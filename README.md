@@ -27,7 +27,7 @@ Search:
 - [ ] Late Move Pruning (LMR)
 - [ ] Null Move Pruning
 
-Evaluation
+Evaluation:
 - [ ] Material
 - [ ] Game-Phase evaluation (maybe with Tapered Eval)
 - [ ] Piece-Square Tables
@@ -56,3 +56,5 @@ Tests:
 
 
 ## Dependencies
+
+## Building
