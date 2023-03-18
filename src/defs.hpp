@@ -5,11 +5,30 @@
 
 using BitBoard = uint64_t;
 using PieceType = uint32_t;
+using Piece = uint32_t;
 using Color = uint32_t;
 using Square = uint32_t;
 using File = uint32_t;
 using Rank = uint32_t;
 
+inline Square north      (Square square) {return square + 8;}
+inline Square north_west (Square square) {return square + 7;}
+inline Square west       (Square square) {return square - 1;}
+inline Square south_west (Square square) {return square - 9;}
+inline Square south      (Square square) {return square - 8;}
+inline Square south_east (Square square) {return square - 7;}
+inline Square east       (Square square) {return square + 1;}
+inline Square north_east (Square square) {return square + 9;}
+
+inline Square make_square(File file, Rank rank)
+{
+    return (file << 3) + rank;
+}
+
+inline Square make_piece(Color color, PieceType type)
+{
+    return (type << 1) + color;
+}
 
 enum PieceTypes : uint32_t 
 {
@@ -19,6 +38,18 @@ enum PieceTypes : uint32_t
     ROOK,
     QUEEN,
     KING,
+    
+    N_PIECE_TYPES
+};
+
+enum Piece : uint32_t 
+{
+    WH_PAWN,    BL_PAWN,
+    WH_KNIGHT,  BL_KNIGHT,
+    WH_BISHOP,  BL_BISHOP,
+    WH_ROOK,    BL_ROOK,
+    WH_QUEEN,   BL_QUEEN,
+    WH_KING,    BL_KING,
     
     N_PIECE_TYPES
 };
