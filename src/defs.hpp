@@ -20,9 +20,19 @@ inline Square south_east (Square square) {return square - 7;}
 inline Square east       (Square square) {return square + 1;}
 inline Square north_east (Square square) {return square + 9;}
 
+inline File make_file(Square square)
+{
+    return square & 0x7;
+}
+
+inline Rank make_rank(Square square)
+{
+    return square >> 3;
+}
+
 inline Square make_square(File file, Rank rank)
 {
-    return (file << 3) + rank;
+    return (rank << 3) + file;
 }
 
 inline Square make_piece(Color color, PieceType type)
@@ -42,7 +52,7 @@ enum PieceTypes : uint32_t
     N_PIECE_TYPES
 };
 
-enum Piece : uint32_t 
+enum Pieces : uint32_t 
 {
     WH_PAWN,    BL_PAWN,
     WH_KNIGHT,  BL_KNIGHT,
@@ -51,7 +61,7 @@ enum Piece : uint32_t
     WH_QUEEN,   BL_QUEEN,
     WH_KING,    BL_KING,
     
-    N_PIECE_TYPES
+    N_PIECES
 };
 
 enum Colors : uint32_t 
