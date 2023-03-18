@@ -1,22 +1,29 @@
 #ifndef ALTAIR_MOVE_HPP
 #define ALTAIR_MOVE_HPP
 
+#include <string>
+
 #include "defs.hpp"
 
 class Move
 {
     public:
 
-    explicit Move(uint32_t move);
+    Move() = default;
+    Move(uint32_t move);
 
-    PieceType piece_type();
+    Square from() const;
+    Square to() const;
+    PieceType piece_type() const;
 
-    PieceType color();
+    void set_from(Square from);
+    void set_to(Square to);
+    void set_piece_type(PieceType from);
 
-    PieceType from();
+    std::string notation() const;
 
     private:
-    uint32_t move_;
+    uint32_t move_ = 0;
 };
 
 
