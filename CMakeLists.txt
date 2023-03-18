@@ -9,6 +9,7 @@ add_executable(${CMAKE_PROJECT_NAME}_executable ${SOURCE_FILES})
 include_directories(src)
 
 add_subdirectory(src)
-# add_subdirectory(tests)
+add_subdirectory(tests)
+add_subdirectory(libs/googletest)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}_executable ${CMAKE_PROJECT_NAME}_lib)
