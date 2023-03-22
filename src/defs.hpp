@@ -3,6 +3,7 @@
 
 #include <cstdint>
 
+// Might want to use more compacte integers in future
 using BitBoard = uint64_t;
 using PieceType = uint32_t;
 using Piece = uint32_t;
@@ -98,6 +99,20 @@ enum Ranks : uint32_t
     RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8,
 
     N_RANKS
+};
+
+struct CastlingRights
+{
+    void set_queen_side(Color color) {rights_ |= (1 << color);}
+    void clear_queen_side(Color color) {rights_ &= ~(1 << color);}
+    void set_king_side(Color color) {rights_ |= (1 << (color + 2));}
+    void clear_king_side(Color color) {rights_ &= ~(1 << (color + 2));}
+
+    bool queen_side(Color color) const {return rights_ && (1 << color);}
+    bool king_side(Color color) const {return rights_ && (1 << (color + 2));}
+    
+    private:
+    uint8_t rights_ = 0xF;
 };
 
 #endif // ALTAIR_DEFS_HPP
