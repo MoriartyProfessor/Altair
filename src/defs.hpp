@@ -108,8 +108,8 @@ struct CastlingRights
     void set_king_side(Color color) {rights_ |= (1 << (color + 2));}
     void clear_king_side(Color color) {rights_ &= ~(1 << (color + 2));}
 
-    bool queen_side(Color color) const {return rights_ && (1 << color);}
-    bool king_side(Color color) const {return rights_ && (1 << (color + 2));}
+    bool queen_side(Color color) const {return rights_ & (1 << color);}
+    bool king_side(Color color) const {return rights_ & (1 << (color + 2));}
     
     private:
     uint8_t rights_ = 0xF;
