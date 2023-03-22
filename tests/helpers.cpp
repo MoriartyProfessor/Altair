@@ -142,3 +142,23 @@ TEST(conversions, make_piece)
     EXPECT_EQ(make_piece(BLACK, QUEEN)  , BL_QUEEN);
     EXPECT_EQ(make_piece(BLACK, KING)   , BL_KING);
 }
+
+
+TEST(castling_rights, castling_rights)
+{
+    CastlingRights rights;
+
+    EXPECT_EQ(rights.queen_side(WHITE), true);
+    EXPECT_EQ(rights.queen_side(BLACK), true);
+    EXPECT_EQ(rights.king_side(WHITE), true);
+    EXPECT_EQ(rights.king_side(BLACK), true);
+
+    rights.clear_queen_side(WHITE);
+    EXPECT_EQ(rights.queen_side(WHITE), false);
+
+    rights.clear_king_side(BLACK);
+    EXPECT_EQ(rights.king_side(BLACK), false);
+
+    rights.set_king_side(BLACK);
+    EXPECT_EQ(rights.king_side(BLACK), true);
+}
