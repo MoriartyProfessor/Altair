@@ -1,7 +1,7 @@
 #include "move.hpp"
 
 Move::Move(uint32_t move)
-: move_{move} { }
+: move_{move & 0x0FFFFFFF} { }
 
 Move& Move::operator=(Move other) 
 {
@@ -45,13 +45,13 @@ PieceType Move::promotion_piece_type(PieceType type) const
     return (move_ >> 18) & 0x7;
 }
 
-bool Move::is_quite()               const { return (move_ >> 21) & (1 << QUITE); }
-bool Move::is_capture()             const { return (move_ >> 21) & (1 << CAPTURE); }
-bool Move::is_promotion()           const { return (move_ >> 21) & (1 << PROMOTION); }
-bool Move::is_double_pawn_push()    const { return (move_ >> 21) & (1 << DOUBLE_PAWN_PUSH); }
-bool Move::is_king_side_castle()    const { return (move_ >> 21) & (1 << KING_CASTLE); }
-bool Move::is_queen_side_castle()   const { return (move_ >> 21) & (1 << QUEEN_CASTLE); }
-bool Move::is_en_passant()          const { return (move_ >> 21) & (1 << EN_PASSANT); }
+bool Move::is_quite()               const { return (move_ >> 21) && (1 << QUITE); }
+bool Move::is_capture()             const { return (move_ >> 21) && (1 << CAPTURE); }
+bool Move::is_promotion()           const { return (move_ >> 21) && (1 << PROMOTION); }
+bool Move::is_double_pawn_push()    const { return (move_ >> 21) && (1 << DOUBLE_PAWN_PUSH); }
+bool Move::is_king_side_castle()    const { return (move_ >> 21) && (1 << KING_CASTLE); }
+bool Move::is_queen_side_castle()   const { return (move_ >> 21) && (1 << QUEEN_CASTLE); }
+bool Move::is_en_passant()          const { return (move_ >> 21) && (1 << EN_PASSANT); }
 
 
 void Move::set_from(Square from)
