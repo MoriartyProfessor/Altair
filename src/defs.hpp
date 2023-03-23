@@ -61,9 +61,8 @@ enum Pieces : uint32_t
     WH_ROOK,    BL_ROOK,
     WH_QUEEN,   BL_QUEEN,
     WH_KING,    BL_KING,
-    
-    EMPTY_SQUARE,
-    N_PIECES
+    N_PIECES,
+    EMPTY_SQUARE
 };
 
 enum Colors : uint32_t 
