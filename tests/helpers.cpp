@@ -1,5 +1,63 @@
 #include "gtest/gtest.h"
+#include "utils.hpp"
 #include "defs.hpp"
+
+TEST(lowlevel_utils, popcount) 
+{
+    EXPECT_EQ(popcount(0x0000000000000000ULL), 0);
+    EXPECT_EQ(popcount(0xFFFFFFFFFFFFFFFFULL), 64);
+    EXPECT_EQ(popcount(0x55AA55AA55AA55AAULL), 32);
+    EXPECT_EQ(popcount(0xAA55AA55AA55AA55ULL), 32);
+    EXPECT_EQ(popcount(0x0000000000000001ULL), 1);
+    EXPECT_EQ(popcount(0x1000000000000000ULL), 1);
+}
+
+TEST(lowlevel_utils, LSB) 
+{
+    EXPECT_EQ(LSB(0x0000000000000000ULL), 64);
+    EXPECT_EQ(LSB(0xFFFFFFFFFFFFFFFFULL), 0);
+    EXPECT_EQ(LSB(0x55AA55AA55AA55AAULL), 1);
+    EXPECT_EQ(LSB(0xAA55AA55AA55AA55ULL), 0);
+    EXPECT_EQ(LSB(0x0000000000000001ULL), 0);
+    EXPECT_EQ(LSB(0x1000000000000000ULL), 60);
+    EXPECT_EQ(LSB(0xF0F0F0F0F0F0F040ULL), 6);
+    EXPECT_EQ(LSB(0xCF1234FFCFFF8000ULL), 15);
+}
+
+TEST(lowlevel_utils, pop_LSB) 
+{
+    uint64_t test_ll = 0x0000000000000000ULL;
+    EXPECT_EQ(pop_LSB(test_ll), 64);
+    EXPECT_EQ(test_ll, 0x0000000000000000ULL);
+
+    test_ll = 0xFFFFFFFFFFFFFFFFULL;
+    EXPECT_EQ(pop_LSB(test_ll), 0);
+    EXPECT_EQ(test_ll, 0xFFFFFFFFFFFFFFDULL);
+    
+    test_ll = 0x55AA55AA55AA55AAULL;
+    EXPECT_EQ(pop_LSB(test_ll), 1);
+    EXPECT_EQ(test_ll, 0x55AA55AA55AA55A9ULL);
+    
+    test_ll = 0xAA55AA55AA55AA55ULL;
+    EXPECT_EQ(pop_LSB(test_ll), 0);
+    EXPECT_EQ(test_ll, 0xAA55AA55AA55AA54ULL);
+    
+    test_ll = 0x0000000000000001ULL;
+    EXPECT_EQ(pop_LSB(test_ll), 0);
+    EXPECT_EQ(test_ll, 0x0000000000000000ULL);
+    
+    test_ll = 0x1000000000000000ULL;
+    EXPECT_EQ(pop_LSB(test_ll), 60);
+    EXPECT_EQ(test_ll, 0x0000000000000000ULL);
+    
+    test_ll = 0xF0F0F0F0F0F0F040ULL;
+    EXPECT_EQ(pop_LSB(test_ll), 6);
+    EXPECT_EQ(test_ll, 0xF0F0F0F0F0F0F000ULL);
+    
+    test_ll = 0xCF1234FFCFFF8000ULL;
+    EXPECT_EQ(pop_LSB(test_ll), 15);
+    EXPECT_EQ(test_ll, 0xCF1234FFCFFF0000ULL);
+}
 
 TEST(directions, north) 
 {
