@@ -62,6 +62,7 @@ enum Pieces : uint32_t
     WH_QUEEN,   BL_QUEEN,
     WH_KING,    BL_KING,
     
+    EMPTY_SQUARE,
     N_PIECES
 };
 
