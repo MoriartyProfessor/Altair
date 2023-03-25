@@ -32,13 +32,11 @@ inline uint32_t pop_LSB(uint64_t& x)
 {
 #if __GNUC__
     uint32_t LSB = __builtin_ctzll(x);
-    x -= LSB;
-    return LSB;
 #else
     uint32_t LSB = std::log2(x & -x);
-    x -= LSB;
-    return LSB;
 #endif
+    x &= ~(1ULL << LSB);
+    return LSB;
 }
 
 #endif // ALTAIR_UTILS_HPP
