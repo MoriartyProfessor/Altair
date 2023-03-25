@@ -32,11 +32,11 @@ TEST(lowlevel_utils, pop_LSB)
 
     test_ll = 0xFFFFFFFFFFFFFFFFULL;
     EXPECT_EQ(pop_LSB(test_ll), 0);
-    EXPECT_EQ(test_ll, 0xFFFFFFFFFFFFFFDULL);
+    EXPECT_EQ(test_ll, 0xFFFFFFFFFFFFFFFEULL);
     
     test_ll = 0x55AA55AA55AA55AAULL;
     EXPECT_EQ(pop_LSB(test_ll), 1);
-    EXPECT_EQ(test_ll, 0x55AA55AA55AA55A9ULL);
+    EXPECT_EQ(test_ll, 0x55AA55AA55AA55A8ULL);
     
     test_ll = 0xAA55AA55AA55AA55ULL;
     EXPECT_EQ(pop_LSB(test_ll), 0);
@@ -124,44 +124,44 @@ TEST(directions, north_east)
 }
 
 
-TEST(conversions, make_file)
+TEST(conversions, get_file)
 {
-    EXPECT_EQ(make_file(SQ_A4), FILE_A);
-    EXPECT_EQ(make_file(SQ_C1), FILE_C);
-    EXPECT_EQ(make_file(SQ_H3), FILE_H);
-    EXPECT_EQ(make_file(SQ_D4), FILE_D);
-    EXPECT_EQ(make_file(SQ_E2), FILE_E);
-    EXPECT_EQ(make_file(SQ_B4), FILE_B);
-    EXPECT_EQ(make_file(SQ_G1), FILE_G);
-    EXPECT_EQ(make_file(SQ_B2), FILE_B);
-    EXPECT_EQ(make_file(SQ_A5), FILE_A);
-    EXPECT_EQ(make_file(SQ_H6), FILE_H);
-    EXPECT_EQ(make_file(SQ_D3), FILE_D);
-    EXPECT_EQ(make_file(SQ_G2), FILE_G);
-    EXPECT_EQ(make_file(SQ_F7), FILE_F);
-    EXPECT_EQ(make_file(SQ_B3), FILE_B);
-    EXPECT_EQ(make_file(SQ_D8), FILE_D);
-    EXPECT_EQ(make_file(SQ_E7), FILE_E);
+    EXPECT_EQ(get_file(SQ_A4), FILE_A);
+    EXPECT_EQ(get_file(SQ_C1), FILE_C);
+    EXPECT_EQ(get_file(SQ_H3), FILE_H);
+    EXPECT_EQ(get_file(SQ_D4), FILE_D);
+    EXPECT_EQ(get_file(SQ_E2), FILE_E);
+    EXPECT_EQ(get_file(SQ_B4), FILE_B);
+    EXPECT_EQ(get_file(SQ_G1), FILE_G);
+    EXPECT_EQ(get_file(SQ_B2), FILE_B);
+    EXPECT_EQ(get_file(SQ_A5), FILE_A);
+    EXPECT_EQ(get_file(SQ_H6), FILE_H);
+    EXPECT_EQ(get_file(SQ_D3), FILE_D);
+    EXPECT_EQ(get_file(SQ_G2), FILE_G);
+    EXPECT_EQ(get_file(SQ_F7), FILE_F);
+    EXPECT_EQ(get_file(SQ_B3), FILE_B);
+    EXPECT_EQ(get_file(SQ_D8), FILE_D);
+    EXPECT_EQ(get_file(SQ_E7), FILE_E);
 }
 
-TEST(conversions, make_rank)
+TEST(conversions, get_rank)
 {
-    EXPECT_EQ(make_rank(SQ_A4), RANK_4);
-    EXPECT_EQ(make_rank(SQ_C1), RANK_1);
-    EXPECT_EQ(make_rank(SQ_H3), RANK_3);
-    EXPECT_EQ(make_rank(SQ_D4), RANK_4);
-    EXPECT_EQ(make_rank(SQ_E2), RANK_2);
-    EXPECT_EQ(make_rank(SQ_B4), RANK_4);
-    EXPECT_EQ(make_rank(SQ_G1), RANK_1);
-    EXPECT_EQ(make_rank(SQ_B2), RANK_2);
-    EXPECT_EQ(make_rank(SQ_A5), RANK_5);
-    EXPECT_EQ(make_rank(SQ_H6), RANK_6);
-    EXPECT_EQ(make_rank(SQ_D3), RANK_3);
-    EXPECT_EQ(make_rank(SQ_G2), RANK_2);
-    EXPECT_EQ(make_rank(SQ_F7), RANK_7);
-    EXPECT_EQ(make_rank(SQ_B3), RANK_3);
-    EXPECT_EQ(make_rank(SQ_D8), RANK_8);
-    EXPECT_EQ(make_rank(SQ_E7), RANK_7);
+    EXPECT_EQ(get_rank(SQ_A4), RANK_4);
+    EXPECT_EQ(get_rank(SQ_C1), RANK_1);
+    EXPECT_EQ(get_rank(SQ_H3), RANK_3);
+    EXPECT_EQ(get_rank(SQ_D4), RANK_4);
+    EXPECT_EQ(get_rank(SQ_E2), RANK_2);
+    EXPECT_EQ(get_rank(SQ_B4), RANK_4);
+    EXPECT_EQ(get_rank(SQ_G1), RANK_1);
+    EXPECT_EQ(get_rank(SQ_B2), RANK_2);
+    EXPECT_EQ(get_rank(SQ_A5), RANK_5);
+    EXPECT_EQ(get_rank(SQ_H6), RANK_6);
+    EXPECT_EQ(get_rank(SQ_D3), RANK_3);
+    EXPECT_EQ(get_rank(SQ_G2), RANK_2);
+    EXPECT_EQ(get_rank(SQ_F7), RANK_7);
+    EXPECT_EQ(get_rank(SQ_B3), RANK_3);
+    EXPECT_EQ(get_rank(SQ_D8), RANK_8);
+    EXPECT_EQ(get_rank(SQ_E7), RANK_7);
 }
 
 TEST(conversions, make_square)
