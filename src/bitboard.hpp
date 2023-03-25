@@ -9,12 +9,17 @@ namespace BitBoards
 {
     inline void set_square(BitBoard& bitboard, Square square)
     {
-        bitboard |= (1 << square);
+        bitboard |= (1ULL << square);
     }
 
     inline void clear_square(BitBoard& bitboard, Square square)
     {
-        bitboard &= ~(1 << square);
+        bitboard &= ~(1ULL << square);
+    }
+
+    inline bool is_square_set(BitBoard bitboard, Square square)
+    {
+        return (bitboard >> square) & 1;
     }
 
     constexpr BitBoard file_filled_in(File file)
@@ -32,6 +37,7 @@ namespace BitBoards
     std::string prettify(BitBoard);
 }
 
+/* Maybe should be moved inside the namespace */
 constexpr BitBoard EMPTY_BB = 0x0ULL;
 constexpr BitBoard UNIVERSE_BB = ~EMPTY_BB;
 
