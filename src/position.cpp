@@ -183,7 +183,7 @@ std::string Position::pretty() const
         }
     }
 
-    pretty_pos += "\n  ABCDEFGH \n";
+    pretty_pos += "\n\n  ABCDEFGH \n";
 
     return pretty_pos;
 }
@@ -201,7 +201,12 @@ BitBoard Position::piece_bitboard(Color color, PieceType type) const
 
 BitBoard Position::occupancy_bitboard() const
 {
-    
+    BitBoard occupancy_bitboard = EMPTY_BB;
+    for(auto piece_bitboard : piece_bitboards_)
+    {
+        occupancy_bitboard |= piece_bitboard;
+    }
+    return occupancy_bitboard;
 }
 
 
