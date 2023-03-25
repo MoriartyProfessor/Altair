@@ -7,6 +7,16 @@
 
 namespace BitBoards
 {
+    inline void set_square(BitBoard& bitboard, Square square)
+    {
+        bitboard |= (1 << square);
+    }
+
+    inline void clear_square(BitBoard& bitboard, Square square)
+    {
+        bitboard &= ~(1 << square);
+    }
+
     constexpr BitBoard file_filled_in(File file)
     {
         constexpr BitBoard FILE_A_BB = 0x0101010101010101ULL;
@@ -22,8 +32,11 @@ namespace BitBoards
     std::string prettify(BitBoard);
 }
 
+constexpr BitBoard EMPTY_BB = 0x0ULL;
+constexpr BitBoard UNIVERSE_BB = ~EMPTY_BB;
+
 constexpr BitBoard LIGHT_SQUARES_BB = 0x55AA55AA55AA55AAULL;
-constexpr BitBoard DARK_SQUARES_BB = 0xAA55AA55AA55AA55ULL;
+constexpr BitBoard DARK_SQUARES_BB = ~LIGHT_SQUARES_BB;
 
 constexpr BitBoard FILE_A_BB = BitBoards::file_filled_in(FILE_A);
 constexpr BitBoard FILE_B_BB = BitBoards::file_filled_in(FILE_B);
