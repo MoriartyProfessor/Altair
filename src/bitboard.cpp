@@ -22,7 +22,7 @@ std::string BitBoards::prettify(BitBoard bit_board)
         bit_board <<= 8;
     }
 
-    pretty_BB += "\n  ABCDEFGH \n";
+    pretty_BB += "\n\n  ABCDEFGH \n";
 
     return pretty_BB;
 }
