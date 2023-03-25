@@ -12,35 +12,6 @@ using Square = uint32_t;
 using File = uint32_t;
 using Rank = uint32_t;
 
-inline Square north      (Square square) {return square + 8;}
-inline Square north_west (Square square) {return square + 7;}
-inline Square west       (Square square) {return square - 1;}
-inline Square south_west (Square square) {return square - 9;}
-inline Square south      (Square square) {return square - 8;}
-inline Square south_east (Square square) {return square - 7;}
-inline Square east       (Square square) {return square + 1;}
-inline Square north_east (Square square) {return square + 9;}
-
-inline File make_file(Square square)
-{
-    return square & 0x7;
-}
-
-inline Rank make_rank(Square square)
-{
-    return square >> 3;
-}
-
-inline Square make_square(File file, Rank rank)
-{
-    return (rank << 3) + file;
-}
-
-inline Square make_piece(Color color, PieceType type)
-{
-    return (type << 1) + color;
-}
-
 enum PieceTypes : uint32_t 
 {
     PAWN,
@@ -116,5 +87,72 @@ struct CastlingRights
     private:
     uint8_t rights_ = 0xF;
 };
+
+inline Square north      (Square square) {return square + 8;}
+inline Square north_west (Square square) {return square + 7;}
+inline Square west       (Square square) {return square - 1;}
+inline Square south_west (Square square) {return square - 9;}
+inline Square south      (Square square) {return square - 8;}
+inline Square south_east (Square square) {return square - 7;}
+inline Square east       (Square square) {return square + 1;}
+inline Square north_east (Square square) {return square + 9;}
+
+inline File get_file(Square square)
+{
+    return square & 0x7;
+}
+
+inline Rank get_rank(Square square)
+{
+    return square >> 3;
+}
+
+inline Square make_square(File file, Rank rank)
+{
+    return (rank << 3) + file;
+}
+
+inline Square make_piece(Color color, PieceType type)
+{
+    return (type << 1) + color;
+}
+
+inline Color get_color(Piece piece)
+{
+    return piece & 0x1;
+}
+
+inline PieceType get_type(Piece piece)
+{
+    return piece >> 1;
+}
+
+inline char piece_to_char(Piece piece)
+{
+    if(piece == N_PIECES)
+        return '.';
+    
+    PieceType type = get_type(piece);
+    Color color = get_color(piece);
+
+    char piece_ch;
+
+    if(type == PAWN)
+        piece_ch = 'P';
+    if(type == KNIGHT)
+        piece_ch = 'N';
+    if(type == BISHOP)
+        piece_ch = 'B';
+    if(type == ROOK)
+        piece_ch = 'R';
+    if(type == QUEEN)
+        piece_ch = 'Q';
+    if(type == KING)
+        piece_ch = 'K';
+
+    if(color == BLACK)
+        piece_ch += 32;
+    return piece_ch;
+}
 
 #endif // ALTAIR_DEFS_HPP
