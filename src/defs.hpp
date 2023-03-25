@@ -61,8 +61,7 @@ enum Pieces : uint32_t
     WH_ROOK,    BL_ROOK,
     WH_QUEEN,   BL_QUEEN,
     WH_KING,    BL_KING,
-    N_PIECES,
-    EMPTY_SQUARE
+    N_PIECES
 };
 
 enum Colors : uint32_t 
@@ -107,6 +106,9 @@ struct CastlingRights
     void clear_queen_side(Color color) {rights_ &= ~(1 << color);}
     void set_king_side(Color color) {rights_ |= (1 << (color + 2));}
     void clear_king_side(Color color) {rights_ &= ~(1 << (color + 2));}
+
+    void set_all_rights() {rights_ = 0xF;}
+    void clear_all_rights() {rights_ = 0x0;}
 
     bool queen_side(Color color) const {return rights_ & (1 << color);}
     bool king_side(Color color) const {return rights_ & (1 << (color + 2));}
