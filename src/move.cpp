@@ -3,6 +3,12 @@
 Move::Move(uint32_t move)
 : move_{move & 0x0FFFFFFF} { }
 
+Move::Move(Square from, Square to)
+{
+    set_from(from);
+    set_to(to);
+}
+
 Move& Move::operator=(Move other) 
 {
     move_ = other.move_;
