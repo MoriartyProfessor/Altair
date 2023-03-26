@@ -98,6 +98,15 @@ inline Square south_east (Square square) {return square - 7;}
 inline Square east       (Square square) {return square + 1;}
 inline Square north_east (Square square) {return square + 9;}
 
+inline Square north      (Square square, uint32_t step) {return square + 8 * step;}
+inline Square north_west (Square square, uint32_t step) {return square + 7 * step;}
+inline Square west       (Square square, uint32_t step) {return square - 1 * step;}
+inline Square south_west (Square square, uint32_t step) {return square - 9 * step;}
+inline Square south      (Square square, uint32_t step) {return square - 8 * step;}
+inline Square south_east (Square square, uint32_t step) {return square - 7 * step;}
+inline Square east       (Square square, uint32_t step) {return square + 1 * step;}
+inline Square north_east (Square square, uint32_t step) {return square + 9 * step;}
+
 inline File get_file(Square square)
 {
     return square & 0x7;
