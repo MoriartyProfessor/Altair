@@ -14,5 +14,7 @@ int main()
     
     std::cout << "Side to move: " << side_to_move_str << std::endl;
 
+    std::cout << "Reverse FEN: " << std::endl << position.fen() << std::endl;
+
     return 0;
 }
