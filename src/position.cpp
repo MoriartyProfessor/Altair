@@ -282,9 +282,9 @@ std::string Position::pretty() const
     return pretty_pos;
 }
 
-void Position::do_move(Move move)
+void Position::make_move(Move move)
 {
-
+    
 }
 
 
