@@ -2,6 +2,7 @@
 #define ALTAIR_DEFS_HPP
 
 #include <cstdint>
+#include <string>
 
 // Might want to use more compacte integers in future
 using BitBoard = uint64_t;
@@ -153,6 +154,21 @@ inline char piece_to_char(Piece piece)
     if(color == BLACK)
         piece_ch += 32;
     return piece_ch;
+}
+
+inline char file_to_char(File file)
+{
+    return file + 'a';
+}
+
+inline char rank_to_char(Rank rank)
+{
+    return rank + '0';
+}
+
+inline std::string square_to_str(Square square)
+{
+    return std::string{file_to_char(get_file(square)), rank_to_char(get_rank(square))};
 }
 
 #endif // ALTAIR_DEFS_HPP

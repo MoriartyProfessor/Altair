@@ -11,6 +11,7 @@ class Move
 
     Move() = default;
     Move(uint32_t move);
+    Move(Square from, Square to);
 
     Move& operator= (Move other);
     // either don't take into account unused bits, or make sure they are always set to zero
