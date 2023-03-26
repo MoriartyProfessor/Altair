@@ -22,6 +22,7 @@ class Position
 
     BitBoard piece_bitboard(Color color, PieceType type) const;
     BitBoard occupancy_bitboard() const;
+    BitBoard occupancy_bitboard(Color color) const;
     
     Piece piece_occupying(Square square) const;
     

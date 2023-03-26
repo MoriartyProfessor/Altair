@@ -163,7 +163,101 @@ void Position::set_from_fen(const std::string& fen)
 
 std::string Position::fen() const
 {
+    auto fen_piece_placement = [this]
+    {
+        auto fen_rank = [this] (Rank rank)
+        {
+            std::string fen_rank;
+            uint32_t gap_counter = 0;
+            for(File file = FILE_A; file < N_FILES; ++file)
+            {
+                Piece occupant_piece = piece_occupying(make_square(file, rank));
+                char occupant_piece_ch = piece_to_char(occupant_piece);
+                if(occupant_piece_ch == '.')
+                {
+                    ++gap_counter;
+                }
+                else
+                {
+                    if(gap_counter)
+                    {
+                        fen_rank += std::to_string(gap_counter);
+                        gap_counter = 0;
+                    }
+                    fen_rank += occupant_piece_ch;
+                }
+            }
+            if(gap_counter)
+            {
+                fen_rank += std::to_string(gap_counter);
+                gap_counter = 0;
+            }
+            return fen_rank;
+        };
 
+        std::string fen_piece_placement;
+
+        for(Rank rank = RANK_1; rank < N_RANKS; ++rank)
+        {
+            fen_piece_placement += fen_rank(7 - rank);
+            fen_piece_placement += '/';
+        }
+        fen_piece_placement.pop_back();
+        return fen_piece_placement;
+    };
+
+    auto fen_side_to_move = [this]
+    {
+        std::string fen_side_to_move;
+        fen_side_to_move += side_to_move_ == WHITE ? 'w' : 'b';
+        return fen_side_to_move;
+    };
+
+    auto fen_castling_rights = [this]
+    {
+        std::string fen_castling_rights;
+        if(castling_rights_.king_side(WHITE))
+            fen_castling_rights += 'K';
+        if(castling_rights_.queen_side(WHITE))
+            fen_castling_rights += 'Q';
+        if(castling_rights_.king_side(BLACK))
+            fen_castling_rights += 'k';
+        if(castling_rights_.king_side(BLACK))
+            fen_castling_rights += 'q';
+        if(fen_castling_rights.empty())
+            fen_castling_rights = '-';
+        return fen_castling_rights;
+    };
+
+    auto fen_en_passant_square = [this]
+    {
+        std::string fen_en_passant_square;
+        if(en_passant_square_ == N_SQUARES)
+            fen_en_passant_square = '-';
+        else
+            fen_en_passant_square = square_to_str(en_passant_square_);
+        return fen_en_passant_square;
+    };
+
+    auto fen_halfclock = [this]
+    {
+        return std::to_string(halfclock_);
+    };
+
+    auto fen_moveclock = [this]
+    {
+        return std::to_string(moveclock_);
+    };
+
+    std::string fen;
+    fen += fen_piece_placement() + ' ';
+    fen += fen_side_to_move() + ' ';
+    fen += fen_castling_rights() + ' ';
+    fen += fen_en_passant_square() + ' ';
+    fen += fen_halfclock() + ' ';
+    fen += fen_moveclock();
+
+    return fen;
 }
 
 std::string Position::pretty() const
@@ -201,10 +295,15 @@ BitBoard Position::piece_bitboard(Color color, PieceType type) const
 
 BitBoard Position::occupancy_bitboard() const
 {
+    return occupancy_bitboard(WHITE) | occupancy_bitboard(BLACK);
+}
+
+BitBoard Position::occupancy_bitboard(Color color) const
+{
     BitBoard occupancy_bitboard = EMPTY_BB;
-    for(auto piece_bitboard : piece_bitboards_)
+    for(PieceType piece_type = PAWN; piece_type < N_PIECE_TYPES; ++piece_type)
     {
-        occupancy_bitboard |= piece_bitboard;
+        occupancy_bitboard |= piece_bitboards_[make_piece(color, piece_type)];
     }
     return occupancy_bitboard;
 }
