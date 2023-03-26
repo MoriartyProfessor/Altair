@@ -67,6 +67,14 @@ TEST(directions, north)
     EXPECT_EQ(north(SQ_D2), SQ_D3);
 }
 
+TEST(directions, north_stepped) 
+{
+    EXPECT_EQ(north(SQ_A1, 1), SQ_A2);
+    EXPECT_EQ(north(SQ_B3, 2), SQ_B5);
+    EXPECT_EQ(north(SQ_C4, 3), SQ_C7);
+    EXPECT_EQ(north(SQ_D2, 4), SQ_D6);
+}
+
 TEST(directions, north_west) 
 {
     EXPECT_EQ(north_west(SQ_H5), SQ_G6);
