@@ -4,10 +4,10 @@ set(HEADER_FILES
     bitboard.hpp
     defs.hpp
     move.hpp
-    utils.hpp
     movegenerator.hpp
     patterns.hpp
     position.cpp
+    utils.hpp
 )
 
 set(SOURCE_FILES

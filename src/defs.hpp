@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string>
 
-// Might want to use more compacte integers in future
+// Might want to use more compact integers in future
 using BitBoard = uint64_t;
 using PieceType = uint32_t;
 using Piece = uint32_t;
