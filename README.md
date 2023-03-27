@@ -12,7 +12,7 @@ Altair - UCI Compatible chess engine
 Board representation:
 
 - [ ] Move generation (with Magic Bitboards)
-- [ ] Constrution of position from FEN
+- [x] Constrution of position from FEN
 
 Search:
 - [ ] Negamax
