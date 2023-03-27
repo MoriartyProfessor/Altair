@@ -25,6 +25,8 @@ class Position
     BitBoard occupancy_bitboard(Color color) const;
     
     Piece piece_occupying(Square square) const;
+
+    bool is_in_check(Color color) const;
     
     Color side_to_move() const;
     CastlingRights castling_rights() const;

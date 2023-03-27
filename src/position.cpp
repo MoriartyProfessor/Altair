@@ -319,6 +319,11 @@ Piece Position::piece_occupying(Square square) const
     return N_PIECES;
 }
 
+bool Position::is_in_check(Color color) const
+{
+    
+}
+
 
 Color Position::side_to_move() const
 {
