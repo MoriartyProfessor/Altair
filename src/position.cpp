@@ -26,7 +26,7 @@ void Position::set_from_fen(const std::string& fen)
 {
     auto init_piece_placement = [this] (const std::string& fen_piece_placement)
     {
-        clear_piece_bitboards();
+        clear_piece_bitboards_();
         Rank rank = RANK_8;
         File file = FILE_A;
         for(auto ch : fen_piece_placement)
@@ -285,7 +285,38 @@ std::string Position::pretty() const
 
 void Position::make_move(Move move)
 {
+    if(move.is_quite())
+        make_quite_move_(move);
+
+    else if(move.is_capture() && move.is_promotion())
+        make_capture_promotion_move_(move);
+
+    else if(move.is_capture())
+        make_capture_move_(move);
+
+    else if(move.is_promotion())
+        make_promotion_move_(move);
+
+    else if(move.is_double_pawn_push())
+        make_double_pawn_push_move_(move);
+
+    else if(move.is_king_side_castle())
+        make_king_side_castling_move_(move);
+
+    else if(move.is_queen_side_castle())
+        make_queen_side_castling_move_(move);
+
+    else if(move.is_en_passant())
+        make_en_passant_move_(move);
+
+
+    side_to_move_ = toggle_color(side_to_move_);
     
+    if(!move.is_double_pawn_push())
+        en_passant_square_ = N_SQUARES;
+    
+    if(side_to_move_ == WHITE)
+        ++moveclock_;
 }
 
 void Position::unmake_move(Move move)
@@ -356,8 +387,89 @@ uint32_t Position::moveclock() const
     return moveclock_;
 }
 
-void Position::clear_piece_bitboards()
+void Position::clear_piece_bitboards_()
 {
     for(auto& piece_bitboard : piece_bitboards_)
         piece_bitboard = EMPTY_BB;
+}
+
+void Position::make_quite_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
+}
+
+void Position::make_capture_move_(Move move)
+{
+    remove_piece_(make_piece(toggle_color(side_to_move_), move.capture_piece_type()), move.to());
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
+}
+
+void Position::make_promotion_move_(Move move)
+{
+    remove_piece_(make_piece(side_to_move_, move.piece_type()), move.from());
+    add_piece_(make_piece(side_to_move_, move.promotion_piece_type()), move.to());
+}
+
+void Position::make_capture_promotion_move_(Move move)
+{
+    remove_piece_(make_piece(side_to_move_, move.piece_type()), move.from());
+    remove_piece_(make_piece(toggle_color(side_to_move_), move.capture_piece_type()), move.to());
+    add_piece_(make_piece(side_to_move_, move.promotion_piece_type()), move.to());
+}
+
+void Position::make_double_pawn_push_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
+    en_passant_square_ = square_in_between(move.from(), move.to());
+}
+
+void Position::make_king_side_castling_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
+
+    if(side_to_move_ == WHITE)
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_H1, SQ_F1);
+    else
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_H8, SQ_F8);
+    
+    castling_rights_.clear_king_side(side_to_move_);
+}
+
+void Position::make_queen_side_castling_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
+
+    if(side_to_move_ == WHITE)
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_A1, SQ_D1);
+    else
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_A8, SQ_D8);
+    
+    castling_rights_.clear_king_side(side_to_move_);
+}
+
+void Position::make_en_passant_move_(Move move)
+{
+    remove_piece_(make_piece(toggle_color(side_to_move_), move.capture_piece_type()), en_passant_square_);
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
+}
+
+
+void Position::add_piece_(Piece piece, Square square)
+{
+    BitBoards::set_square(piece_bitboards_[piece], square);
+}
+
+void Position::remove_piece_(Piece piece, Square square)
+{
+    BitBoards::clear_square(piece_bitboards_[piece], square);
+}
+
+void Position::move_piece_(Piece piece, Square from, Square to)
+{
+    BitBoard from_to_BB = EMPTY_BB;
+    /* Maybe add helper that returns bitboard with set square */
+    BitBoards::set_square(from_to_BB, from);
+    BitBoards::set_square(from_to_BB, to);
+
+    piece_bitboards_[piece] ^= from_to_BB;
 }

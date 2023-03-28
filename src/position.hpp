@@ -37,7 +37,21 @@ class Position
 
     private:
 
-    void clear_piece_bitboards();
+    void clear_piece_bitboards_();
+
+    void make_quite_move_               (Move move);
+    void make_capture_move_             (Move move);
+    void make_promotion_move_           (Move move);
+    void make_capture_promotion_move_   (Move move);
+    void make_double_pawn_push_move_    (Move move);
+    void make_king_side_castling_move_  (Move move);
+    void make_queen_side_castling_move_ (Move move);
+    void make_en_passant_move_          (Move move);
+
+    void add_piece_(Piece piece, Square square);
+    /* Maybe add toggle piece interface instead*/
+    void remove_piece_(Piece piece, Square square);
+    void move_piece_(Piece piece, Square from, Square to);
 
     private:
     std::array<BitBoard, N_PIECES> piece_bitboards_;
