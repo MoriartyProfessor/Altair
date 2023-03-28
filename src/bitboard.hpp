@@ -22,6 +22,11 @@ namespace BitBoards
         return (bitboard >> square) & 1;
     }
 
+    constexpr BitBoard square_set_in(Square square)
+    {
+        return (1ULL << square);
+    }
+
     constexpr BitBoard file_filled_in(File file)
     {
         constexpr BitBoard FILE_A_BB = 0x0101010101010101ULL;
