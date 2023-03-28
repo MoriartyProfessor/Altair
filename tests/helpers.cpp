@@ -228,3 +228,12 @@ TEST(castling_rights, castling_rights)
     rights.set_king_side(BLACK);
     EXPECT_EQ(rights.king_side(BLACK), true);
 }
+
+TEST(square_in_between, square_in_between)
+{
+    EXPECT_EQ(square_in_between(SQ_A1, SQ_A3), SQ_A2);
+    EXPECT_EQ(square_in_between(SQ_B4, SQ_B6), SQ_B5);
+
+    EXPECT_EQ(square_in_between(SQ_A3, SQ_A1), SQ_A2);
+    EXPECT_EQ(square_in_between(SQ_B6, SQ_B4), SQ_B5);
+}
