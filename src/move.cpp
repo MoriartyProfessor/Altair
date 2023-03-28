@@ -41,12 +41,12 @@ PieceType Move::piece_type() const
     return (move_ >> 12) & 0x7;
 }
 
-PieceType Move::capture_piece_type(PieceType type) const
+PieceType Move::capture_piece_type() const
 {
     return (move_ >> 15) & 0x7;
 }
 
-PieceType Move::promotion_piece_type(PieceType type) const
+PieceType Move::promotion_piece_type() const
 {
     return (move_ >> 18) & 0x7;
 }
