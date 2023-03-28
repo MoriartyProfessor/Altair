@@ -314,6 +314,13 @@ void Position::make_move(Move move)
     
     if(!move.is_double_pawn_push())
         en_passant_square_ = N_SQUARES;
+
+
+    if(move.piece_type() == PAWN || move.is_capture())
+        halfclock_ = 0;
+    else
+        ++halfclock_;
+    
     
     if(side_to_move_ == WHITE)
         ++moveclock_;
