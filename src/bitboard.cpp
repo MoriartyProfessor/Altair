@@ -1,7 +1,8 @@
-#include "bitboard.hpp"
 #include <iostream>
 
-std::string BitBoards::prettify(BitBoard bit_board)
+#include "bitboard.hpp"
+
+std::string BitBoards::prettify(BitBoard bitboard)
 {
     std::string pretty_BB = "----------";
 
@@ -13,13 +14,13 @@ std::string BitBoards::prettify(BitBoard bit_board)
 
         for(File file_ind = FILE_A; file_ind < N_FILES; ++file_ind)
         {
-            if(bit_board & (1ULL << (64 - (8 - file_ind))))
+            if(bitboard & (1ULL << (64 - (8 - file_ind))))
                 pretty_BB += 'x';
             else
                 pretty_BB += '.';
         }
 
-        bit_board <<= 8;
+        bitboard <<= 8;
     }
 
     pretty_BB += "\n\n  ABCDEFGH \n";

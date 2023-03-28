@@ -3,7 +3,10 @@
 
 #include "defs.hpp"
 
-BitBoard knight_attacks[N_SQUARES];
-BitBoard king_attacks[N_SQUARES];
+namespace Patterns
+{
+    BitBoard knight_attacks[N_SQUARES];
+    BitBoard king_attacks[N_SQUARES];
+}
 
 #endif // ALTAIR_PATTERNS_HPP

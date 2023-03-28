@@ -18,6 +18,7 @@ Position::Position(const std::string& fen)
 void Position::set_to_starting()
 {
     /* Just use set_from_fen for now, if this functions is invoked often in runtime, maybe replace it with manual setting */
+    /* Maybe move starting to FEN to seperate constant*/
     set_from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
 
@@ -287,6 +288,10 @@ void Position::make_move(Move move)
     
 }
 
+void Position::unmake_move(Move move)
+{
+    
+}
 
 BitBoard Position::piece_bitboard(Color color, PieceType type) const
 {
@@ -300,6 +305,7 @@ BitBoard Position::occupancy_bitboard() const
 
 BitBoard Position::occupancy_bitboard(Color color) const
 {
+    /* Maybe we should keep occupancy bitboards instead of calculating them everytime*/
     BitBoard occupancy_bitboard = EMPTY_BB;
     for(PieceType piece_type = PAWN; piece_type < N_PIECE_TYPES; ++piece_type)
     {
