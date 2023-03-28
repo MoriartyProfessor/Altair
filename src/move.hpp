@@ -22,8 +22,8 @@ class Move
     Square to() const;
     PieceType piece_type() const;
 
-    PieceType capture_piece_type(PieceType type) const;
-    PieceType promotion_piece_type(PieceType type) const;
+    PieceType capture_piece_type() const;
+    PieceType promotion_piece_type() const;
 
     bool is_quite() const;
     bool is_capture() const;
