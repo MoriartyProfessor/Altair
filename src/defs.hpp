@@ -9,7 +9,7 @@ using BitBoard = uint64_t;
 using PieceType = uint32_t;
 using Piece = uint32_t;
 using Color = uint32_t;
-using Square = uint32_t;
+using Square = int32_t;
 using File = uint32_t;
 using Rank = uint32_t;
 
@@ -127,6 +127,11 @@ inline Square make_piece(Color color, PieceType type)
     return (type << 1) + color;
 }
 
+inline Color toggle_color(Color color)
+{
+    return color ^ BLACK;
+}
+
 inline Color get_color(Piece piece)
 {
     return piece & 0x1;
@@ -135,6 +140,11 @@ inline Color get_color(Piece piece)
 inline PieceType get_type(Piece piece)
 {
     return piece >> 1;
+}
+
+inline Square square_in_between(Square square_1, Square square_2)
+{
+    return square_1 + ((square_2 - square_1)/2);
 }
 
 inline char piece_to_char(Piece piece)
