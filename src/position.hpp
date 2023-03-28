@@ -19,6 +19,7 @@ class Position
     std::string pretty() const;
 
     void make_move(Move move);
+    void unmake_move(Move move);
 
     BitBoard piece_bitboard(Color color, PieceType type) const;
     BitBoard occupancy_bitboard() const;
