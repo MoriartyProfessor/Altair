@@ -175,6 +175,30 @@ inline char piece_to_char(Piece piece)
     return piece_ch;
 }
 
+inline Piece char_to_piece(char piece_char)
+{
+    Color color = piece_char >= 'A' && piece_char <= 'Z' ? WHITE : BLACK;
+
+    if(color == BLACK)
+        piece_char -= 32;
+
+    PieceType type;
+    if(piece_char == 'P')
+        type = PAWN;
+    if(piece_char == 'N')
+        type = KNIGHT;
+    if(piece_char == 'B')
+        type = BISHOP;
+    if(piece_char == 'R')
+        type = ROOK;
+    if(piece_char == 'Q')
+        type = QUEEN;
+    if(piece_char == 'K')
+        type = KING;
+
+    return make_piece(color, type);
+}
+
 inline char file_to_char(File file)
 {
     return file + 'a';
@@ -182,12 +206,27 @@ inline char file_to_char(File file)
 
 inline char rank_to_char(Rank rank)
 {
-    return rank + '0';
+    return rank + '1';
 }
 
 inline std::string square_to_str(Square square)
 {
     return std::string{file_to_char(get_file(square)), rank_to_char(get_rank(square))};
+}
+
+inline File char_to_file(char file_char)
+{
+    return file_char - 'a';
+}
+
+inline Rank char_to_rank(char rank_char)
+{
+    return rank_char - '1';
+}
+
+inline Square str_to_square(const std::string& square_str)
+{
+    return make_square(char_to_file(square_str[0]), char_to_rank(square_str[1]));
 }
 
 #endif // ALTAIR_DEFS_HPP

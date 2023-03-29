@@ -3,6 +3,7 @@ enable_testing()
 
 set(SOURCE_FILES
     helpers.cpp  
+    move.cpp
     main.cpp
 )
 

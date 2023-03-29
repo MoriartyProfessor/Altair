@@ -5,6 +5,7 @@ set(HEADER_FILES
     defs.hpp
     move.hpp
     movegenerator.hpp
+    moveparser.hpp
     patterns.hpp
     position.cpp
     utils.hpp
@@ -14,6 +15,7 @@ set(SOURCE_FILES
     bitboard.cpp
     move.cpp
     movegenerator.cpp
+    moveparser.cpp
     patterns.hpp
     position.cpp
 )
