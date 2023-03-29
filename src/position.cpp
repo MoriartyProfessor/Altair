@@ -452,26 +452,6 @@ void Position::make_en_passant_move_(Move move)
 }
 
 
-void Position::add_piece_(Piece piece, Square square)
-{
-    BitBoards::set_square(piece_bitboards_[piece], square);
-}
-
-void Position::remove_piece_(Piece piece, Square square)
-{
-    BitBoards::clear_square(piece_bitboards_[piece], square);
-}
-
-void Position::move_piece_(Piece piece, Square from, Square to)
-{
-    BitBoard from_to_BB = EMPTY_BB;
-    /* Maybe add helper that returns bitboard with set square */
-    BitBoards::set_square(from_to_BB, from);
-    BitBoards::set_square(from_to_BB, to);
-
-    piece_bitboards_[piece] ^= from_to_BB;
-}
-
 void Position::update_castling_rights_in_make_(Move move)
 {
     if(move.piece_type() == KING)
@@ -523,4 +503,25 @@ void Position::update_moveclock_in_make_(Move move)
 {
     if(side_to_move_ == BLACK)
         ++moveclock_;
+}
+
+
+void Position::add_piece_(Piece piece, Square square)
+{
+    BitBoards::set_square(piece_bitboards_[piece], square);
+}
+
+void Position::remove_piece_(Piece piece, Square square)
+{
+    BitBoards::clear_square(piece_bitboards_[piece], square);
+}
+
+void Position::move_piece_(Piece piece, Square from, Square to)
+{
+    BitBoard from_to_BB = EMPTY_BB;
+    /* Maybe add helper that returns bitboard with set square */
+    BitBoards::set_square(from_to_BB, from);
+    BitBoards::set_square(from_to_BB, to);
+
+    piece_bitboards_[piece] ^= from_to_BB;
 }
