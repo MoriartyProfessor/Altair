@@ -79,11 +79,17 @@ struct CastlingRights
     void set_king_side(Color color) {rights_ |= (1 << (color + 2));}
     void clear_king_side(Color color) {rights_ &= ~(1 << (color + 2));}
 
+    void set_all_color_rights(Color color) {rights_ |= (0x5 << color);}
+    void clear_all_color_rights(Color color) {rights_ &= ~(0x5 << color);}
+
     void set_all_rights() {rights_ = 0xF;}
     void clear_all_rights() {rights_ = 0x0;}
 
     bool queen_side(Color color) const {return rights_ & (1 << color);}
     bool king_side(Color color) const {return rights_ & (1 << (color + 2));}
+
+    bool is_all_set() const {return rights_ == 0xF;}
+    bool is_all_clear() const {return rights_ == 0x0;}
     
     private:
     uint8_t rights_ = 0xF;
