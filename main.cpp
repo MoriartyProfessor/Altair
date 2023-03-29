@@ -9,7 +9,7 @@ int main()
 {
     std::cout << "This is Altair Chess Engine" << std::endl;
 
-    Position position("r1br2k1/pp1nqpb1/3p3p/2pP2p1/P1N5/2N1P1P1/1P2BPP1/R2Q1RK1 b Q a3 0 16");   
+    Position position;   
     std::cout << "Starting position: " << std::endl << position.pretty() << std::endl;
 
     CoordinateMoveParser move_parser(position);
