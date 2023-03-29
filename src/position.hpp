@@ -53,6 +53,11 @@ class Position
     void remove_piece_(Piece piece, Square square);
     void move_piece_(Piece piece, Square from, Square to);
 
+    void update_castling_rights_in_make_(Move move);
+    void update_en_passant_in_make_(Move move);
+    void update_halfclock_in_make_(Move move);
+    void update_moveclock_in_make_(Move move);
+
     private:
     std::array<BitBoard, N_PIECES> piece_bitboards_;
     Color side_to_move_ = WHITE;

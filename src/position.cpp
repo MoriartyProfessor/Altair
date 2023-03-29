@@ -310,20 +310,16 @@ void Position::make_move(Move move)
         make_en_passant_move_(move);
 
 
+    if(!castling_rights_.is_all_clear())
+        update_castling_rights_in_make_(move);
+
+    update_en_passant_in_make_(move);
+
+    update_halfclock_in_make_(move);
+    
+    update_moveclock_in_make_(move);
+
     side_to_move_ = toggle_color(side_to_move_);
-    
-    if(!move.is_double_pawn_push())
-        en_passant_square_ = N_SQUARES;
-
-
-    if(move.piece_type() == PAWN || move.is_capture())
-        halfclock_ = 0;
-    else
-        ++halfclock_;
-    
-    
-    if(side_to_move_ == WHITE)
-        ++moveclock_;
 }
 
 void Position::unmake_move(Move move)
@@ -427,7 +423,6 @@ void Position::make_capture_promotion_move_(Move move)
 void Position::make_double_pawn_push_move_(Move move)
 {
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
-    en_passant_square_ = square_in_between(move.from(), move.to());
 }
 
 void Position::make_king_side_castling_move_(Move move)
@@ -438,8 +433,6 @@ void Position::make_king_side_castling_move_(Move move)
         move_piece_(make_piece(side_to_move_, ROOK), SQ_H1, SQ_F1);
     else
         move_piece_(make_piece(side_to_move_, ROOK), SQ_H8, SQ_F8);
-    
-    castling_rights_.clear_king_side(side_to_move_);
 }
 
 void Position::make_queen_side_castling_move_(Move move)
@@ -450,8 +443,6 @@ void Position::make_queen_side_castling_move_(Move move)
         move_piece_(make_piece(side_to_move_, ROOK), SQ_A1, SQ_D1);
     else
         move_piece_(make_piece(side_to_move_, ROOK), SQ_A8, SQ_D8);
-    
-    castling_rights_.clear_king_side(side_to_move_);
 }
 
 void Position::make_en_passant_move_(Move move)
@@ -479,4 +470,57 @@ void Position::move_piece_(Piece piece, Square from, Square to)
     BitBoards::set_square(from_to_BB, to);
 
     piece_bitboards_[piece] ^= from_to_BB;
+}
+
+void Position::update_castling_rights_in_make_(Move move)
+{
+    if(move.piece_type() == KING)
+        castling_rights_.clear_all_color_rights(side_to_move_);
+    
+    if(move.piece_type() == ROOK)
+    {
+        if(move.from() == SQ_A1)
+            castling_rights_.clear_queen_side(WHITE);
+        else if(move.from() == SQ_A8)
+            castling_rights_.clear_queen_side(BLACK);
+        else if(move.from() == SQ_H1)
+            castling_rights_.clear_king_side(WHITE);
+        else if(move.from() == SQ_H8)
+            castling_rights_.clear_king_side(BLACK);
+    }
+
+    /* Maybe it is possible rook move case with capture case, or simplify it in some way*/ 
+    if(move.is_capture())
+    {
+        if(move.to() == SQ_A1)
+            castling_rights_.clear_queen_side(WHITE);
+        else if(move.to() == SQ_A8)
+            castling_rights_.clear_queen_side(BLACK);
+        else if(move.to() == SQ_H1)
+            castling_rights_.clear_king_side(WHITE);
+        else if(move.to() == SQ_H8)
+            castling_rights_.clear_king_side(BLACK);
+    }
+}
+
+void Position::update_en_passant_in_make_(Move move)
+{
+    if(move.is_double_pawn_push())
+        en_passant_square_ = square_in_between(move.from(), move.to());
+    else
+        en_passant_square_ = N_SQUARES;
+}
+
+void Position::update_halfclock_in_make_(Move move)
+{
+    if(move.piece_type() == PAWN || move.is_capture())
+        halfclock_ = 0;
+    else
+        ++halfclock_;
+}
+
+void Position::update_moveclock_in_make_(Move move)
+{
+    if(side_to_move_ == BLACK)
+        ++moveclock_;
 }
