@@ -92,7 +92,8 @@ struct CastlingRights
     bool is_all_clear() const {return rights_ == 0x0;}
     
     private:
-    uint8_t rights_ = 0xF;
+    /* 32-bit for now, it is more cache friendly */
+    uint32_t rights_ = 0xF;
 };
 
 inline Square north      (Square square) {return square + 8;}
