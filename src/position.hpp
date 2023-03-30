@@ -10,6 +10,13 @@
 class Position
 {
     public:
+    struct IrrecoverableState
+    {
+        CastlingRights castling_rights;
+        uint32_t halfclock;
+    };
+
+    public:
     Position();
     explicit Position(const std::string& fen);
 
@@ -19,7 +26,7 @@ class Position
     std::string pretty() const;
 
     void make_move(Move move);
-    void unmake_move(Move move);
+    void unmake_move(Move move, IrrecoverableState irrecoverable_state);
 
     BitBoard piece_bitboard(Color color, PieceType type) const;
     BitBoard occupancy_bitboard() const;
@@ -34,6 +41,12 @@ class Position
     Square en_passant_square() const;
     uint32_t halfclock() const;
     uint32_t moveclock() const;
+
+    IrrecoverableState irrecoverable_state() const;
+
+    public:
+    /* Maybe not the best place for this function */
+    static Square en_passant_capture_square(Color side_to_move, Square en_passant_square);
 
     private:
 
@@ -62,9 +75,9 @@ class Position
     void unmake_queen_side_castling_move_   (Move move);
     void unmake_en_passant_move_            (Move move);
 
-    void update_castling_rights_in_unmake_  (Move move);
+    void update_castling_rights_in_unmake_  (CastlingRights castling_rights);
     void update_en_passant_in_unmake_       (Move move);
-    void update_halfclock_in_unmake_        (Move move);
+    void update_halfclock_in_unmake_        (uint32_t halfclock);
     void update_moveclock_in_unmake_        (Move move);
 
     void add_piece_(Piece piece, Square square);
