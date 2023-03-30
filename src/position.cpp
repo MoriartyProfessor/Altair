@@ -322,9 +322,43 @@ void Position::make_move(Move move)
     side_to_move_ = toggle_color(side_to_move_);
 }
 
-void Position::unmake_move(Move move)
+void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
 {
+    side_to_move_ = toggle_color(side_to_move_);
     
+    if(move.is_quite())
+        unmake_quite_move_(move);
+
+    else if(move.is_capture() && move.is_promotion())
+        unmake_capture_promotion_move_(move);
+
+    else if(move.is_capture())
+        unmake_capture_move_(move);
+
+    else if(move.is_promotion())
+        unmake_promotion_move_(move);
+
+    else if(move.is_double_pawn_push())
+        unmake_double_pawn_push_move_(move);
+
+    else if(move.is_king_side_castle())
+        unmake_king_side_castling_move_(move);
+
+    else if(move.is_queen_side_castle())
+        unmake_queen_side_castling_move_(move);
+
+    else if(move.is_en_passant())
+        unmake_en_passant_move_(move);
+
+
+    if(!castling_rights_.is_all_set())
+        update_castling_rights_in_unmake_(irrecoverable_state.castling_rights);
+
+    update_en_passant_in_unmake_(move);
+
+    update_halfclock_in_unmake_(irrecoverable_state.halfclock);
+    
+    update_moveclock_in_unmake_(move);
 }
 
 BitBoard Position::piece_bitboard(Color color, PieceType type) const
@@ -390,6 +424,20 @@ uint32_t Position::moveclock() const
     return moveclock_;
 }
 
+Position::IrrecoverableState Position::irrecoverable_state() const
+{
+    return IrrecoverableState{castling_rights_, halfclock_};
+}
+
+Square Position::en_passant_capture_square(Color side_to_move, Square en_passant_square)
+{
+    if(side_to_move == WHITE)
+        return south(en_passant_square);
+    else
+        return north(en_passant_square);
+}
+
+
 void Position::clear_piece_bitboards_()
 {
     for(auto& piece_bitboard : piece_bitboards_)
@@ -447,7 +495,9 @@ void Position::make_queen_side_castling_move_(Move move)
 
 void Position::make_en_passant_move_(Move move)
 {
-    remove_piece_(make_piece(toggle_color(side_to_move_), move.capture_piece_type()), en_passant_square_);
+    Square capture_square = en_passant_capture_square(side_to_move_, en_passant_square_);
+
+    remove_piece_(make_piece(toggle_color(side_to_move_), PAWN), capture_square);
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
 }
 
@@ -504,6 +554,89 @@ void Position::update_moveclock_in_make_(Move move)
     if(side_to_move_ == BLACK)
         ++moveclock_;
 }
+
+void Position::unmake_quite_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
+}
+
+void Position::unmake_capture_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
+    add_piece_(make_piece(toggle_color(side_to_move_), move.capture_piece_type()), move.to());
+}
+
+void Position::unmake_promotion_move_(Move move)
+{
+    remove_piece_(make_piece(side_to_move_, move.promotion_piece_type()), move.to());
+    add_piece_(make_piece(side_to_move_, move.piece_type()), move.from());
+}
+
+void Position::unmake_capture_promotion_move_(Move move)
+{
+    remove_piece_(make_piece(side_to_move_, move.promotion_piece_type()), move.to());
+    add_piece_(make_piece(side_to_move_, move.piece_type()), move.from());
+    add_piece_(make_piece(toggle_color(side_to_move_), move.capture_piece_type()), move.to());
+}
+
+void Position::unmake_double_pawn_push_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
+}
+
+void Position::unmake_king_side_castling_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
+
+    if(side_to_move_ == WHITE)
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_F1, SQ_H1);
+    else
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_F8, SQ_H8);
+}
+
+void Position::unmake_queen_side_castling_move_(Move move)
+{
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
+
+    if(side_to_move_ == WHITE)
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_D1, SQ_A1);
+    else
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_D8, SQ_A8);
+}
+
+void Position::unmake_en_passant_move_(Move move)
+{
+    Square capture_square = en_passant_capture_square(side_to_move_, move.to());
+
+    add_piece_(make_piece(toggle_color(side_to_move_), PAWN), capture_square);
+    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
+}
+
+
+void Position::update_castling_rights_in_unmake_(CastlingRights castling_rights)
+{
+    castling_rights_ = castling_rights;
+}
+
+void Position::update_en_passant_in_unmake_(Move move)
+{
+    if(move.is_en_passant())
+        en_passant_square_ = move.to();
+    else
+        en_passant_square_ = N_SQUARES;
+}
+
+void Position::update_halfclock_in_unmake_(uint32_t halfclock)
+{
+    halfclock_ = halfclock;
+}
+
+void Position::update_moveclock_in_unmake_(Move move)
+{
+    if(side_to_move_ == WHITE)
+        --moveclock_;
+}
+
 
 
 void Position::add_piece_(Piece piece, Square square)
