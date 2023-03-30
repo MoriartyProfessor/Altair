@@ -105,7 +105,7 @@ void Move::set_en_passant()         { set_flag(EN_PASSANT); }
 
 void Move::set_flag(FlagBit flag)
 {
-    uint32_t mask = 0x3F << 21;
+    uint32_t mask = 0x7F << 21;
     move_ &= ~mask;
     move_ |= mask & (1 << (21 + flag));
 }

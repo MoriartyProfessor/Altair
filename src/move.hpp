@@ -18,6 +18,7 @@ class Move
     bool operator== (Move other) const;
     bool operator!= (Move other) const;
 
+    /* Make these inline */
     Square from() const;
     Square to() const;
     PieceType piece_type() const;
