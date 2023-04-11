@@ -67,4 +67,16 @@ constexpr BitBoard RANK_6_BB = BitBoards::rank_filled_in(RANK_6);
 constexpr BitBoard RANK_7_BB = BitBoards::rank_filled_in(RANK_7);
 constexpr BitBoard RANK_8_BB = BitBoards::rank_filled_in(RANK_8);
 
+namespace BitBoards
+{
+    inline BitBoard north      (BitBoard bitboard) {return (bitboard << 8);}
+    inline BitBoard north_west (BitBoard bitboard) {return (bitboard << 7) & (~FILE_H_BB);}
+    inline BitBoard west       (BitBoard bitboard) {return (bitboard >> 1) & (~FILE_H_BB);}
+    inline BitBoard south_west (BitBoard bitboard) {return (bitboard >> 9) & (~FILE_H_BB);}
+    inline BitBoard south      (BitBoard bitboard) {return (bitboard >> 8);}
+    inline BitBoard south_east (BitBoard bitboard) {return (bitboard >> 7) & (~FILE_A_BB);}
+    inline BitBoard east       (BitBoard bitboard) {return (bitboard << 1) & (~FILE_A_BB);}
+    inline BitBoard north_east (BitBoard bitboard) {return (bitboard << 9) & (~FILE_A_BB);}
+}
+
 #endif // ALTAIR_BITBOARD_HPP
