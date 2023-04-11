@@ -7,6 +7,7 @@ set(HEADER_FILES
     movegenerator.hpp
     moveparser.hpp
     patterns.hpp
+    perft.hpp
     position.cpp
     utils.hpp
 )
@@ -17,6 +18,7 @@ set(SOURCE_FILES
     movegenerator.cpp
     moveparser.cpp
     patterns.cpp
+    perft.cpp
     position.cpp
 )
 
