@@ -16,7 +16,7 @@ set(SOURCE_FILES
     move.cpp
     movegenerator.cpp
     moveparser.cpp
-    patterns.hpp
+    patterns.cpp
     position.cpp
 )
 
