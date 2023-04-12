@@ -9,6 +9,7 @@ set(HEADER_FILES
     patterns.hpp
     perft.hpp
     position.cpp
+    rays.hpp
     utils.hpp
 )
 
@@ -20,6 +21,7 @@ set(SOURCE_FILES
     patterns.cpp
     perft.cpp
     position.cpp
+    rays.cpp
 )
 
 add_library(${CMAKE_PROJECT_NAME}_lib STATIC
