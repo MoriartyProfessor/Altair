@@ -49,6 +49,9 @@ constexpr BitBoard UNIVERSE_BB = ~EMPTY_BB;
 constexpr BitBoard LIGHT_SQUARES_BB = 0x55AA55AA55AA55AAULL;
 constexpr BitBoard DARK_SQUARES_BB = ~LIGHT_SQUARES_BB;
 
+constexpr BitBoard MAIN_DIAGONAL_BB = 0x8040201008040201ULL;
+constexpr BitBoard MAIN_ANTIDIAGONAL_BB = 0x0102040810204080ULL;
+
 constexpr BitBoard FILE_A_BB = BitBoards::file_filled_in(FILE_A);
 constexpr BitBoard FILE_B_BB = BitBoards::file_filled_in(FILE_B);
 constexpr BitBoard FILE_C_BB = BitBoards::file_filled_in(FILE_C);
