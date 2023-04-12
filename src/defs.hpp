@@ -12,6 +12,7 @@ using Color = uint32_t;
 using Square = int32_t;
 using File = uint32_t;
 using Rank = uint32_t;
+using Direction = uint32_t;
 
 enum PieceTypes : uint32_t 
 {
@@ -72,6 +73,20 @@ enum Ranks : uint32_t
     N_RANKS
 };
 
+enum Directions : uint32_t
+{
+    NORTH,
+    NORTH_WEST,
+    WEST,
+    SOUTH_WEST,
+    SOUTH,
+    SOUTH_EAST,
+    EAST,
+    NORTH_EAST,
+
+    N_DIRECTIONS
+};
+
 struct CastlingRights
 {
     void set_queen_side(Color color) {rights_ |= (1 << color);}
@@ -96,6 +111,8 @@ struct CastlingRights
     uint32_t rights_ = 0xF;
 };
 
+
+/* Maybe create enum for each direction and use single function */
 inline Square north      (Square square) {return square + 8;}
 inline Square north_west (Square square) {return square + 7;}
 inline Square west       (Square square) {return square - 1;}
