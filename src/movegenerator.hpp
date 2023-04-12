@@ -8,6 +8,7 @@
 
 class MoveGenerator
 {
+    public:
     explicit MoveGenerator(const Position& position);
 
     void set_position(const Position& position);

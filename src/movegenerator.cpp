@@ -38,6 +38,7 @@ void MoveGenerator::gen_legal_moves_()
 void MoveGenerator::gen_pseudolegal_moves_()
 {
     gen_knight_moves_();
+    gen_king_moves_();
 }
 
 
@@ -54,7 +55,14 @@ void MoveGenerator::gen_knight_moves_()
 
 void MoveGenerator::gen_king_moves_()
 {
+    /* Maybe generalize with other gen functions */
+    BitBoard king_bitboard = position_.piece_bitboard(position_.side_to_move(), KING);
 
+    for(Square king = pop_LSB(king_bitboard); king != N_SQUARES; king = pop_LSB(king_bitboard))
+    {
+        BitBoard king_attacks = Patterns::get_king_attacks(king) & ~position_.occupancy_bitboard(position_.side_to_move());
+        add_piece_moves_(KING, king, king_attacks);
+    }
 }
 
 
