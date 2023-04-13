@@ -61,74 +61,74 @@ TEST(lowlevel_utils, pop_LSB)
 
 TEST(directions, north) 
 {
-    EXPECT_EQ(north(SQ_A1), SQ_A2);
-    EXPECT_EQ(north(SQ_B3), SQ_B4);
-    EXPECT_EQ(north(SQ_C6), SQ_C7);
-    EXPECT_EQ(north(SQ_D2), SQ_D3);
+    EXPECT_EQ(step<NORTH>(SQ_A1), SQ_A2);
+    EXPECT_EQ(step<NORTH>(SQ_B3), SQ_B4);
+    EXPECT_EQ(step<NORTH>(SQ_C6), SQ_C7);
+    EXPECT_EQ(step<NORTH>(SQ_D2), SQ_D3);
 }
 
 TEST(directions, north_stepped) 
 {
-    EXPECT_EQ(north(SQ_A1, 1), SQ_A2);
-    EXPECT_EQ(north(SQ_B3, 2), SQ_B5);
-    EXPECT_EQ(north(SQ_C4, 3), SQ_C7);
-    EXPECT_EQ(north(SQ_D2, 4), SQ_D6);
+    EXPECT_EQ(step<NORTH>(SQ_A1, 1), SQ_A2);
+    EXPECT_EQ(step<NORTH>(SQ_B3, 2), SQ_B5);
+    EXPECT_EQ(step<NORTH>(SQ_C4, 3), SQ_C7);
+    EXPECT_EQ(step<NORTH>(SQ_D2, 4), SQ_D6);
 }
 
 TEST(directions, north_west) 
 {
-    EXPECT_EQ(north_west(SQ_H5), SQ_G6);
-    EXPECT_EQ(north_west(SQ_B3), SQ_A4);
-    EXPECT_EQ(north_west(SQ_C6), SQ_B7);
-    EXPECT_EQ(north_west(SQ_D2), SQ_C3);
+    EXPECT_EQ(step<NORTH_WEST>(SQ_H5), SQ_G6);
+    EXPECT_EQ(step<NORTH_WEST>(SQ_B3), SQ_A4);
+    EXPECT_EQ(step<NORTH_WEST>(SQ_C6), SQ_B7);
+    EXPECT_EQ(step<NORTH_WEST>(SQ_D2), SQ_C3);
 }
 
 TEST(directions, west) 
 {
-    EXPECT_EQ(west(SQ_H1), SQ_G1);
-    EXPECT_EQ(west(SQ_B3), SQ_A3);
-    EXPECT_EQ(west(SQ_C6), SQ_B6);
-    EXPECT_EQ(west(SQ_D2), SQ_C2);
+    EXPECT_EQ(step<WEST>(SQ_H1), SQ_G1);
+    EXPECT_EQ(step<WEST>(SQ_B3), SQ_A3);
+    EXPECT_EQ(step<WEST>(SQ_C6), SQ_B6);
+    EXPECT_EQ(step<WEST>(SQ_D2), SQ_C2);
 }
 
 TEST(directions, south_west) 
 {
-    EXPECT_EQ(south_west(SQ_H5), SQ_G4);
-    EXPECT_EQ(south_west(SQ_B3), SQ_A2);
-    EXPECT_EQ(south_west(SQ_C6), SQ_B5);
-    EXPECT_EQ(south_west(SQ_D2), SQ_C1);
+    EXPECT_EQ(step<SOUTH_WEST>(SQ_H5), SQ_G4);
+    EXPECT_EQ(step<SOUTH_WEST>(SQ_B3), SQ_A2);
+    EXPECT_EQ(step<SOUTH_WEST>(SQ_C6), SQ_B5);
+    EXPECT_EQ(step<SOUTH_WEST>(SQ_D2), SQ_C1);
 }
 
 TEST(directions, south) 
 {
-    EXPECT_EQ(south(SQ_A5), SQ_A4);
-    EXPECT_EQ(south(SQ_B3), SQ_B2);
-    EXPECT_EQ(south(SQ_C6), SQ_C5);
-    EXPECT_EQ(south(SQ_D2), SQ_D1);
+    EXPECT_EQ(step<SOUTH>(SQ_A5), SQ_A4);
+    EXPECT_EQ(step<SOUTH>(SQ_B3), SQ_B2);
+    EXPECT_EQ(step<SOUTH>(SQ_C6), SQ_C5);
+    EXPECT_EQ(step<SOUTH>(SQ_D2), SQ_D1);
 }
 
 TEST(directions, south_east) 
 {
-    EXPECT_EQ(south_east(SQ_A5), SQ_B4);
-    EXPECT_EQ(south_east(SQ_B3), SQ_C2);
-    EXPECT_EQ(south_east(SQ_C6), SQ_D5);
-    EXPECT_EQ(south_east(SQ_D2), SQ_E1);
+    EXPECT_EQ(step<SOUTH_EAST>(SQ_A5), SQ_B4);
+    EXPECT_EQ(step<SOUTH_EAST>(SQ_B3), SQ_C2);
+    EXPECT_EQ(step<SOUTH_EAST>(SQ_C6), SQ_D5);
+    EXPECT_EQ(step<SOUTH_EAST>(SQ_D2), SQ_E1);
 }
 
 TEST(directions, east)
 {
-    EXPECT_EQ(east(SQ_A5), SQ_B5);
-    EXPECT_EQ(east(SQ_B3), SQ_C3);
-    EXPECT_EQ(east(SQ_C6), SQ_D6);
-    EXPECT_EQ(east(SQ_D2), SQ_E2);
+    EXPECT_EQ(step<EAST>(SQ_A5), SQ_B5);
+    EXPECT_EQ(step<EAST>(SQ_B3), SQ_C3);
+    EXPECT_EQ(step<EAST>(SQ_C6), SQ_D6);
+    EXPECT_EQ(step<EAST>(SQ_D2), SQ_E2);
 }
 
 TEST(directions, north_east) 
 {
-    EXPECT_EQ(north_east(SQ_A3), SQ_B4);
-    EXPECT_EQ(north_east(SQ_B5), SQ_C6);
-    EXPECT_EQ(north_east(SQ_C6), SQ_D7);
-    EXPECT_EQ(north_east(SQ_D2), SQ_E3);
+    EXPECT_EQ(step<NORTH_EAST>(SQ_A3), SQ_B4);
+    EXPECT_EQ(step<NORTH_EAST>(SQ_B5), SQ_C6);
+    EXPECT_EQ(step<NORTH_EAST>(SQ_C6), SQ_D7);
+    EXPECT_EQ(step<NORTH_EAST>(SQ_D2), SQ_E3);
 }
 
 

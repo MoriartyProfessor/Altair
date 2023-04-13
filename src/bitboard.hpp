@@ -72,14 +72,15 @@ constexpr BitBoard RANK_8_BB = BitBoards::rank_filled_in(RANK_8);
 
 namespace BitBoards
 {
-    inline BitBoard north      (BitBoard bitboard) {return (bitboard << 8);}
-    inline BitBoard north_west (BitBoard bitboard) {return (bitboard << 7) & (~FILE_H_BB);}
-    inline BitBoard west       (BitBoard bitboard) {return (bitboard >> 1) & (~FILE_H_BB);}
-    inline BitBoard south_west (BitBoard bitboard) {return (bitboard >> 9) & (~FILE_H_BB);}
-    inline BitBoard south      (BitBoard bitboard) {return (bitboard >> 8);}
-    inline BitBoard south_east (BitBoard bitboard) {return (bitboard >> 7) & (~FILE_A_BB);}
-    inline BitBoard east       (BitBoard bitboard) {return (bitboard << 1) & (~FILE_A_BB);}
-    inline BitBoard north_east (BitBoard bitboard) {return (bitboard << 9) & (~FILE_A_BB);}
+    template<Direction direction> inline BitBoard step(BitBoard bitboard) { static_assert(direction < N_DIRECTIONS); return N_SQUARES;}
+    template<> inline BitBoard step<NORTH>      (BitBoard bitboard) {return (bitboard << 8);}
+    template<> inline BitBoard step<NORTH_WEST> (BitBoard bitboard) {return (bitboard << 7) & (~FILE_H_BB);}
+    template<> inline BitBoard step<WEST>       (BitBoard bitboard) {return (bitboard >> 1) & (~FILE_H_BB);}
+    template<> inline BitBoard step<SOUTH_WEST> (BitBoard bitboard) {return (bitboard >> 9) & (~FILE_H_BB);}
+    template<> inline BitBoard step<SOUTH>      (BitBoard bitboard) {return (bitboard >> 8);}
+    template<> inline BitBoard step<SOUTH_EAST> (BitBoard bitboard) {return (bitboard >> 7) & (~FILE_A_BB);}
+    template<> inline BitBoard step<EAST>       (BitBoard bitboard) {return (bitboard << 1) & (~FILE_A_BB);}
+    template<> inline BitBoard step<NORTH_EAST> (BitBoard bitboard) {return (bitboard << 9) & (~FILE_A_BB);}
 }
 
 #endif // ALTAIR_BITBOARD_HPP
