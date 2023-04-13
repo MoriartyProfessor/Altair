@@ -432,9 +432,9 @@ Position::IrrecoverableState Position::irrecoverable_state() const
 Square Position::en_passant_capture_square(Color side_to_move, Square en_passant_square)
 {
     if(side_to_move == WHITE)
-        return south(en_passant_square);
+        return step<SOUTH>(en_passant_square);
     else
-        return north(en_passant_square);
+        return step<NORTH>(en_passant_square);
 }
 
 
@@ -633,7 +633,7 @@ void Position::update_halfclock_in_unmake_(uint32_t halfclock)
 
 void Position::update_moveclock_in_unmake_(Move move)
 {
-    if(side_to_move_ == WHITE)
+    if(side_to_move_ == BLACK)
         --moveclock_;
 }
 

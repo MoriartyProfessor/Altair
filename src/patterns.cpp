@@ -28,14 +28,14 @@ namespace Patterns
         BitBoard king_bitboard = BitBoards::square_set_in(square);
         BitBoard king_attacks = EMPTY_BB;
 
-        king_attacks |= BitBoards::north       (king_bitboard);
-        king_attacks |= BitBoards::north_west  (king_bitboard);
-        king_attacks |= BitBoards::west        (king_bitboard);
-        king_attacks |= BitBoards::south_west  (king_bitboard);
-        king_attacks |= BitBoards::south       (king_bitboard);
-        king_attacks |= BitBoards::south_east  (king_bitboard);
-        king_attacks |= BitBoards::east        (king_bitboard);
-        king_attacks |= BitBoards::north_east  (king_bitboard);
+        king_attacks |= BitBoards::step<NORTH>       (king_bitboard);
+        king_attacks |= BitBoards::step<NORTH_WEST>  (king_bitboard);
+        king_attacks |= BitBoards::step<WEST>        (king_bitboard);
+        king_attacks |= BitBoards::step<SOUTH_WEST>  (king_bitboard);
+        king_attacks |= BitBoards::step<SOUTH>       (king_bitboard);
+        king_attacks |= BitBoards::step<SOUTH_EAST>  (king_bitboard);
+        king_attacks |= BitBoards::step<EAST>        (king_bitboard);
+        king_attacks |= BitBoards::step<NORTH_EAST>  (king_bitboard);
 
         return king_attacks;
     }

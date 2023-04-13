@@ -112,24 +112,26 @@ struct CastlingRights
 };
 
 
-/* Maybe create enum for each direction and use single function */
-inline Square north      (Square square) {return square + 8;}
-inline Square north_west (Square square) {return square + 7;}
-inline Square west       (Square square) {return square - 1;}
-inline Square south_west (Square square) {return square - 9;}
-inline Square south      (Square square) {return square - 8;}
-inline Square south_east (Square square) {return square - 7;}
-inline Square east       (Square square) {return square + 1;}
-inline Square north_east (Square square) {return square + 9;}
+template<Direction direction> inline Square step(Square square) { static_assert(direction < N_DIRECTIONS); return N_SQUARES;} // returning to shut warnings}
+template<> inline Square step<NORTH>        (Square square) { return square + 8; }
+template<> inline Square step<NORTH_WEST>   (Square square) { return square + 7; }
+template<> inline Square step<WEST>         (Square square) { return square - 1; }
+template<> inline Square step<SOUTH_WEST>   (Square square) { return square - 9; }
+template<> inline Square step<SOUTH>        (Square square) { return square - 8; }
+template<> inline Square step<SOUTH_EAST>   (Square square) { return square - 7; }
+template<> inline Square step<EAST>         (Square square) { return square + 1; }
+template<> inline Square step<NORTH_EAST>   (Square square) { return square + 9; }
 
-inline Square north      (Square square, uint32_t step) {return square + 8 * step;}
-inline Square north_west (Square square, uint32_t step) {return square + 7 * step;}
-inline Square west       (Square square, uint32_t step) {return square - 1 * step;}
-inline Square south_west (Square square, uint32_t step) {return square - 9 * step;}
-inline Square south      (Square square, uint32_t step) {return square - 8 * step;}
-inline Square south_east (Square square, uint32_t step) {return square - 7 * step;}
-inline Square east       (Square square, uint32_t step) {return square + 1 * step;}
-inline Square north_east (Square square, uint32_t step) {return square + 9 * step;}
+template<Direction direction> inline Square step(Square square, uint32_t n) { static_assert(direction < N_DIRECTIONS); return N_SQUARES;}
+template<> inline Square step<NORTH>        (Square square, uint32_t n) { return square + 8 * n; }
+template<> inline Square step<NORTH_WEST>   (Square square, uint32_t n) { return square + 7 * n; }
+template<> inline Square step<WEST>         (Square square, uint32_t n) { return square - 1 * n; }
+template<> inline Square step<SOUTH_WEST>   (Square square, uint32_t n) { return square - 9 * n; }
+template<> inline Square step<SOUTH>        (Square square, uint32_t n) { return square - 8 * n; }
+template<> inline Square step<SOUTH_EAST>   (Square square, uint32_t n) { return square - 7 * n; }
+template<> inline Square step<EAST>         (Square square, uint32_t n) { return square + 1 * n; }
+template<> inline Square step<NORTH_EAST>   (Square square, uint32_t n) { return square + 9 * n; }
+
 
 inline File get_file(Square square)
 {
