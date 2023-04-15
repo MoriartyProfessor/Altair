@@ -1,8 +1,37 @@
 #include "patterns.hpp"
 #include "bitboard.hpp"
+#include "rays.hpp"
 
 namespace Patterns
 {
+    BitBoard bishop_occupancy_masks_[N_SQUARES];
+    BitBoard rook_occupancy_masks_[N_SQUARES];
+
+    void init_occupancy_masks_()
+    {
+        BitBoard rim_BB = FILE_A_BB | FILE_H_BB | RANK_1_BB | RANK_8_BB;
+
+        for(Square square = SQ_A1; square != N_SQUARES; ++square)
+        {
+            BitBoard bishop_occupancy_mask = EMPTY_BB;
+            bishop_occupancy_mask = (Rays::get(NORTH_WEST, square) | 
+                                     Rays::get(SOUTH_WEST, square) | 
+                                     Rays::get(SOUTH_EAST, square) | 
+                                     Rays::get(NORTH_EAST, square)) &
+                                     ~rim_BB;
+
+            bishop_occupancy_masks_[square] = bishop_occupancy_mask;
+
+            BitBoard rook_occupancy_mask = EMPTY_BB;
+            rook_occupancy_mask =   (Rays::get(NORTH, square) & ~RANK_8_BB) |
+                                    (Rays::get(WEST,  square) & ~FILE_A_BB) |
+                                    (Rays::get(SOUTH, square) & ~RANK_1_BB) |
+                                    (Rays::get(EAST,  square) & ~FILE_H_BB) ;
+
+            rook_occupancy_masks_[square] = rook_occupancy_mask;
+        }
+    }
+
     BitBoard knight_attacks_[N_SQUARES];
     BitBoard king_attacks_[N_SQUARES];
 
@@ -61,6 +90,8 @@ namespace Patterns
 
     void init()
     {
+        init_occupancy_masks_();
+        
         init_knight_attacks_();
         init_king_attacks_();
     }
