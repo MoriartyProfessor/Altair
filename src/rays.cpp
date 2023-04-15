@@ -60,7 +60,7 @@ namespace Rays
 
     void init()
     {
-        BitBoard north_BB = FILE_A_BB;
+        BitBoard north_BB = FILE_A_BB << 8;
         BitBoard south_BB = FILE_H_BB >> 8;
 
         for(Square square = SQ_A1; square < N_SQUARES; ++square)
