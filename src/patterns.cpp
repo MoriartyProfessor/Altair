@@ -1,37 +1,66 @@
 #include "patterns.hpp"
+#include "utils.hpp"
 #include "bitboard.hpp"
 #include "rays.hpp"
 
-namespace Patterns
+#include <iostream>
+
+namespace Patterns::Magic
 {
-    BitBoard bishop_occupancy_masks_[N_SQUARES];
-    BitBoard rook_occupancy_masks_[N_SQUARES];
-
-    void init_occupancy_masks_()
+    struct Info
     {
-        BitBoard rim_BB = FILE_A_BB | FILE_H_BB | RANK_1_BB | RANK_8_BB;
+        BitBoard* attack_table;
+        BitBoard occupancy_mask;
+        uint64_t magic;
+        uint32_t bit_index;
+    };
 
-        for(Square square = SQ_A1; square != N_SQUARES; ++square)
+    Info bishop_info_table_[N_SQUARES];
+    Info rook_info_table_[N_SQUARES];
+
+    BitBoard gen_bishop_occupancy_mask_(Square square)
+    {
+        constexpr BitBoard rim_BB = FILE_A_BB | FILE_H_BB | RANK_1_BB | RANK_8_BB;
+
+        BitBoard bishop_occupancy_mask =   (Rays::get(NORTH_WEST, square) | 
+                                            Rays::get(SOUTH_WEST, square) | 
+                                            Rays::get(SOUTH_EAST, square) | 
+                                            Rays::get(NORTH_EAST, square)) &
+                                            ~rim_BB;
+        return bishop_occupancy_mask;
+    }
+
+    BitBoard gen_rook_occupancy_mask_(Square square)
+    {
+        BitBoard rook_occupancy_mask =   (Rays::get(NORTH, square) & ~RANK_8_BB) |
+                                         (Rays::get(WEST,  square) & ~FILE_A_BB) |
+                                         (Rays::get(SOUTH, square) & ~RANK_1_BB) |
+                                         (Rays::get(EAST,  square) & ~FILE_H_BB) ;
+        return rook_occupancy_mask;
+    }
+
+    void init_info_tables_()
+    {
+        for(Square square = SQ_A1; square < N_SQUARES; ++square)
         {
-            BitBoard bishop_occupancy_mask = EMPTY_BB;
-            bishop_occupancy_mask = (Rays::get(NORTH_WEST, square) | 
-                                     Rays::get(SOUTH_WEST, square) | 
-                                     Rays::get(SOUTH_EAST, square) | 
-                                     Rays::get(NORTH_EAST, square)) &
-                                     ~rim_BB;
+            Magic::Info& bishop_info = bishop_info_table_[square];
+            bishop_info.occupancy_mask = gen_bishop_occupancy_mask_(square);
+            bishop_info.bit_index = popcount(bishop_info.occupancy_mask);
 
-            bishop_occupancy_masks_[square] = bishop_occupancy_mask;
-
-            BitBoard rook_occupancy_mask = EMPTY_BB;
-            rook_occupancy_mask =   (Rays::get(NORTH, square) & ~RANK_8_BB) |
-                                    (Rays::get(WEST,  square) & ~FILE_A_BB) |
-                                    (Rays::get(SOUTH, square) & ~RANK_1_BB) |
-                                    (Rays::get(EAST,  square) & ~FILE_H_BB) ;
-
-            rook_occupancy_masks_[square] = rook_occupancy_mask;
+            Magic::Info& rook_info = rook_info_table_[square];
+            rook_info.occupancy_mask = gen_rook_occupancy_mask_(square);
+            rook_info.bit_index = popcount(rook_info.occupancy_mask);
         }
     }
 
+    void init_()
+    {
+        init_info_tables_();
+    }
+}
+
+namespace Patterns
+{
     BitBoard knight_attacks_[N_SQUARES];
     BitBoard king_attacks_[N_SQUARES];
 
@@ -90,7 +119,7 @@ namespace Patterns
 
     void init()
     {
-        init_occupancy_masks_();
+        Magic::init_();
         
         init_knight_attacks_();
         init_king_attacks_();
