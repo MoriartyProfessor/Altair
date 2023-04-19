@@ -168,6 +168,11 @@ inline PieceType get_type(Piece piece)
     return piece >> 1;
 }
 
+constexpr bool is_direction_positive(Direction direction)
+{
+    return direction == EAST || direction == NORTH || direction == NORTH_EAST || direction == NORTH_WEST;
+}
+
 inline Square square_in_between(Square square_1, Square square_2)
 {
     return square_1 + ((square_2 - square_1)/2);
