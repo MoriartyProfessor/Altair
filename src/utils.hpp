@@ -28,6 +28,18 @@ inline uint32_t LSB(uint64_t x)
 #endif
 }
 
+inline uint32_t MSB(uint64_t x)
+{
+#if __GNUC__
+    return 63 - __builtin_clzll(x);
+#else
+    /* Replace with something efficient in the future */
+    uint32_t MSB;
+    while (x >>= 1) {MSB++;}
+    return MSB;
+#endif
+}
+
 inline uint32_t pop_LSB(uint64_t& x)
 {
 #if __GNUC__
