@@ -168,7 +168,7 @@ namespace Patterns::Magic
 
     void init_attack_table_()
     {
-        for(Square square = SQ_C4; square == SQ_C4; ++square)
+        for(Square square = SQ_A1; square < N_SQUARES; ++square)
         {
             /* Refactor, combine loops and simplify */
             Info& bishop_info = bishop_info_table_[square];

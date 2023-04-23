@@ -9,27 +9,30 @@
 class MoveGenerator
 {
     public:
-    explicit MoveGenerator(const Position& position);
+    enum class Config
+    {
+        GENERATE_ALL,
+        GENERATE_TACTICAL
+    };
 
-    void set_position(const Position& position);
-
-    std::vector<Move> legal_moves();
-    std::vector<Move> pseudolegal_moves();
-
-    private:
-    Position position_;
-    std::vector<Move> legal_moves_;
-    std::vector<Move> pseudolegal_moves_;
+    std::vector<Move> all_moves(const Position& position);
+    std::vector<Move> tactical_moves(const Position& position);
 
     private:
-    void gen_legal_moves_();
-    void gen_pseudolegal_moves_();
+    std::vector<Move> all_moves_;
+    std::vector<Move> tactical_moves_;
+
+    private:
+    template<Config config>
+    void gen_moves_(const Position& position);
 
     /* Convenience functions for generating moves for individual pieces and special cases */
-    void gen_knight_moves_();
-    void gen_king_moves_();
+    
+    template<Config config, PieceType piece_type>
+    void gen_piece_moves_(const Position& position);
 
-    void add_piece_moves_(PieceType type, Square from, BitBoard attacks);
+    template<Config config, PieceType piece_type>
+    void add_piece_moves_(const Position& position, Square from, BitBoard attacks);
 };
 
 #endif // ALTAIR_MOVEGENERATOR_HPP
