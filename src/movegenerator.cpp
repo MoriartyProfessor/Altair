@@ -74,9 +74,9 @@ void MoveGenerator::add_piece_moves_(const Position& position, Square from, BitB
             move.set_quite();
         }
 
-        if(config == Config::GENERATE_ALL)
+        if constexpr (config == Config::GENERATE_ALL)
             all_moves_.push_back(move);
-        if(config == Config::GENERATE_TACTICAL)
+        else if(config == Config::GENERATE_TACTICAL)
             tactical_moves_.push_back(move);
     }
 }
