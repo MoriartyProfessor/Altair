@@ -14,7 +14,9 @@ using File = uint32_t;
 using Rank = uint32_t;
 using Direction = uint32_t;
 
-enum PieceTypes : uint32_t 
+const uint32_t MAX_DEPTH = 64;
+
+enum PieceTypes : PieceType 
 {
     PAWN,
     KNIGHT,
@@ -26,7 +28,7 @@ enum PieceTypes : uint32_t
     N_PIECE_TYPES
 };
 
-enum Pieces : uint32_t 
+enum Pieces : Piece 
 {
     WH_PAWN,    BL_PAWN,
     WH_KNIGHT,  BL_KNIGHT,
@@ -37,7 +39,7 @@ enum Pieces : uint32_t
     N_PIECES
 };
 
-enum Colors : uint32_t 
+enum Colors : Color 
 {
     WHITE,
     BLACK,
@@ -45,7 +47,7 @@ enum Colors : uint32_t
     N_COLORS
 };
 
-enum Squares : uint32_t
+enum Squares : Square
 {
     SQ_A1, SQ_B1, SQ_C1, SQ_D1, SQ_E1, SQ_F1, SQ_G1, SQ_H1,
     SQ_A2, SQ_B2, SQ_C2, SQ_D2, SQ_E2, SQ_F2, SQ_G2, SQ_H2,
@@ -59,21 +61,21 @@ enum Squares : uint32_t
     N_SQUARES
 };
 
-enum Files : uint32_t
+enum Files : File
 {
     FILE_A, FILE_B, FILE_C, FILE_D, FILE_E, FILE_F, FILE_G, FILE_H,
 
     N_FILES
 };
 
-enum Ranks : uint32_t
+enum Ranks : Rank
 {
     RANK_1, RANK_2, RANK_3, RANK_4, RANK_5, RANK_6, RANK_7, RANK_8,
 
     N_RANKS
 };
 
-enum Directions : uint32_t
+enum Directions : Direction
 {
     NORTH,
     NORTH_WEST,
