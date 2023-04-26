@@ -237,3 +237,15 @@ TEST(square_in_between, square_in_between)
     EXPECT_EQ(square_in_between(SQ_A3, SQ_A1), SQ_A2);
     EXPECT_EQ(square_in_between(SQ_B6, SQ_B4), SQ_B5);
 }
+
+TEST(invert_direction, invert_direction)
+{
+    EXPECT_EQ(invert_direction(NORTH        ), SOUTH        );
+    EXPECT_EQ(invert_direction(NORTH_WEST   ), SOUTH_EAST   );
+    EXPECT_EQ(invert_direction(WEST         ), EAST         );
+    EXPECT_EQ(invert_direction(SOUTH_WEST   ), NORTH_EAST   );
+    EXPECT_EQ(invert_direction(SOUTH        ), NORTH        );
+    EXPECT_EQ(invert_direction(SOUTH_EAST   ), NORTH_WEST   );
+    EXPECT_EQ(invert_direction(EAST         ), WEST         );
+    EXPECT_EQ(invert_direction(NORTH_EAST   ), SOUTH_WEST   );
+}

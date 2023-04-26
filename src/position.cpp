@@ -395,7 +395,7 @@ Piece Position::piece_occupying(Square square) const
 
 bool Position::is_in_check(Color color) const
 {
-    
+    return false;
 }
 
 
