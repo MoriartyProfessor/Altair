@@ -180,6 +180,11 @@ inline Square square_in_between(Square square_1, Square square_2)
     return square_1 + ((square_2 - square_1)/2);
 }
 
+inline Direction invert_direction(Direction direction)
+{
+    return (direction + 4) % N_DIRECTIONS;
+}
+
 inline char piece_to_char(Piece piece)
 {
     if(piece == N_PIECES)
