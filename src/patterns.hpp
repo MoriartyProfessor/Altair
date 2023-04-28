@@ -6,7 +6,7 @@
 namespace Patterns
 {
     void init();
-    /* Think about pawn pattern interfaces later */ 
+    BitBoard get_pawn_attacks(Square square, Color color);
     BitBoard get_knight_attacks(Square square);
     BitBoard get_bishop_attacks(Square square, BitBoard occupancy_bitboard);
     BitBoard get_rook_attacks(Square square, BitBoard occupancy_bitboard);
