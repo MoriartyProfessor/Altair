@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "bitboard.hpp"
 
 std::string BitBoards::prettify(BitBoard bitboard)
@@ -26,4 +24,25 @@ std::string BitBoards::prettify(BitBoard bitboard)
     pretty_BB += "\n\n  ABCDEFGH \n";
 
     return pretty_BB;
+}
+
+BitBoard BitBoards::from_string(const std::string& str)
+{
+    BitBoard bitboard = EMPTY_BB;
+    Square be_square = SQ_A1;
+    for(auto ch : str)
+    {
+        if(ch == 'x')
+        {
+            Square le_square = make_square(get_file(be_square), N_RANKS - get_rank(be_square) - 1);
+            BitBoards::set_square(bitboard, le_square);
+        }
+        if(ch == '.' || ch == 'x')
+        {
+            ++be_square;
+            if(be_square == N_SQUARES)
+                break;
+        }
+    }
+    return bitboard;
 }

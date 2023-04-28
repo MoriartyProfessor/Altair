@@ -2,8 +2,10 @@ include(GoogleTest)
 enable_testing()
 
 set(SOURCE_FILES
+    bitboard.cpp
     helpers.cpp  
     move.cpp
+    position.cpp
     main.cpp
 )
 
