@@ -172,6 +172,22 @@ TEST(conversions, get_rank)
     EXPECT_EQ(get_rank(SQ_E7), RANK_7);
 }
 
+TEST(conversions, get_color)
+{
+    EXPECT_EQ(get_color(WH_PAWN)     , WHITE);
+    EXPECT_EQ(get_color(BL_PAWN)     , BLACK);
+    EXPECT_EQ(get_color(WH_KNIGHT)   , WHITE);
+    EXPECT_EQ(get_color(BL_KNIGHT)   , BLACK);
+    EXPECT_EQ(get_color(WH_BISHOP)   , WHITE);
+    EXPECT_EQ(get_color(BL_BISHOP)   , BLACK);
+    EXPECT_EQ(get_color(WH_ROOK)     , WHITE);
+    EXPECT_EQ(get_color(BL_ROOK)     , BLACK);
+    EXPECT_EQ(get_color(WH_QUEEN)    , WHITE);
+    EXPECT_EQ(get_color(BL_QUEEN)    , BLACK);
+    EXPECT_EQ(get_color(WH_KING)     , WHITE);
+    EXPECT_EQ(get_color(BL_KING)     , BLACK);   
+}
+
 TEST(conversions, make_square)
 {
     EXPECT_EQ(make_square(FILE_A, RANK_4), SQ_A4);
