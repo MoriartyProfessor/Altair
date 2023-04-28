@@ -2,7 +2,9 @@
 #include <sstream>
 
 #include "position.hpp"
+#include "utils.hpp"
 #include "bitboard.hpp"
+#include "patterns.hpp"
 
 Position::Position()
 {
@@ -395,7 +397,27 @@ Piece Position::piece_occupying(Square square) const
 
 bool Position::is_in_check(Color color) const
 {
-    return false;
+    Square king_square = LSB(piece_bitboard(color, KING));
+    return square_attackers(king_square) & occupancy_bitboard(toggle_color(side_to_move()));
+}
+
+BitBoard Position::square_attackers(Square square) const
+{
+    BitBoard knights, bishop_queens, rook_queens, kings;
+    knights = piece_bitboard(WHITE, KNIGHT) | piece_bitboard(BLACK, KNIGHT);
+    bishop_queens = rook_queens = piece_bitboard(WHITE, QUEEN) | piece_bitboard(BLACK, QUEEN);
+    bishop_queens |= piece_bitboard(WHITE, BISHOP) | piece_bitboard(BLACK, BISHOP);
+    rook_queens |= piece_bitboard(WHITE, ROOK) | piece_bitboard(BLACK, ROOK);
+    kings = piece_bitboard(WHITE, KING) | piece_bitboard(BLACK, KING);
+
+    BitBoard attackers = piece_bitboard(WHITE, PAWN) & Patterns::get_pawn_attacks(square, WHITE);
+    attackers |= piece_bitboard(BLACK, PAWN) & Patterns::get_pawn_attacks(square, BLACK);
+    attackers |= knights & Patterns::get_knight_attacks(square);
+    attackers |= bishop_queens & Patterns::get_bishop_attacks(square, occupancy_bitboard());
+    attackers |= rook_queens & Patterns::get_rook_attacks(square, occupancy_bitboard());
+    attackers |= kings & Patterns::get_king_attacks(square);
+
+    return attackers;
 }
 
 
