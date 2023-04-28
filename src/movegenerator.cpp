@@ -9,13 +9,18 @@
 std::vector<Move> MoveGenerator::all_moves(const Position& position)
 {
     gen_moves_<Config::GENERATE_ALL>(position);
-    return moves_;
+    /* Where to create move list? */
+    auto moves = std::move(moves_);
+    moves_.reserve(MOVE_LIST_SIZE);
+    return moves;
 }
 
 std::vector<Move> MoveGenerator::tactical_moves(const Position& position)
 {
     gen_moves_<Config::GENERATE_TACTICAL>(position);
-    return moves_;
+    auto moves = std::move(moves_);
+    moves_.reserve(MOVE_LIST_SIZE);
+    return moves;
 }
 
 

@@ -47,7 +47,7 @@ inline uint32_t pop_LSB(uint64_t& x)
 #else
     uint32_t LSB = std::log2(x & -x);
 #endif
-    x &= ~(1ULL << LSB);
+    x &= x - 1;
     return LSB;
 }
 
