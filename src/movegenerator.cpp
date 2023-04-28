@@ -188,6 +188,17 @@ void MoveGenerator::gen_pawn_moves_(const Position& position)
             moves_.push_back(move);
         }
     }
+
+    if(position.en_passant_square() != N_SQUARES)
+    {
+        BitBoard en_passant_sources = Patterns::get_pawn_attacks(position.en_passant_square(), toggle_color(side_to_play)) & position.piece_bitboard(side_to_play, PAWN);
+        if(en_passant_sources)
+        {
+            Move move{LSB(en_passant_sources), position.en_passant_square()};
+            move.set_en_passant();
+            moves_.push_back(move);
+        }
+    }
 }
 
 
