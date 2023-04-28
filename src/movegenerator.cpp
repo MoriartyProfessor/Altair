@@ -97,7 +97,7 @@ void MoveGenerator::gen_pawn_moves_(const Position& position)
         move.set_piece_type(PAWN);
         moves_.push_back(move);
     }
-
+    
     for(Square attack = pop_LSB(left_attacks); attack != N_SQUARES; attack = pop_LSB(left_attacks))
     {
         Move move{step<SOUTH_EAST>(attack), attack};
@@ -122,7 +122,6 @@ void MoveGenerator::gen_pawn_moves_(const Position& position)
 
         move.set_capture();
         move.set_piece_type(PAWN);
-        moves_.push_back(move);
 
         Piece attacked_piece = position.piece_occupying(attack);
         move.set_capture_piece_type(get_type(attacked_piece));

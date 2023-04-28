@@ -398,7 +398,7 @@ Piece Position::piece_occupying(Square square) const
 bool Position::is_in_check(Color color) const
 {
     Square king_square = LSB(piece_bitboard(color, KING));
-    return square_attackers(king_square) & occupancy_bitboard(toggle_color(side_to_move()));
+    return square_attackers(king_square) & occupancy_bitboard(toggle_color(color));
 }
 
 BitBoard Position::square_attackers(Square square) const
