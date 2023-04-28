@@ -2,6 +2,9 @@
 #include "defs.hpp"
 #include "movegenerator.hpp"
 
+#include "bitboard.hpp"
+#include <iostream>
+
 MoveGenerator move_generator_;
 Position::IrrecoverableState irrecoverable_states_[MAX_DEPTH];
 
