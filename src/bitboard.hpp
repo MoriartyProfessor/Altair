@@ -40,6 +40,7 @@ namespace BitBoards
     }
 
     std::string prettify(BitBoard);
+    BitBoard from_string(const std::string& string);
 }
 
 /* Maybe should be moved inside the namespace */
