@@ -15,6 +15,7 @@ using Rank = uint32_t;
 using Direction = uint32_t;
 
 const uint32_t MAX_DEPTH = 64;
+const uint32_t MOVE_LIST_SIZE = 128;
 
 enum PieceTypes : PieceType 
 {
