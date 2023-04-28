@@ -36,6 +36,9 @@ void MoveGenerator::gen_moves_(const Position& position)
     gen_piece_moves_<config, ROOK   >(position);
     gen_piece_moves_<config, QUEEN  >(position);
     gen_piece_moves_<config, KING   >(position);
+    
+    if constexpr (config == Config::GENERATE_ALL)
+        gen_castling_moves_(position);
 }
 
 template<MoveGenerator::Config config, Color side_to_play>
@@ -212,9 +215,48 @@ void MoveGenerator::gen_piece_moves_(const Position& position)
     }
 }
 
-void gen_castling_moves_(const Position& position)
+void MoveGenerator::gen_castling_moves_(const Position& position)
 {
+    Color side_to_move = position.side_to_move();
+    
+    if(position.is_in_check(side_to_move))
+        return;
+    
+    CastlingRights rights = position.castling_rights();
+    
+    Square  king_square = side_to_move == WHITE ? SQ_E1 : SQ_E8,
+            queen_rook_square = side_to_move == WHITE ? SQ_A1 : SQ_A8,
+            king_rook_square = side_to_move == WHITE ? SQ_H1 : SQ_H8;
 
+    if(rights.queen_side(side_to_move))
+    {
+        BitBoard queen_side_mask = QUEEN_SIDE_CASTLE_MASKS_BB[side_to_move];
+        bool permission =   !(((queen_side_mask & position.occupancy_bitboard()) != EMPTY_BB) ||
+                            position.is_square_attacked(pop_LSB(queen_side_mask), toggle_color(side_to_move)) ||
+                            position.is_square_attacked(pop_LSB(queen_side_mask), toggle_color(side_to_move)) ||
+                            position.is_square_attacked(pop_LSB(queen_side_mask), toggle_color(side_to_move)));
+
+        if(permission)
+        {
+            Move move{king_square, queen_rook_square};
+            move.set_queen_side_castle();
+            moves_.push_back(move);
+        }
+    }
+
+    if(rights.king_side(side_to_move))
+    {
+        BitBoard king_side_mask = KING_SIDE_CASTLE_MASKS_BB[position.side_to_move()];
+        bool permission =   !(((king_side_mask & position.occupancy_bitboard()) != EMPTY_BB) ||
+                            position.is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)) ||
+                            position.is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)));
+        if(permission)
+        {
+            Move move{king_square, king_rook_square};
+            move.set_king_side_castle();
+            moves_.push_back(move);
+        }
+    }
 }
 
 template<MoveGenerator::Config config, PieceType piece_type>

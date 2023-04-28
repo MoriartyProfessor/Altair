@@ -35,6 +35,7 @@ class Position
     Piece piece_occupying(Square square) const;
 
     bool is_in_check(Color color) const;
+    bool is_square_attacked(Square square, Color color) const;
     BitBoard square_attackers(Square square) const;
 
     Color side_to_move() const;
