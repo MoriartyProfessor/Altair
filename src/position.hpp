@@ -88,7 +88,7 @@ class Position
     void move_piece_(Piece piece, Square from, Square to);
 
     private:
-    std::array<BitBoard, N_PIECES> piece_bitboards_;
+    BitBoard piece_bitboards_[N_PIECES];
     Color side_to_move_ = WHITE;
     CastlingRights castling_rights_;
     Square en_passant_square_ = N_SQUARES;

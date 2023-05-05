@@ -8,7 +8,7 @@ namespace Rays
     template<Directions direction>
     BitBoard gen_diagonals_(Square square)
     {
-        static_assert(direction == NORTH_WEST || direction == SOUTH_WEST || direction == SOUTH_EAST || direction == NORTH_EAST );
+        static_assert( direction == NORTH_WEST || direction == SOUTH_WEST || direction == SOUTH_EAST || direction == NORTH_EAST );
         return EMPTY_BB;
     }
     template<>

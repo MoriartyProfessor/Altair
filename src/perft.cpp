@@ -5,15 +5,17 @@
 #include "bitboard.hpp"
 #include <iostream>
 
-MoveGenerator move_generator_;
 Position::IrrecoverableState irrecoverable_states_[MAX_DEPTH];
 
 uint64_t Perft::test(Position& position, uint32_t depth)
 {
+    std::vector<Move> moves{256};
     if(depth == 0)
         return 1;
+
+    MoveGenerator move_generator_{&position, &moves};
+    move_generator_.gen_all_moves();
     uint64_t node_count = 0;
-    auto moves = move_generator_.all_moves(position);
     for(auto move : moves)
     {
         irrecoverable_states_[depth] = position.irrecoverable_state();
