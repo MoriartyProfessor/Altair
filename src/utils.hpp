@@ -22,6 +22,8 @@ inline uint32_t popcount(uint64_t x)
 inline uint32_t LSB(uint64_t x)
 {
 #if __GNUC__
+    if(x == 0)
+        return 64;
     return __builtin_ctzll(x);
 #else
     return std::log2(x & -x);
@@ -42,13 +44,9 @@ inline uint32_t MSB(uint64_t x)
 
 inline uint32_t pop_LSB(uint64_t& x)
 {
-#if __GNUC__
-    uint32_t LSB = __builtin_ctzll(x);
-#else
-    uint32_t LSB = std::log2(x & -x);
-#endif
+    uint32_t popped_LSB = LSB(x);
     x &= x - 1;
-    return LSB;
+    return popped_LSB;
 }
 
 #endif // ALTAIR_UTILS_HPP

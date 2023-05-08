@@ -9,7 +9,7 @@ using BitBoard = uint64_t;
 using PieceType = uint32_t;
 using Piece = uint32_t;
 using Color = uint32_t;
-using Square = int32_t;
+using Square = uint32_t;
 using File = uint32_t;
 using Rank = uint32_t;
 using Direction = uint32_t;
@@ -178,7 +178,7 @@ constexpr bool is_direction_positive(Direction direction)
 
 inline Square square_in_between(Square square_1, Square square_2)
 {
-    return square_1 + ((square_2 - square_1)/2);
+    return square_1 + ((static_cast<int32_t>(square_2) - static_cast<int32_t>(square_1))/2);
 }
 
 inline Direction invert_direction(Direction direction)

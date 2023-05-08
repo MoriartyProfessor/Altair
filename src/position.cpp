@@ -6,6 +6,8 @@
 #include "bitboard.hpp"
 #include "patterns.hpp"
 
+#include <iostream>
+
 Position::Position()
 {
     set_to_starting();
@@ -125,10 +127,7 @@ void Position::set_from_fen(const std::string& fen)
             en_passant_square_ = N_SQUARES;
         else
         {
-            File ep_file = fen_en_passant_square[0] - 'a';
-            Rank ep_rank = fen_en_passant_square[1] - '0';     // Should we check if rank lies in the range of 3-6
-
-            en_passant_square_ = make_square(ep_file, ep_rank);
+            en_passant_square_ = str_to_square(fen_en_passant_square);
         }
     };
 
@@ -522,8 +521,10 @@ void Position::make_queen_side_castling_move_(Move move)
 
 void Position::make_en_passant_move_(Move move)
 {
+    std::cout << "En Passant" << std::endl;
     Square capture_square = en_passant_capture_square(side_to_move_, en_passant_square_);
 
+    std::cout << en_passant_square_ << std::endl;
     remove_piece_(make_piece(toggle_color(side_to_move_), PAWN), capture_square);
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
 }
