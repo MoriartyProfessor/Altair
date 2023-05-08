@@ -13,6 +13,7 @@ class Position
     struct IrrecoverableState
     {
         CastlingRights castling_rights;
+        Square en_passant_square;
         uint32_t halfclock;
     };
 
@@ -78,7 +79,7 @@ class Position
     void unmake_en_passant_move_            (Move move);
 
     void update_castling_rights_in_unmake_  (CastlingRights castling_rights);
-    void update_en_passant_in_unmake_       (Move move);
+    void update_en_passant_in_unmake_       (Square en_passant_square);
     void update_halfclock_in_unmake_        (uint32_t halfclock);
     void update_moveclock_in_unmake_        (Move move);
 
