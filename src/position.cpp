@@ -21,7 +21,6 @@ Position::Position(const std::string& fen)
 
 void Position::set_to_starting()
 {
-    /* Just use set_from_fen for now, if this functions is invoked often in runtime, maybe replace it with manual setting */
     /* Maybe move starting to FEN to seperate constant*/
     set_from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
@@ -355,7 +354,7 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
     if(!castling_rights_.is_all_set())
         update_castling_rights_in_unmake_(irrecoverable_state.castling_rights);
 
-    update_en_passant_in_unmake_(move);
+    update_en_passant_in_unmake_(irrecoverable_state.en_passant_square);
 
     update_halfclock_in_unmake_(irrecoverable_state.halfclock);
     
@@ -452,7 +451,7 @@ uint32_t Position::moveclock() const
 
 Position::IrrecoverableState Position::irrecoverable_state() const
 {
-    return IrrecoverableState{castling_rights_, halfclock_};
+    return IrrecoverableState{castling_rights_, en_passant_square_, halfclock_};
 }
 
 Square Position::en_passant_capture_square(Color side_to_move, Square en_passant_square)
@@ -521,10 +520,7 @@ void Position::make_queen_side_castling_move_(Move move)
 
 void Position::make_en_passant_move_(Move move)
 {
-    std::cout << "En Passant" << std::endl;
     Square capture_square = en_passant_capture_square(side_to_move_, en_passant_square_);
-
-    std::cout << en_passant_square_ << std::endl;
     remove_piece_(make_piece(toggle_color(side_to_move_), PAWN), capture_square);
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
 }
@@ -646,12 +642,9 @@ void Position::update_castling_rights_in_unmake_(CastlingRights castling_rights)
     castling_rights_ = castling_rights;
 }
 
-void Position::update_en_passant_in_unmake_(Move move)
+void Position::update_en_passant_in_unmake_(Square en_passant_square)
 {
-    if(move.is_en_passant())
-        en_passant_square_ = move.to();
-    else
-        en_passant_square_ = N_SQUARES;
+    en_passant_square_ = en_passant_square;
 }
 
 void Position::update_halfclock_in_unmake_(uint32_t halfclock)
