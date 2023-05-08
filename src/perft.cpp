@@ -9,7 +9,8 @@ Position::IrrecoverableState irrecoverable_states_[MAX_DEPTH];
 
 uint64_t Perft::test(Position& position, uint32_t depth)
 {
-    std::vector<Move> moves{256};
+    std::vector<Move> moves;
+    moves.reserve(256);
     if(depth == 0)
         return 1;
 
