@@ -1,0 +1,4 @@
+#ifndef ALTAIR_SEARCH_HPP
+#define ALTAIR_SEARCH_HPP
+
+#endif // ALTAIR_SEARCH_HPP
