@@ -3,6 +3,11 @@ project(Altair)
 
 set(CMAKE_CXX_STANDARD 17)
 
+
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
 set(SOURCE_FILES main.cpp)
 add_executable(${CMAKE_PROJECT_NAME}_executable ${SOURCE_FILES})
 
