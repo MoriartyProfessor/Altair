@@ -46,29 +46,25 @@ void MoveGenerator::gen_pawn_moves_()
     static_assert(side_to_play < N_COLORS);
     BitBoard pawn_bitboard = position_->piece_bitboard(side_to_play, PAWN);
     
-    BitBoard starting_rank_BB, promotion_rank_BB;
     BitBoard push_targets, double_push_targets, left_attacks, right_attacks, promotion_push_targets, promotion_left_attacks, promotion_right_attacks;
 
-    if constexpr (side_to_play == WHITE)
-    {
-        starting_rank_BB = RANK_2_BB;
-        promotion_rank_BB = RANK_8_BB;
-        push_targets = BitBoards::step<NORTH>(pawn_bitboard) & ~position_->occupancy_bitboard();
-        double_push_targets = BitBoards::step<NORTH>(starting_rank_BB & pawn_bitboard) & ~position_->occupancy_bitboard();
-        double_push_targets = BitBoards::step<NORTH>(double_push_targets) & ~position_->occupancy_bitboard();
-        left_attacks = BitBoards::step<NORTH_WEST>(pawn_bitboard) & position_->occupancy_bitboard(toggle_color(side_to_play));
-        right_attacks = BitBoards::step<NORTH_EAST>(pawn_bitboard) & position_->occupancy_bitboard(toggle_color(side_to_play));
-    }
-    else
-    {
-        starting_rank_BB = RANK_7_BB;
-        promotion_rank_BB = RANK_1_BB;
-        push_targets = BitBoards::step<SOUTH>(pawn_bitboard) & ~position_->occupancy_bitboard();
-        double_push_targets = BitBoards::step<SOUTH>(starting_rank_BB & pawn_bitboard) & ~position_->occupancy_bitboard();
-        double_push_targets = BitBoards::step<SOUTH>(double_push_targets) & ~position_->occupancy_bitboard();
-        left_attacks = BitBoards::step<SOUTH_EAST>(pawn_bitboard) & position_->occupancy_bitboard(toggle_color(side_to_play));
-        right_attacks = BitBoards::step<SOUTH_WEST>(pawn_bitboard) & position_->occupancy_bitboard(toggle_color(side_to_play));
-    }
+    constexpr BitBoard starting_rank_BB  = side_to_play == WHITE ? RANK_2_BB : RANK_7_BB;
+    constexpr BitBoard promotion_rank_BB = side_to_play == WHITE ? RANK_8_BB : RANK_1_BB;
+    constexpr Direction r_NORTH       = side_to_play == WHITE ? NORTH         : SOUTH;
+    constexpr Direction r_NORTH_WEST  = side_to_play == WHITE ? NORTH_WEST    : SOUTH_EAST;
+    constexpr Direction r_WEST        = side_to_play == WHITE ? WEST          : EAST;
+    constexpr Direction r_SOUTH_WEST  = side_to_play == WHITE ? SOUTH_WEST    : NORTH_EAST;
+    constexpr Direction r_SOUTH       = side_to_play == WHITE ? SOUTH         : NORTH;
+    constexpr Direction r_SOUTH_EAST  = side_to_play == WHITE ? SOUTH_EAST    : NORTH_WEST;
+    constexpr Direction r_EAST        = side_to_play == WHITE ? EAST          : WEST;
+    constexpr Direction r_NORTH_EAST  = side_to_play == WHITE ? NORTH_EAST    : SOUTH_WEST;
+
+    
+    push_targets = BitBoards::step<r_NORTH>(pawn_bitboard) & ~position_->occupancy_bitboard();
+    double_push_targets = BitBoards::step<r_NORTH>(starting_rank_BB & pawn_bitboard) & ~position_->occupancy_bitboard();
+    double_push_targets = BitBoards::step<r_NORTH>(double_push_targets) & ~position_->occupancy_bitboard();
+    left_attacks = BitBoards::step<r_NORTH_WEST>(pawn_bitboard) & position_->occupancy_bitboard(toggle_color(side_to_play));
+    right_attacks = BitBoards::step<r_NORTH_EAST>(pawn_bitboard) & position_->occupancy_bitboard(toggle_color(side_to_play));
 
     promotion_push_targets = push_targets & promotion_rank_BB;
     promotion_left_attacks = left_attacks & promotion_rank_BB;
@@ -77,11 +73,8 @@ void MoveGenerator::gen_pawn_moves_()
 
     for(Square push_sq = pop_LSB(push_targets); push_sq != N_SQUARES; push_sq = pop_LSB(push_targets))
     {
-        Move move{step<SOUTH>(push_sq), push_sq};
+        Move move{step<r_SOUTH>(push_sq), push_sq};
         
-        if constexpr (side_to_play == BLACK)
-            move.set_from(step<NORTH>(push_sq));
-
         move.set_quite();
         move.set_piece_type(PAWN);
         moves_->push_back(move);
@@ -89,10 +82,7 @@ void MoveGenerator::gen_pawn_moves_()
 
     for(Square double_push_sq = pop_LSB(double_push_targets); double_push_sq != N_SQUARES; double_push_sq = pop_LSB(double_push_targets))
     {
-        Move move{step<SOUTH>(double_push_sq, 2), double_push_sq};
-
-        if constexpr (side_to_play == BLACK)
-            move.set_from(step<NORTH>(double_push_sq, 2));
+        Move move{step<r_SOUTH>(double_push_sq, 2), double_push_sq};
 
         move.set_double_pawn_push();
         move.set_piece_type(PAWN);
@@ -101,10 +91,7 @@ void MoveGenerator::gen_pawn_moves_()
     
     for(Square attack = pop_LSB(left_attacks); attack != N_SQUARES; attack = pop_LSB(left_attacks))
     {
-        Move move{step<SOUTH_EAST>(attack), attack};
-
-        if constexpr (side_to_play == BLACK)
-            move.set_from(step<NORTH_WEST>(attack));
+        Move move{step<r_SOUTH_EAST>(attack), attack};
 
         move.set_capture();
         move.set_piece_type(PAWN);
@@ -116,10 +103,7 @@ void MoveGenerator::gen_pawn_moves_()
 
     for(Square attack = pop_LSB(right_attacks); attack != N_SQUARES; attack = pop_LSB(right_attacks))
     {
-        Move move{step<SOUTH_WEST>(attack), attack};
-
-        if constexpr (side_to_play == BLACK)
-            move.set_from(step<NORTH_EAST>(attack));
+        Move move{step<r_SOUTH_WEST>(attack), attack};
 
         move.set_capture();
         move.set_piece_type(PAWN);
@@ -131,10 +115,7 @@ void MoveGenerator::gen_pawn_moves_()
 
     for(Square promotion_push_sq = pop_LSB(promotion_push_targets); promotion_push_sq != N_SQUARES; promotion_push_sq = pop_LSB(promotion_push_targets))
     {
-        Move move{step<SOUTH>(promotion_push_sq), promotion_push_sq};
-
-        if constexpr (side_to_play == BLACK)
-            move.set_from(step<NORTH>(promotion_push_sq));
+        Move move{step<r_SOUTH>(promotion_push_sq), promotion_push_sq};
 
         move.set_promotion();
         move.set_piece_type(PAWN);
@@ -147,10 +128,7 @@ void MoveGenerator::gen_pawn_moves_()
 
     for(Square promotion_attack = pop_LSB(promotion_left_attacks); promotion_attack != N_SQUARES; promotion_attack = pop_LSB(promotion_left_attacks))
     {
-        Move move{step<SOUTH_EAST>(promotion_attack), promotion_attack};
-
-        if constexpr (side_to_play == BLACK)
-            move.set_from(step<NORTH_WEST>(promotion_attack));
+        Move move{step<r_SOUTH_EAST>(promotion_attack), promotion_attack};
 
         move.set_promotion();
         move.set_piece_type(PAWN);
@@ -168,10 +146,7 @@ void MoveGenerator::gen_pawn_moves_()
 
     for(Square promotion_attack = pop_LSB(promotion_right_attacks); promotion_attack != N_SQUARES; promotion_attack = pop_LSB(promotion_right_attacks))
     {
-        Move move{step<SOUTH_WEST>(promotion_attack), promotion_attack};
-
-        if constexpr (side_to_play == BLACK)
-            move.set_from(step<NORTH_EAST>(promotion_attack));
+        Move move{step<r_SOUTH_WEST>(promotion_attack), promotion_attack};
 
         move.set_promotion();
         move.set_piece_type(PAWN);
