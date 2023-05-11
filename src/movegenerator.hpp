@@ -22,10 +22,6 @@ class MoveGenerator
     void gen_tactical_moves();
 
     private:
-    std::vector<Move>* moves_;
-    const Position* position_;
-
-    private:
     template<Config config>
     void gen_moves_();
 
@@ -41,6 +37,10 @@ class MoveGenerator
 
     template<Config config, PieceType piece_type>
     void add_piece_moves_(Square from, BitBoard attacks);
+
+    private:
+    std::vector<Move>* moves_;
+    const Position* position_;
 };
 
 #endif // ALTAIR_MOVEGENERATOR_HPP
