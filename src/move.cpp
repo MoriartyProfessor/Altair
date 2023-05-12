@@ -120,7 +120,5 @@ std::string Move::descriptive_notation() const
 
 std::string Move::algebraic_notation() const
 {
-    std::string notation;
-    
-    return notation;
+    return square_to_str(from()) + square_to_str(to());
 }

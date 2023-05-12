@@ -3,13 +3,17 @@ project(${CMAKE_PROJECT_NAME}_lib)
 set(HEADER_FILES 
     bitboard.hpp
     defs.hpp
+    eval.hpp
     move.hpp
     movegenerator.hpp
+    moveorderer.hpp
     moveparser.hpp
     patterns.hpp
     perft.hpp
     position.cpp
     rays.hpp
+    search.hpp
+    uci.hpp
     utils.hpp
 )
 
