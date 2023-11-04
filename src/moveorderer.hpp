@@ -14,7 +14,7 @@ class MoveOrderer
     {
         Move pv_move;
         uint32_t history [N_COLORS][N_SQUARES][N_SQUARES];
-        Move killers [2][MAX_PLY];
+        Move killers [2][256];
         uint32_t ply;
     };
 
@@ -27,14 +27,18 @@ class MoveOrderer
 
     explicit MoveOrderer(const Position& position, std::vector<Move>* moves, Info* info);
 
-    template<Config config>
-    void score_moves();
+    void score_all_moves();
+    void score_tactical_moves();
 
     bool has_next();
 
     Move next();
 
     private:
+    
+    template<Config config>
+    void score_moves_();
+
     void init_MVV_LAA_();
     int32_t capture_score_(Move capture);
     int32_t promotion_score_(Move promotion);

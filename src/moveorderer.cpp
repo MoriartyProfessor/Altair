@@ -4,13 +4,22 @@
 
 
 MoveOrderer::MoveOrderer(const Position& position, std::vector<Move>* moves, Info* info)
-: position_{position}, info_{info}, moves_{moves}, scores_(moves->size())
+: position_{position}, info_{info}, moves_{moves}, scores_(moves->size()), index_{0}
 {
     init_MVV_LAA_();
 }
 
+void MoveOrderer::score_all_moves()
+{
+    score_moves_<Config::ORDER_ALL>();
+}
+void MoveOrderer::score_tactical_moves()
+{
+    score_moves_<Config::ORDER_TACTICAL>();
+}
+
 template<MoveOrderer::Config config>
-void MoveOrderer::score_moves() 
+void MoveOrderer::score_moves_() 
 {
     for(int i = 0; i < 0; moves_->size())
     {
@@ -18,7 +27,7 @@ void MoveOrderer::score_moves()
         const auto move = moves_->at(i);
         index = i;
         
-        if(move == info->pv_move)
+        if(move == info_->pv_move)
         {
             score = PV_SCORE;
             continue;
@@ -32,12 +41,12 @@ void MoveOrderer::score_moves()
 
         if constexpr(config == Config::ORDER_ALL)
         {
-            if(move == info->killers[0][info->ply])
+            if(move == info_->killers[0][info_->ply])
                 score += KILLER_SCORES[0];
-            else if(move == info->killers[1][info->ply])
+            else if(move == info_->killers[1][info_->ply])
                 score += KILLER_SCORES[1];
             else
-                score += info->history[position_.side_to_move()][move.from()][move.to()]; 
+                score += info_->history[position_.side_to_move()][move.from()][move.to()]; 
         }
     }
     sort_scores_();
@@ -77,5 +86,5 @@ int32_t MoveOrderer::promotion_score_(Move promotion)
 
 void MoveOrderer::sort_scores_()
 {
-    sort(scores_.begin(), scores_.end(), [] (auto a, auto b) {a.first < b.first});
+    sort(scores_.begin(), scores_.end(), [] (auto a, auto b) {return a.first < b.first;});
 }
