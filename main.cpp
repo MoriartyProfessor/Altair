@@ -42,13 +42,17 @@ int main()
 
     auto t1 = high_resolution_clock::now();
 
-    std::cout << Perft::test(position, 5) << std::endl;
+    auto perft_result = Perft::test(position, 5);
+    std::cout << "Nodes: " << perft_result << std::endl;
     
     auto t2 = high_resolution_clock::now();
 
     duration<double, std::milli> ms_double = t2 - t1;
+    duration<double> s_double = t2 - t1;
 
-    std::cout << ms_double.count() << "ms\n";
+    std::cout << "Duration: " << ms_double.count() << "ms\n";
+    std::cout << "Performance: " << (perft_result/s_double.count())/1000000.0 << "M Nodes/s\n";
+
     
 
     /*
