@@ -19,13 +19,17 @@ set(HEADER_FILES
 
 set(SOURCE_FILES
     bitboard.cpp
+    eval.cpp
     move.cpp
     movegenerator.cpp
+    moveorderer.cpp
     moveparser.cpp
     patterns.cpp
     perft.cpp
     position.cpp
     rays.cpp
+    search.cpp
+    uci.cpp
 )
 
 add_library(${CMAKE_PROJECT_NAME}_lib STATIC
