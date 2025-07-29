@@ -413,8 +413,8 @@ BitBoard Position::square_attackers(Square square) const
     rook_queens |= piece_bitboard(WHITE, ROOK) | piece_bitboard(BLACK, ROOK);
     kings = piece_bitboard(WHITE, KING) | piece_bitboard(BLACK, KING);
 
-    BitBoard attackers = piece_bitboard(WHITE, PAWN) & Patterns::get_pawn_attacks(square, WHITE);
-    attackers |= piece_bitboard(BLACK, PAWN) & Patterns::get_pawn_attacks(square, BLACK);
+    BitBoard attackers = piece_bitboard(WHITE, PAWN) & Patterns::get_pawn_attacks(square, BLACK);
+    attackers |= piece_bitboard(BLACK, PAWN) & Patterns::get_pawn_attacks(square, WHITE);
     attackers |= knights & Patterns::get_knight_attacks(square);
     attackers |= bishop_queens & Patterns::get_bishop_attacks(square, occupancy_bitboard());
     attackers |= rook_queens & Patterns::get_rook_attacks(square, occupancy_bitboard());
