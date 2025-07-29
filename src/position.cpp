@@ -500,22 +500,26 @@ void Position::make_double_pawn_push_move_(Move move)
 
 void Position::make_king_side_castling_move_(Move move)
 {
-    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
-
-    if(side_to_move_ == WHITE)
+    if(side_to_move_ == WHITE) {
+        move_piece_(make_piece(side_to_move_, KING), SQ_E1, SQ_G1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_H1, SQ_F1);
-    else
+    }
+    else {
+        move_piece_(make_piece(side_to_move_, KING), SQ_E8, SQ_G8);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_H8, SQ_F8);
+    }
 }
 
 void Position::make_queen_side_castling_move_(Move move)
 {
-    move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
-
-    if(side_to_move_ == WHITE)
+    if(side_to_move_ == WHITE) {
+        move_piece_(make_piece(side_to_move_, KING), SQ_E1, SQ_C1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_A1, SQ_D1);
-    else
+    }
+    else {
+        move_piece_(make_piece(side_to_move_, KING), SQ_E8, SQ_C8);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_A8, SQ_D8);
+    }
 }
 
 void Position::make_en_passant_move_(Move move)
@@ -610,22 +614,26 @@ void Position::unmake_double_pawn_push_move_(Move move)
 
 void Position::unmake_king_side_castling_move_(Move move)
 {
-    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
-
-    if(side_to_move_ == WHITE)
+    if(side_to_move_ == WHITE) {
+        move_piece_(make_piece(side_to_move_, KING), SQ_G1, SQ_E1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_F1, SQ_H1);
-    else
-        move_piece_(make_piece(side_to_move_, ROOK), SQ_F8, SQ_H8);
+    }
+    else {
+        move_piece_(make_piece(side_to_move_, KING), SQ_G8, SQ_E8);
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_F8, SQ_H8);   
+    }
 }
 
 void Position::unmake_queen_side_castling_move_(Move move)
 {
-    move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
-
-    if(side_to_move_ == WHITE)
+    if(side_to_move_ == WHITE) {
+        move_piece_(make_piece(side_to_move_, KING), SQ_C1, SQ_E1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_D1, SQ_A1);
-    else
+    }
+    else {
+        move_piece_(make_piece(side_to_move_, KING), SQ_C8, SQ_E8);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_D8, SQ_A8);
+    }
 }
 
 void Position::unmake_en_passant_move_(Move move)
