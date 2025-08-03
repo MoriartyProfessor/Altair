@@ -72,7 +72,8 @@ constexpr BitBoard RANK_7_BB = BitBoards::rank_filled_in(RANK_7);
 constexpr BitBoard RANK_8_BB = BitBoards::rank_filled_in(RANK_8);
 
 constexpr BitBoard KING_SIDE_CASTLE_MASKS_BB[N_COLORS] = {0x60ULL, 0x6000000000000000ULL};
-constexpr BitBoard QUEEN_SIDE_CASTLE_MASKS_BB[N_COLORS] = {0xCULL, 0xC00000000000000ULL};
+constexpr BitBoard QUEEN_SIDE_CASTLE_MASKS_BB[N_COLORS] = {0xEULL, 0xE00000000000000ULL};
+constexpr BitBoard QUEEN_SIDE_CASTLE_PATH_MASKS_BB[N_COLORS] = {0xCULL, 0xC00000000000000ULL};
 
 namespace BitBoards
 {
