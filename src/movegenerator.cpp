@@ -216,10 +216,11 @@ void MoveGenerator::gen_castling_moves_()
     if(rights.queen_side(side_to_move))
     {
         BitBoard queen_side_mask = QUEEN_SIDE_CASTLE_MASKS_BB[side_to_move];
+        BitBoard queen_side_path_mask = QUEEN_SIDE_CASTLE_PATH_MASKS_BB[side_to_move];
         bool permission =   !(((queen_side_mask & position_->occupancy_bitboard()) != EMPTY_BB) ||
                             ((position_->piece_bitboard(side_to_move, PieceTypes::ROOK) & BitBoards::square_set_in(queen_rook_square)) == EMPTY_BB) ||  
-                            position_->is_square_attacked(pop_LSB(queen_side_mask), toggle_color(side_to_move)) ||
-                            position_->is_square_attacked(pop_LSB(queen_side_mask), toggle_color(side_to_move)));
+                            position_->is_square_attacked(pop_LSB(queen_side_path_mask), toggle_color(side_to_move)) ||
+                            position_->is_square_attacked(pop_LSB(queen_side_path_mask), toggle_color(side_to_move)));
 
         if(permission)
         {

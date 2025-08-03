@@ -6,6 +6,7 @@ set(SOURCE_FILES
     helpers.cpp  
     move.cpp
     position.cpp
+    perft.cpp
     main.cpp
 )
 
