@@ -243,6 +243,26 @@ TEST(castling_rights, castling_rights)
 
     rights.set_king_side(BLACK);
     EXPECT_EQ(rights.king_side(BLACK), true);
+
+    rights.clear_all_color_rights(BLACK);
+    EXPECT_EQ(rights.king_side(BLACK), false);
+    EXPECT_EQ(rights.queen_side(BLACK), false);
+
+    rights.set_all_color_rights(BLACK);
+    EXPECT_EQ(rights.king_side(BLACK), true);
+    EXPECT_EQ(rights.queen_side(BLACK), true);
+
+    rights.set_all_rights();
+    EXPECT_EQ(rights.king_side(WHITE), true);
+    EXPECT_EQ(rights.queen_side(WHITE), true);
+    EXPECT_EQ(rights.king_side(BLACK), true);
+    EXPECT_EQ(rights.queen_side(BLACK), true);
+
+    rights.clear_all_rights();
+    EXPECT_EQ(rights.king_side(WHITE), false);
+    EXPECT_EQ(rights.queen_side(WHITE), false);
+    EXPECT_EQ(rights.king_side(BLACK), false);
+    EXPECT_EQ(rights.queen_side(BLACK), false);
 }
 
 TEST(square_in_between, square_in_between)

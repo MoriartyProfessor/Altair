@@ -168,6 +168,7 @@ void MoveGenerator::gen_pawn_moves_()
         if(en_passant_sources)
         {
             Move move{LSB(en_passant_sources), position_->en_passant_square()};
+            move.set_capture();
             move.set_en_passant();
             moves_->push_back(move);
         }
@@ -216,6 +217,7 @@ void MoveGenerator::gen_castling_moves_()
     {
         BitBoard queen_side_mask = QUEEN_SIDE_CASTLE_MASKS_BB[side_to_move];
         bool permission =   !(((queen_side_mask & position_->occupancy_bitboard()) != EMPTY_BB) ||
+                            ((position_->piece_bitboard(side_to_move, PieceTypes::ROOK) & BitBoards::square_set_in(queen_rook_square)) == EMPTY_BB) ||  
                             position_->is_square_attacked(pop_LSB(queen_side_mask), toggle_color(side_to_move)) ||
                             position_->is_square_attacked(pop_LSB(queen_side_mask), toggle_color(side_to_move)));
 
@@ -232,6 +234,7 @@ void MoveGenerator::gen_castling_moves_()
     {
         BitBoard king_side_mask = KING_SIDE_CASTLE_MASKS_BB[position_->side_to_move()];
         bool permission =   !(((king_side_mask & position_->occupancy_bitboard()) != EMPTY_BB) ||
+                            ((position_->piece_bitboard(side_to_move, PieceTypes::ROOK) & BitBoards::square_set_in(king_rook_square)) == EMPTY_BB) ||
                             position_->is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)) ||
                             position_->is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)));
         if(permission)
