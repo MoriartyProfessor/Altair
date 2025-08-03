@@ -291,8 +291,11 @@ void Position::make_move(Move move)
     else if(move.is_capture() && move.is_promotion())
         make_capture_promotion_move_(move);
 
-    else if(move.is_capture())
+    else if(move.is_capture() && !move.is_en_passant())
         make_capture_move_(move);
+
+    else if(move.is_en_passant())
+        make_en_passant_move_(move);
 
     else if(move.is_promotion())
         make_promotion_move_(move);
@@ -305,9 +308,6 @@ void Position::make_move(Move move)
 
     else if(move.is_queen_side_castle())
         make_queen_side_castling_move_(move);
-
-    else if(move.is_en_passant())
-        make_en_passant_move_(move);
 
 
     if(!castling_rights_.is_all_clear())
@@ -332,8 +332,11 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
     else if(move.is_capture() && move.is_promotion())
         unmake_capture_promotion_move_(move);
 
-    else if(move.is_capture())
+    else if(move.is_capture() && !move.is_en_passant())
         unmake_capture_move_(move);
+
+    else if(move.is_en_passant())
+        unmake_en_passant_move_(move);
 
     else if(move.is_promotion())
         unmake_promotion_move_(move);
@@ -346,9 +349,6 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
 
     else if(move.is_queen_side_castle())
         unmake_queen_side_castling_move_(move);
-
-    else if(move.is_en_passant())
-        unmake_en_passant_move_(move);
 
 
     if(!castling_rights_.is_all_set())
