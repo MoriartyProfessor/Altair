@@ -11,7 +11,7 @@ Altair - UCI Compatible chess engine
 
 Board representation:
 
-- [ ] Move generation (with Magic Bitboards)
+- [x] Move generation (with Magic Bitboards)
 - [x] Constrution of position from FEN
 
 Search:
@@ -52,7 +52,7 @@ Miscellaneous:
 - [ ] Parallel search
 
 Tests:
-- [ ] Perft Test
+- [x] Perft Test
 
 
 ## Dependencies
