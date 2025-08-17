@@ -14,4 +14,7 @@ add_executable(${CMAKE_PROJECT_NAME}_test ${SOURCE_FILES})
 
 target_link_libraries(${CMAKE_PROJECT_NAME}_test PUBLIC ${CMAKE_PROJECT_NAME}_lib gtest)
 
+add_executable(${CMAKE_PROJECT_NAME}_perftree perftree.cpp)
+target_link_libraries(${CMAKE_PROJECT_NAME}_perftree PUBLIC ${CMAKE_PROJECT_NAME}_lib gtest)
+
 gtest_discover_tests(${CMAKE_PROJECT_NAME}_test)

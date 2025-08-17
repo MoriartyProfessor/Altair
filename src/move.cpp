@@ -123,3 +123,17 @@ std::string Move::algebraic_notation() const
     
     return notation;
 }
+
+std::string Move::uci_notation() const
+{
+    std::string uci;
+    
+    uci += square_to_str(from());
+    uci += square_to_str(to());
+    if (is_promotion())
+    {
+        uci += piece_to_char(promotion_piece_type());
+    }
+
+    return uci;
+}
