@@ -165,9 +165,9 @@ void MoveGenerator::gen_pawn_moves_()
     if(position_->en_passant_square() != N_SQUARES)
     {
         BitBoard en_passant_sources = Patterns::get_pawn_attacks(position_->en_passant_square(), toggle_color(side_to_play)) & position_->piece_bitboard(side_to_play, PAWN);
-        if(en_passant_sources)
+        while(en_passant_sources)
         {
-            Move move{LSB(en_passant_sources), position_->en_passant_square()};
+            Move move{pop_LSB(en_passant_sources), position_->en_passant_square()};
             move.set_capture();
             move.set_en_passant();
             moves_->push_back(move);

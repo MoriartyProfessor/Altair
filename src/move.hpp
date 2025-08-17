@@ -51,6 +51,7 @@ class Move
 
     std::string descriptive_notation() const;
     std::string algebraic_notation() const;
+    std::string uci_notation() const;
 
     private:
 
