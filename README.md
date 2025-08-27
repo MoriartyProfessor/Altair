@@ -15,21 +15,21 @@ Board representation:
 - [x] Constrution of position from FEN
 
 Search:
-- [ ] Negamax
+- [x] Negamax
 - [ ] Alpha-Beta pruning
 - [ ] Move Ordering (preferably with Killer Heuristics)
 - [ ] Iterative Deepening
 - [ ] Transposition tables (with Zobrist Hashing)
-- [ ] Aspiration windows
 - [ ] Quiescence search
+- [ ] Aspiration windows
 - [ ] Principled Variation search
-- [ ] Selectivity
-- [ ] Late Move Pruning (LMR)
+- [ ] Search Extensions Reductions
+- [ ] Late Move Reduction (LMR)
 - [ ] Null Move Pruning
 
 Evaluation:
-- [ ] Material
-- [ ] Game-Phase evaluation (maybe with Tapered Eval)
+- [x] Material
+- [ ] Game-Phase dependent evaluation
 - [ ] Piece-Square Tables
 - [ ] Pawn Structure
 - [ ] Evaluation of Pieces
@@ -47,7 +47,7 @@ Other game phases:
 - [ ] Endgame tablebases
 
 Miscellaneous:
-- [ ] UCI protocol implementation
+- [x] UCI protocol implementation
 - [ ] Time control
 - [ ] Parallel search
 
