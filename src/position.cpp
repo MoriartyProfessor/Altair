@@ -13,11 +13,10 @@ Position::Position()
     set_to_starting();
 }
 
-Position::Position(const std::string& fen)
+Position::Position(const std::string &fen)
 {
     set_from_fen(fen);
 }
-
 
 void Position::set_to_starting()
 {
@@ -25,104 +24,110 @@ void Position::set_to_starting()
     set_from_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 }
 
-void Position::set_from_fen(const std::string& fen)
+void Position::set_from_fen(const std::string &fen)
 {
-    auto init_piece_placement = [this] (const std::string& fen_piece_placement)
+    std::istringstream fen_stream(fen);
+    set_from_fen(fen_stream);
+}
+
+void Position::set_from_fen(std::istringstream &fen_stream)
+{
+    auto init_piece_placement = [this](const std::string &fen_piece_placement)
     {
         clear_piece_bitboards_();
         Rank rank = RANK_8;
         File file = FILE_A;
-        for(auto ch : fen_piece_placement)
+        for (auto ch : fen_piece_placement)
         {
             switch (ch)
             {
-                case 'P':
-                    BitBoards::set_square(piece_bitboards_[WH_PAWN], make_square(file, rank));
-                    break;
-                case 'N':
-                    BitBoards::set_square(piece_bitboards_[WH_KNIGHT], make_square(file, rank));
-                    break;
-                case 'B':
-                    BitBoards::set_square(piece_bitboards_[WH_BISHOP], make_square(file, rank));
+            case 'P':
+                BitBoards::set_square(piece_bitboards_[WH_PAWN], make_square(file, rank));
                 break;
-                case 'R':
-                    BitBoards::set_square(piece_bitboards_[WH_ROOK], make_square(file, rank));
-                    break;
-                case 'Q':
-                    BitBoards::set_square(piece_bitboards_[WH_QUEEN], make_square(file, rank));
-                    break;
-                case 'K':
-                    BitBoards::set_square(piece_bitboards_[WH_KING], make_square(file, rank));
-                    break;
+            case 'N':
+                BitBoards::set_square(piece_bitboards_[WH_KNIGHT], make_square(file, rank));
+                break;
+            case 'B':
+                BitBoards::set_square(piece_bitboards_[WH_BISHOP], make_square(file, rank));
+                break;
+            case 'R':
+                BitBoards::set_square(piece_bitboards_[WH_ROOK], make_square(file, rank));
+                break;
+            case 'Q':
+                BitBoards::set_square(piece_bitboards_[WH_QUEEN], make_square(file, rank));
+                break;
+            case 'K':
+                BitBoards::set_square(piece_bitboards_[WH_KING], make_square(file, rank));
+                break;
 
-                case 'p':
-                    BitBoards::set_square(piece_bitboards_[BL_PAWN], make_square(file, rank));
-                    break;
-                case 'n':
-                    BitBoards::set_square(piece_bitboards_[BL_KNIGHT], make_square(file, rank));
-                    break;
-                case 'b':
-                    BitBoards::set_square(piece_bitboards_[BL_BISHOP], make_square(file, rank));
-                    break;
-                case 'r':
-                    BitBoards::set_square(piece_bitboards_[BL_ROOK], make_square(file, rank));
-                    break;
-                case 'q':
-                    BitBoards::set_square(piece_bitboards_[BL_QUEEN], make_square(file, rank));
-                    break;
-                case 'k':
-                    BitBoards::set_square(piece_bitboards_[BL_KING], make_square(file, rank));
-                    break;
+            case 'p':
+                BitBoards::set_square(piece_bitboards_[BL_PAWN], make_square(file, rank));
+                break;
+            case 'n':
+                BitBoards::set_square(piece_bitboards_[BL_KNIGHT], make_square(file, rank));
+                break;
+            case 'b':
+                BitBoards::set_square(piece_bitboards_[BL_BISHOP], make_square(file, rank));
+                break;
+            case 'r':
+                BitBoards::set_square(piece_bitboards_[BL_ROOK], make_square(file, rank));
+                break;
+            case 'q':
+                BitBoards::set_square(piece_bitboards_[BL_QUEEN], make_square(file, rank));
+                break;
+            case 'k':
+                BitBoards::set_square(piece_bitboards_[BL_KING], make_square(file, rank));
+                break;
 
-                case '/':
-                    --rank;
-                    file = FILE_A;
-                    continue;
-                
-                default:
-                    file += ch - '0';
-                    continue;
+            case '/':
+                --rank;
+                file = FILE_A;
+                continue;
+
+            default:
+                file += ch - '0';
+                continue;
             }
             ++file;
         }
     };
 
-    auto init_side_to_move = [this] (const std::string& fen_side_to_move)
+    auto init_side_to_move = [this](const std::string &fen_side_to_move)
     {
         side_to_move_ = fen_side_to_move == "w" ? WHITE : BLACK;
     };
 
-    auto init_castling_rights = [this] (const std::string& fen_castling_rights)
+    auto init_castling_rights = [this](const std::string &fen_castling_rights)
     {
         castling_rights_.clear_all_rights();
-        if(fen_castling_rights == "-")
+        if (fen_castling_rights == "-")
             return;
-        for(auto ch : fen_castling_rights)
+        for (auto ch : fen_castling_rights)
         {
             switch (ch)
             {
-                case 'K':
-                    castling_rights_.set_king_side(WHITE);
-                    break;
-            
-                case 'Q':
-                    castling_rights_.set_queen_side(WHITE);
-                    break;
-            
-                case 'k':
-                    castling_rights_.set_king_side(BLACK);
-                    break;
-            
-                case 'q':
-                    castling_rights_.set_queen_side(BLACK);
-                    break;
+            case 'K':
+                castling_rights_.set_king_side(WHITE);
+                break;
+
+            case 'Q':
+                castling_rights_.set_queen_side(WHITE);
+                break;
+
+            case 'k':
+                castling_rights_.set_king_side(BLACK);
+                break;
+
+            case 'q':
+                castling_rights_.set_queen_side(BLACK);
+                break;
             }
         }
     };
 
-    auto init_en_passant_square = [this] (const std::string& fen_en_passant_square)
+    auto init_en_passant_square = [this](const std::string &fen_en_passant_square)
     {
-        if(fen_en_passant_square == "-")
+        if (fen_en_passant_square == "-")
             en_passant_square_ = N_SQUARES;
         else
         {
@@ -130,34 +135,35 @@ void Position::set_from_fen(const std::string& fen)
         }
     };
 
-    auto init_halfclock = [this] (const std::string& fen_halfclock)
+    auto init_halfclock = [this](const std::string &fen_halfclock)
     {
-        halfclock_ = std::stoul(fen_halfclock);
+        if (!fen_halfclock.empty() || fen_halfclock != "-")
+            halfclock_ = std::stoul(fen_halfclock);
     };
 
-    auto init_moveclock = [this] (const std::string& fen_moveclock)
+    auto init_moveclock = [this](const std::string &fen_moveclock)
     {
-        moveclock_ = std::stoul(fen_moveclock);
+        if (!fen_moveclock.empty() || fen_moveclock != "-")
+            moveclock_ = std::stoul(fen_moveclock);
     };
 
-    std::stringstream fen_stream(fen);
     std::string fen_field;
 
     fen_stream >> fen_field;
     init_piece_placement(fen_field);
-    
+
     fen_stream >> fen_field;
     init_side_to_move(fen_field);
-    
+
     fen_stream >> fen_field;
     init_castling_rights(fen_field);
-    
+
     fen_stream >> fen_field;
     init_en_passant_square(fen_field);
-    
+
     fen_stream >> fen_field;
     init_halfclock(fen_field);
-    
+
     fen_stream >> fen_field;
     init_moveclock(fen_field);
 }
@@ -166,21 +172,21 @@ std::string Position::fen() const
 {
     auto fen_piece_placement = [this]
     {
-        auto fen_rank = [this] (Rank rank)
+        auto fen_rank = [this](Rank rank)
         {
             std::string fen_rank;
             uint32_t gap_counter = 0;
-            for(File file = FILE_A; file < N_FILES; ++file)
+            for (File file = FILE_A; file < N_FILES; ++file)
             {
                 Piece occupant_piece = piece_occupying(make_square(file, rank));
                 char occupant_piece_ch = piece_to_char(occupant_piece);
-                if(occupant_piece_ch == '.')
+                if (occupant_piece_ch == '.')
                 {
                     ++gap_counter;
                 }
                 else
                 {
-                    if(gap_counter)
+                    if (gap_counter)
                     {
                         fen_rank += std::to_string(gap_counter);
                         gap_counter = 0;
@@ -188,7 +194,7 @@ std::string Position::fen() const
                     fen_rank += occupant_piece_ch;
                 }
             }
-            if(gap_counter)
+            if (gap_counter)
             {
                 fen_rank += std::to_string(gap_counter);
                 gap_counter = 0;
@@ -198,7 +204,7 @@ std::string Position::fen() const
 
         std::string fen_piece_placement;
 
-        for(Rank rank = RANK_1; rank < N_RANKS; ++rank)
+        for (Rank rank = RANK_1; rank < N_RANKS; ++rank)
         {
             fen_piece_placement += fen_rank(7 - rank);
             fen_piece_placement += '/';
@@ -217,15 +223,15 @@ std::string Position::fen() const
     auto fen_castling_rights = [this]
     {
         std::string fen_castling_rights;
-        if(castling_rights_.king_side(WHITE))
+        if (castling_rights_.king_side(WHITE))
             fen_castling_rights += 'K';
-        if(castling_rights_.queen_side(WHITE))
+        if (castling_rights_.queen_side(WHITE))
             fen_castling_rights += 'Q';
-        if(castling_rights_.king_side(BLACK))
+        if (castling_rights_.king_side(BLACK))
             fen_castling_rights += 'k';
-        if(castling_rights_.king_side(BLACK))
+        if (castling_rights_.king_side(BLACK))
             fen_castling_rights += 'q';
-        if(fen_castling_rights.empty())
+        if (fen_castling_rights.empty())
             fen_castling_rights = '-';
         return fen_castling_rights;
     };
@@ -233,7 +239,7 @@ std::string Position::fen() const
     auto fen_en_passant_square = [this]
     {
         std::string fen_en_passant_square;
-        if(en_passant_square_ == N_SQUARES)
+        if (en_passant_square_ == N_SQUARES)
             fen_en_passant_square = '-';
         else
             fen_en_passant_square = square_to_str(en_passant_square_);
@@ -265,13 +271,13 @@ std::string Position::pretty() const
 {
     std::string pretty_pos = "----------";
 
-    for(Rank rank = RANK_1; rank < N_RANKS; ++rank)
+    for (Rank rank = RANK_1; rank < N_RANKS; ++rank)
     {
         pretty_pos += '\n';
         pretty_pos += std::to_string(8 - rank);
         pretty_pos += ' ';
 
-        for(File file = FILE_A; file < N_FILES; ++file)
+        for (File file = FILE_A; file < N_FILES; ++file)
         {
             Piece occupant_piece = piece_occupying(make_square(file, 7 - rank));
             pretty_pos += piece_to_char(occupant_piece);
@@ -285,38 +291,37 @@ std::string Position::pretty() const
 
 void Position::make_move(Move move)
 {
-    if(move.is_quite())
+    if (move.is_quite())
         make_quite_move_(move);
 
-    else if(move.is_capture() && move.is_promotion())
+    else if (move.is_capture() && move.is_promotion())
         make_capture_promotion_move_(move);
 
-    else if(move.is_capture() && !move.is_en_passant())
+    else if (move.is_capture() && !move.is_en_passant())
         make_capture_move_(move);
 
-    else if(move.is_en_passant())
+    else if (move.is_en_passant())
         make_en_passant_move_(move);
 
-    else if(move.is_promotion())
+    else if (move.is_promotion())
         make_promotion_move_(move);
 
-    else if(move.is_double_pawn_push())
+    else if (move.is_double_pawn_push())
         make_double_pawn_push_move_(move);
 
-    else if(move.is_king_side_castle())
+    else if (move.is_king_side_castle())
         make_king_side_castling_move_(move);
 
-    else if(move.is_queen_side_castle())
+    else if (move.is_queen_side_castle())
         make_queen_side_castling_move_(move);
 
-
-    if(!castling_rights_.is_all_clear())
+    if (!castling_rights_.is_all_clear())
         update_castling_rights_in_make_(move);
 
     update_en_passant_in_make_(move);
 
     update_halfclock_in_make_(move);
-    
+
     update_moveclock_in_make_(move);
 
     side_to_move_ = toggle_color(side_to_move_);
@@ -325,39 +330,38 @@ void Position::make_move(Move move)
 void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
 {
     side_to_move_ = toggle_color(side_to_move_);
-    
-    if(move.is_quite())
+
+    if (move.is_quite())
         unmake_quite_move_(move);
 
-    else if(move.is_capture() && move.is_promotion())
+    else if (move.is_capture() && move.is_promotion())
         unmake_capture_promotion_move_(move);
 
-    else if(move.is_capture() && !move.is_en_passant())
+    else if (move.is_capture() && !move.is_en_passant())
         unmake_capture_move_(move);
 
-    else if(move.is_en_passant())
+    else if (move.is_en_passant())
         unmake_en_passant_move_(move);
 
-    else if(move.is_promotion())
+    else if (move.is_promotion())
         unmake_promotion_move_(move);
 
-    else if(move.is_double_pawn_push())
+    else if (move.is_double_pawn_push())
         unmake_double_pawn_push_move_(move);
 
-    else if(move.is_king_side_castle())
+    else if (move.is_king_side_castle())
         unmake_king_side_castling_move_(move);
 
-    else if(move.is_queen_side_castle())
+    else if (move.is_queen_side_castle())
         unmake_queen_side_castling_move_(move);
 
-
-    if(!castling_rights_.is_all_set())
+    if (!castling_rights_.is_all_set())
         update_castling_rights_in_unmake_(irrecoverable_state.castling_rights);
 
     update_en_passant_in_unmake_(irrecoverable_state.en_passant_square);
 
     update_halfclock_in_unmake_(irrecoverable_state.halfclock);
-    
+
     update_moveclock_in_unmake_(move);
 }
 
@@ -375,22 +379,31 @@ BitBoard Position::occupancy_bitboard(Color color) const
 {
     /* Maybe we should keep occupancy bitboards instead of calculating them everytime*/
     BitBoard occupancy_bitboard = EMPTY_BB;
-    for(PieceType piece_type = PAWN; piece_type < N_PIECE_TYPES; ++piece_type)
+    for (PieceType piece_type = PAWN; piece_type < N_PIECE_TYPES; ++piece_type)
     {
         occupancy_bitboard |= piece_bitboards_[make_piece(color, piece_type)];
     }
     return occupancy_bitboard;
 }
 
-
 Piece Position::piece_occupying(Square square) const
 {
-    for(Piece piece = WH_PAWN; piece < N_PIECES; ++piece)
+    for (Piece piece = WH_PAWN; piece < N_PIECES; ++piece)
     {
-        if(BitBoards::is_square_set(piece_bitboards_[piece], square))
+        if (BitBoards::is_square_set(piece_bitboards_[piece], square))
             return piece;
     }
     return N_PIECES;
+}
+
+uint8_t Position::piece_count(Piece piece) const
+{
+    return popcount(piece_bitboards_[piece]);
+}
+
+uint8_t Position::piece_count(Color color, PieceType type) const
+{
+    return popcount(piece_bitboards_[make_piece(color, type)]);
 }
 
 bool Position::is_in_check(Color color) const
@@ -422,7 +435,6 @@ BitBoard Position::square_attackers(Square square) const
 
     return attackers;
 }
-
 
 Color Position::side_to_move() const
 {
@@ -456,16 +468,15 @@ Position::IrrecoverableState Position::irrecoverable_state() const
 
 Square Position::en_passant_capture_square(Color side_to_move, Square en_passant_square)
 {
-    if(side_to_move == WHITE)
+    if (side_to_move == WHITE)
         return step<SOUTH>(en_passant_square);
     else
         return step<NORTH>(en_passant_square);
 }
 
-
 void Position::clear_piece_bitboards_()
 {
-    for(auto& piece_bitboard : piece_bitboards_)
+    for (auto &piece_bitboard : piece_bitboards_)
         piece_bitboard = EMPTY_BB;
 }
 
@@ -500,11 +511,13 @@ void Position::make_double_pawn_push_move_(Move move)
 
 void Position::make_king_side_castling_move_(Move move)
 {
-    if(side_to_move_ == WHITE) {
+    if (side_to_move_ == WHITE)
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_E1, SQ_G1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_H1, SQ_F1);
     }
-    else {
+    else
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_E8, SQ_G8);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_H8, SQ_F8);
     }
@@ -512,11 +525,13 @@ void Position::make_king_side_castling_move_(Move move)
 
 void Position::make_queen_side_castling_move_(Move move)
 {
-    if(side_to_move_ == WHITE) {
+    if (side_to_move_ == WHITE)
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_E1, SQ_C1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_A1, SQ_D1);
     }
-    else {
+    else
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_E8, SQ_C8);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_A8, SQ_D8);
     }
@@ -529,41 +544,40 @@ void Position::make_en_passant_move_(Move move)
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
 }
 
-
 void Position::update_castling_rights_in_make_(Move move)
 {
-    if(move.piece_type() == KING)
+    if (move.piece_type() == KING)
         castling_rights_.clear_all_color_rights(side_to_move_);
-    
-    if(move.piece_type() == ROOK)
+
+    if (move.piece_type() == ROOK)
     {
-        if(move.from() == SQ_A1)
+        if (move.from() == SQ_A1)
             castling_rights_.clear_queen_side(WHITE);
-        else if(move.from() == SQ_A8)
+        else if (move.from() == SQ_A8)
             castling_rights_.clear_queen_side(BLACK);
-        else if(move.from() == SQ_H1)
+        else if (move.from() == SQ_H1)
             castling_rights_.clear_king_side(WHITE);
-        else if(move.from() == SQ_H8)
+        else if (move.from() == SQ_H8)
             castling_rights_.clear_king_side(BLACK);
     }
 
-    /* Maybe it is possible rook move case with capture case, or simplify it in some way*/ 
-    if(move.is_capture())
+    /* Maybe it is possible rook move case with capture case, or simplify it in some way*/
+    if (move.is_capture())
     {
-        if(move.to() == SQ_A1)
+        if (move.to() == SQ_A1)
             castling_rights_.clear_queen_side(WHITE);
-        else if(move.to() == SQ_A8)
+        else if (move.to() == SQ_A8)
             castling_rights_.clear_queen_side(BLACK);
-        else if(move.to() == SQ_H1)
+        else if (move.to() == SQ_H1)
             castling_rights_.clear_king_side(WHITE);
-        else if(move.to() == SQ_H8)
+        else if (move.to() == SQ_H8)
             castling_rights_.clear_king_side(BLACK);
     }
 }
 
 void Position::update_en_passant_in_make_(Move move)
 {
-    if(move.is_double_pawn_push())
+    if (move.is_double_pawn_push())
         en_passant_square_ = square_in_between(move.from(), move.to());
     else
         en_passant_square_ = N_SQUARES;
@@ -571,7 +585,7 @@ void Position::update_en_passant_in_make_(Move move)
 
 void Position::update_halfclock_in_make_(Move move)
 {
-    if(move.piece_type() == PAWN || move.is_capture())
+    if (move.piece_type() == PAWN || move.is_capture())
         halfclock_ = 0;
     else
         ++halfclock_;
@@ -579,7 +593,7 @@ void Position::update_halfclock_in_make_(Move move)
 
 void Position::update_moveclock_in_make_(Move move)
 {
-    if(side_to_move_ == BLACK)
+    if (side_to_move_ == BLACK)
         ++moveclock_;
 }
 
@@ -614,23 +628,27 @@ void Position::unmake_double_pawn_push_move_(Move move)
 
 void Position::unmake_king_side_castling_move_(Move move)
 {
-    if(side_to_move_ == WHITE) {
+    if (side_to_move_ == WHITE)
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_G1, SQ_E1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_F1, SQ_H1);
     }
-    else {
+    else
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_G8, SQ_E8);
-        move_piece_(make_piece(side_to_move_, ROOK), SQ_F8, SQ_H8);   
+        move_piece_(make_piece(side_to_move_, ROOK), SQ_F8, SQ_H8);
     }
 }
 
 void Position::unmake_queen_side_castling_move_(Move move)
 {
-    if(side_to_move_ == WHITE) {
+    if (side_to_move_ == WHITE)
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_C1, SQ_E1);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_D1, SQ_A1);
     }
-    else {
+    else
+    {
         move_piece_(make_piece(side_to_move_, KING), SQ_C8, SQ_E8);
         move_piece_(make_piece(side_to_move_, ROOK), SQ_D8, SQ_A8);
     }
@@ -643,7 +661,6 @@ void Position::unmake_en_passant_move_(Move move)
     add_piece_(make_piece(toggle_color(side_to_move_), PAWN), capture_square);
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
 }
-
 
 void Position::update_castling_rights_in_unmake_(CastlingRights castling_rights)
 {
@@ -662,11 +679,9 @@ void Position::update_halfclock_in_unmake_(uint32_t halfclock)
 
 void Position::update_moveclock_in_unmake_(Move move)
 {
-    if(side_to_move_ == BLACK)
+    if (side_to_move_ == BLACK)
         --moveclock_;
 }
-
-
 
 void Position::add_piece_(Piece piece, Square square)
 {

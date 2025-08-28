@@ -23,6 +23,7 @@ class Position
 
     void set_to_starting();
     void set_from_fen(const std::string& fen);
+    void set_from_fen(std::istringstream& fen_stream);
     std::string fen() const;
     std::string pretty() const;
 
@@ -34,6 +35,10 @@ class Position
     BitBoard occupancy_bitboard(Color color) const;
     
     Piece piece_occupying(Square square) const;
+
+    /*Is this cache friendly?*/
+    uint8_t piece_count(Piece piece) const;
+    uint8_t piece_count(Color color, PieceType type) const;
 
     bool is_in_check(Color color) const;
     bool is_square_attacked(Square square, Color color) const;
