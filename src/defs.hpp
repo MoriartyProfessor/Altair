@@ -15,6 +15,7 @@ using Rank = uint32_t;
 using Direction = uint32_t;
 
 const uint32_t MAX_DEPTH = 64;
+const uint32_t MAX_MOVE_ARRAY_SIZE = 218;
 const uint32_t MOVE_LIST_SIZE = 128;
 
 enum PieceTypes : PieceType 
@@ -186,6 +187,29 @@ inline Direction invert_direction(Direction direction)
     return (direction + 4) % N_DIRECTIONS;
 }
 
+inline char piece_type_to_char(PieceType piece_type)
+{
+    if(piece_type == N_PIECE_TYPES)
+        return '.';
+
+    char piece_ch;
+
+    if(piece_type == PAWN)
+        piece_ch = 'P';
+    if(piece_type == KNIGHT)
+        piece_ch = 'N';
+    if(piece_type == BISHOP)
+        piece_ch = 'B';
+    if(piece_type == ROOK)
+        piece_ch = 'R';
+    if(piece_type == QUEEN)
+        piece_ch = 'Q';
+    if(piece_type == KING)
+        piece_ch = 'K';
+        
+    return piece_ch;
+}
+
 inline char piece_to_char(Piece piece)
 {
     if(piece == N_PIECES)
@@ -194,20 +218,7 @@ inline char piece_to_char(Piece piece)
     PieceType type = get_type(piece);
     Color color = get_color(piece);
 
-    char piece_ch;
-
-    if(type == PAWN)
-        piece_ch = 'P';
-    if(type == KNIGHT)
-        piece_ch = 'N';
-    if(type == BISHOP)
-        piece_ch = 'B';
-    if(type == ROOK)
-        piece_ch = 'R';
-    if(type == QUEEN)
-        piece_ch = 'Q';
-    if(type == KING)
-        piece_ch = 'K';
+    char piece_ch = piece_type_to_char(type);
 
     if(color == BLACK)
         piece_ch += 32;
