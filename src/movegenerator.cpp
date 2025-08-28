@@ -211,7 +211,25 @@ void MoveGenerator::gen_castling_moves_()
     
     Square  king_square = side_to_move == WHITE ? SQ_E1 : SQ_E8,
             queen_rook_square = side_to_move == WHITE ? SQ_A1 : SQ_A8,
-            king_rook_square = side_to_move == WHITE ? SQ_H1 : SQ_H8;
+            king_rook_square = side_to_move == WHITE ? SQ_H1 : SQ_H8,
+            king_side_target_square = side_to_move == WHITE ? SQ_G1 : SQ_G8,
+            queen_side_target_square = side_to_move == WHITE ? SQ_C1 : SQ_C8;
+
+    if(rights.king_side(side_to_move))
+    {
+        BitBoard king_side_mask = KING_SIDE_CASTLE_MASKS_BB[position_->side_to_move()];
+        bool permission =   !(((king_side_mask & position_->occupancy_bitboard()) != EMPTY_BB) ||
+                            ((position_->piece_bitboard(side_to_move, PieceTypes::ROOK) & BitBoards::square_set_in(king_rook_square)) == EMPTY_BB) ||
+                            position_->is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)) ||
+                            position_->is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)));
+        if(permission)
+        {
+            Move move{king_square, king_side_target_square};
+            move.set_piece_type(PieceTypes::KING);
+            move.set_king_side_castle();
+            moves_->push_back(move);
+        }
+    }
 
     if(rights.queen_side(side_to_move))
     {
@@ -224,25 +242,9 @@ void MoveGenerator::gen_castling_moves_()
 
         if(permission)
         {
-            Move move{king_square, queen_rook_square};
+            Move move{king_square, queen_side_target_square};
             move.set_piece_type(PieceTypes::KING);
             move.set_queen_side_castle();
-            moves_->push_back(move);
-        }
-    }
-
-    if(rights.king_side(side_to_move))
-    {
-        BitBoard king_side_mask = KING_SIDE_CASTLE_MASKS_BB[position_->side_to_move()];
-        bool permission =   !(((king_side_mask & position_->occupancy_bitboard()) != EMPTY_BB) ||
-                            ((position_->piece_bitboard(side_to_move, PieceTypes::ROOK) & BitBoards::square_set_in(king_rook_square)) == EMPTY_BB) ||
-                            position_->is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)) ||
-                            position_->is_square_attacked(pop_LSB(king_side_mask), toggle_color(side_to_move)));
-        if(permission)
-        {
-            Move move{king_square, king_rook_square};
-            move.set_piece_type(PieceTypes::KING);
-            move.set_king_side_castle();
             moves_->push_back(move);
         }
     }
