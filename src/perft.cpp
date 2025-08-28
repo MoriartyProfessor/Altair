@@ -10,7 +10,7 @@ Position::IrrecoverableState irrecoverable_states_[MAX_DEPTH];
 uint64_t Perft::test(Position &position, uint32_t depth)
 {
     std::vector<Move> moves;
-    moves.reserve(256);
+    moves.reserve(MAX_MOVE_ARRAY_SIZE);
     if (depth == 0)
         return 1;
 
@@ -47,7 +47,7 @@ void Perft::thorough_test(Position &position, Result &result, Move move, uint32_
     }
 
     std::vector<Move> moves;
-    moves.reserve(256);
+    moves.reserve(MAX_MOVE_ARRAY_SIZE);
 
     MoveGenerator move_generator_{&position, &moves};
     move_generator_.gen_all_moves();
