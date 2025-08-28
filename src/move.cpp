@@ -132,7 +132,7 @@ std::string Move::uci_notation() const
     uci += square_to_str(to());
     if (is_promotion())
     {
-        uci += piece_to_char(promotion_piece_type());
+        uci += piece_type_to_char(promotion_piece_type());
     }
 
     return uci;
