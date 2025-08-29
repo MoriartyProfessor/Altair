@@ -55,6 +55,21 @@ Tests:
 - [x] Perft Test
 
 
+## Current To-Do list
+
+* Move Generation optimizations
+    * Stack Allocated container for moves
+    * Keep bitborads by color
+* Search Improvements
+    * Alpha-Beta pruning
+    * Move Ordering
+        * MVA-LAA
+        * Transposition table
+    * Iterative deepening
+    * Quiescence
+    * Separate thread for search
+* Evaluation
+
 ## Dependencies
 
 ## Building
