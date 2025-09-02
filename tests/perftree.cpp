@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
     Position position{postition_str};
 
-    boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
+    MoveList moves;
 
     Position::IrrecoverableState irrecoverable_state;
 

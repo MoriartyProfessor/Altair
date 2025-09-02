@@ -9,7 +9,7 @@ Position::IrrecoverableState irrecoverable_states_[MAX_DEPTH];
 
 uint64_t Perft::test(Position position, uint32_t depth)
 {
-    boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
+    MoveList moves;
     if (depth == 0)
         return 1;
 
@@ -44,7 +44,7 @@ void Perft::thorough_test(Position &position, Result &result, Move move, uint32_
         return;
     }
 
-    boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
+    MoveList moves;
 
     MoveGenerator move_generator_{&position, &moves};
     move_generator_.gen_all_moves();

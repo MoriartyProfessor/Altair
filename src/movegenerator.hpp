@@ -6,6 +6,8 @@
 #include "move.hpp"
 #include "position.hpp"
 
+using MoveList = boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE>;
+
 class MoveGenerator
 {
     public:
@@ -16,7 +18,7 @@ class MoveGenerator
         GENERATE_TACTICAL
     };
 
-    MoveGenerator(const Position* position, boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE>* moves);
+    MoveGenerator(const Position* position, MoveList* moves);
 
     void gen_all_moves();
     void gen_tactical_moves();
@@ -39,7 +41,7 @@ class MoveGenerator
     void add_piece_moves_(Square from, BitBoard attacks);
 
     private:
-    boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE>* moves_;
+    MoveList* moves_;
     const Position* position_;
 };
 

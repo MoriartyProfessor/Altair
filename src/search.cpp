@@ -19,7 +19,7 @@ namespace Search
         if (current_depth == 0)
             return Evaluation::evaluate(position);
 
-        boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
+        MoveList moves;
 
         MoveGenerator move_generator_{&position, &moves};
         move_generator_.gen_all_moves();
@@ -54,7 +54,7 @@ namespace Search
 
     Move search(Position &position)
     {
-        boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
+        MoveList moves;
 
         MoveGenerator move_generator_{&position, &moves};
         move_generator_.gen_all_moves();
