@@ -59,7 +59,7 @@ class Position
 
     private:
 
-    void clear_piece_bitboards_();
+    void clear_bitboards_();
 
     void make_quite_move_                   (Move move);
     void make_capture_move_                 (Move move);
@@ -96,6 +96,7 @@ class Position
 
     private:
     BitBoard piece_bitboards_[N_PIECES];
+    BitBoard occupancy_bitboards_[N_COLORS + 1];
     Color side_to_move_ = WHITE;
     CastlingRights castling_rights_;
     Square en_passant_square_ = N_SQUARES;

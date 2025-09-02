@@ -40,7 +40,7 @@ namespace BitBoards
     }
 
     std::string prettify(BitBoard);
-    BitBoard from_string(const std::string& string);
+    BitBoard from_string(const std::string &string);
 }
 
 /* Maybe should be moved inside the namespace */
@@ -77,15 +77,28 @@ constexpr BitBoard QUEEN_SIDE_CASTLE_PATH_MASKS_BB[N_COLORS] = {0xCULL, 0xC00000
 
 namespace BitBoards
 {
-    template<Direction direction> inline BitBoard step(BitBoard bitboard) { static_assert(direction < N_DIRECTIONS); return N_SQUARES;}
-    template<> inline BitBoard step<NORTH>      (BitBoard bitboard) {return (bitboard << 8);}
-    template<> inline BitBoard step<NORTH_WEST> (BitBoard bitboard) {return (bitboard << 7) & (~FILE_H_BB);}
-    template<> inline BitBoard step<WEST>       (BitBoard bitboard) {return (bitboard >> 1) & (~FILE_H_BB);}
-    template<> inline BitBoard step<SOUTH_WEST> (BitBoard bitboard) {return (bitboard >> 9) & (~FILE_H_BB);}
-    template<> inline BitBoard step<SOUTH>      (BitBoard bitboard) {return (bitboard >> 8);}
-    template<> inline BitBoard step<SOUTH_EAST> (BitBoard bitboard) {return (bitboard >> 7) & (~FILE_A_BB);}
-    template<> inline BitBoard step<EAST>       (BitBoard bitboard) {return (bitboard << 1) & (~FILE_A_BB);}
-    template<> inline BitBoard step<NORTH_EAST> (BitBoard bitboard) {return (bitboard << 9) & (~FILE_A_BB);}
+    template <Direction direction>
+    inline BitBoard step(BitBoard bitboard)
+    {
+        static_assert(direction < N_DIRECTIONS);
+        return N_SQUARES;
+    }
+    template <>
+    inline BitBoard step<NORTH>(BitBoard bitboard) { return (bitboard << 8); }
+    template <>
+    inline BitBoard step<NORTH_WEST>(BitBoard bitboard) { return (bitboard << 7) & (~FILE_H_BB); }
+    template <>
+    inline BitBoard step<WEST>(BitBoard bitboard) { return (bitboard >> 1) & (~FILE_H_BB); }
+    template <>
+    inline BitBoard step<SOUTH_WEST>(BitBoard bitboard) { return (bitboard >> 9) & (~FILE_H_BB); }
+    template <>
+    inline BitBoard step<SOUTH>(BitBoard bitboard) { return (bitboard >> 8); }
+    template <>
+    inline BitBoard step<SOUTH_EAST>(BitBoard bitboard) { return (bitboard >> 7) & (~FILE_A_BB); }
+    template <>
+    inline BitBoard step<EAST>(BitBoard bitboard) { return (bitboard << 1) & (~FILE_A_BB); }
+    template <>
+    inline BitBoard step<NORTH_EAST>(BitBoard bitboard) { return (bitboard << 9) & (~FILE_A_BB); }
 }
 
 #endif // ALTAIR_BITBOARD_HPP
