@@ -34,7 +34,7 @@ void Position::set_from_fen(std::istringstream &fen_stream)
 {
     auto init_piece_placement = [this](const std::string &fen_piece_placement)
     {
-        clear_piece_bitboards_();
+        clear_bitboards_();
         Rank rank = RANK_8;
         File file = FILE_A;
         for (auto ch : fen_piece_placement)
@@ -43,40 +43,64 @@ void Position::set_from_fen(std::istringstream &fen_stream)
             {
             case 'P':
                 BitBoards::set_square(piece_bitboards_[WH_PAWN], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[WHITE], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'N':
                 BitBoards::set_square(piece_bitboards_[WH_KNIGHT], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[WHITE], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'B':
                 BitBoards::set_square(piece_bitboards_[WH_BISHOP], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[WHITE], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'R':
                 BitBoards::set_square(piece_bitboards_[WH_ROOK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[WHITE], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'Q':
                 BitBoards::set_square(piece_bitboards_[WH_QUEEN], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[WHITE], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'K':
                 BitBoards::set_square(piece_bitboards_[WH_KING], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[WHITE], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
 
             case 'p':
                 BitBoards::set_square(piece_bitboards_[BL_PAWN], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[BLACK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'n':
                 BitBoards::set_square(piece_bitboards_[BL_KNIGHT], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[BLACK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'b':
                 BitBoards::set_square(piece_bitboards_[BL_BISHOP], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[BLACK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'r':
                 BitBoards::set_square(piece_bitboards_[BL_ROOK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[BLACK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'q':
                 BitBoards::set_square(piece_bitboards_[BL_QUEEN], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[BLACK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
             case 'k':
                 BitBoards::set_square(piece_bitboards_[BL_KING], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[BLACK], make_square(file, rank));
+                BitBoards::set_square(occupancy_bitboards_[N_COLORS], make_square(file, rank));
                 break;
 
             case '/':
@@ -372,18 +396,12 @@ BitBoard Position::piece_bitboard(Color color, PieceType type) const
 
 BitBoard Position::occupancy_bitboard() const
 {
-    return occupancy_bitboard(WHITE) | occupancy_bitboard(BLACK);
+    return occupancy_bitboards_[N_COLORS];
 }
 
 BitBoard Position::occupancy_bitboard(Color color) const
 {
-    /* Maybe we should keep occupancy bitboards instead of calculating them everytime*/
-    BitBoard occupancy_bitboard = EMPTY_BB;
-    for (PieceType piece_type = PAWN; piece_type < N_PIECE_TYPES; ++piece_type)
-    {
-        occupancy_bitboard |= piece_bitboards_[make_piece(color, piece_type)];
-    }
-    return occupancy_bitboard;
+    return occupancy_bitboards_[color];
 }
 
 Piece Position::piece_occupying(Square square) const
@@ -478,10 +496,12 @@ Square Position::en_passant_capture_square(Color side_to_move, Square en_passant
         return step<NORTH>(en_passant_square);
 }
 
-void Position::clear_piece_bitboards_()
+void Position::clear_bitboards_()
 {
     for (auto &piece_bitboard : piece_bitboards_)
         piece_bitboard = EMPTY_BB;
+    for (auto &occupancy_bitboard : occupancy_bitboards_)
+        occupancy_bitboard = EMPTY_BB;
 }
 
 void Position::make_quite_move_(Move move)
@@ -690,11 +710,15 @@ void Position::update_moveclock_in_unmake_(Move move)
 void Position::add_piece_(Piece piece, Square square)
 {
     BitBoards::set_square(piece_bitboards_[piece], square);
+    BitBoards::set_square(occupancy_bitboards_[get_color(piece)], square);
+    BitBoards::set_square(occupancy_bitboards_[N_COLORS], square);
 }
 
 void Position::remove_piece_(Piece piece, Square square)
 {
     BitBoards::clear_square(piece_bitboards_[piece], square);
+    BitBoards::clear_square(occupancy_bitboards_[get_color(piece)], square);
+    BitBoards::clear_square(occupancy_bitboards_[N_COLORS], square);
 }
 
 void Position::move_piece_(Piece piece, Square from, Square to)
@@ -705,4 +729,6 @@ void Position::move_piece_(Piece piece, Square from, Square to)
     BitBoards::set_square(from_to_BB, to);
 
     piece_bitboards_[piece] ^= from_to_BB;
+    occupancy_bitboards_[get_color(piece)] ^= from_to_BB;
+    occupancy_bitboards_[N_COLORS] ^= from_to_BB;
 }
