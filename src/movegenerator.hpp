@@ -1,7 +1,7 @@
 #ifndef ALTAIR_MOVEGENERATOR_HPP
 #define ALTAIR_MOVEGENERATOR_HPP
 
-#include <vector>
+#include <boost/container/small_vector.hpp>
 
 #include "move.hpp"
 #include "position.hpp"
@@ -16,7 +16,7 @@ class MoveGenerator
         GENERATE_TACTICAL
     };
 
-    MoveGenerator(const Position* position, std::vector<Move>* moves);
+    MoveGenerator(const Position* position, boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE>* moves);
 
     void gen_all_moves();
     void gen_tactical_moves();
@@ -39,7 +39,7 @@ class MoveGenerator
     void add_piece_moves_(Square from, BitBoard attacks);
 
     private:
-    std::vector<Move>* moves_;
+    boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE>* moves_;
     const Position* position_;
 };
 

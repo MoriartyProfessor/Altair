@@ -19,8 +19,7 @@ namespace Search
         if (current_depth == 0)
             return Evaluation::evaluate(position);
 
-        std::vector<Move> moves;
-        moves.reserve(MAX_MOVE_ARRAY_SIZE);
+        boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
 
         MoveGenerator move_generator_{&position, &moves};
         move_generator_.gen_all_moves();
@@ -55,8 +54,7 @@ namespace Search
 
     Move search(Position &position)
     {
-        std::vector<Move> moves;
-        moves.reserve(MAX_MOVE_ARRAY_SIZE);
+        boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
 
         MoveGenerator move_generator_{&position, &moves};
         move_generator_.gen_all_moves();

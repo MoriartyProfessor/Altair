@@ -14,7 +14,7 @@ namespace Perft
         uint64_t promotions = 0;
         uint64_t checks = 0;
     };
-    uint64_t test(Position &position, uint32_t depth);
+    uint64_t test(Position position, uint32_t depth);
     void thorough_test(Position &position, Result &result, Move move, uint32_t depth);
 }
 
