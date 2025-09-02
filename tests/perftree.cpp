@@ -25,8 +25,7 @@ int main(int argc, char *argv[])
 
     Position position{postition_str};
 
-    std::vector<Move> moves;
-    moves.reserve(256);
+    boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE> moves;
 
     Position::IrrecoverableState irrecoverable_state;
 

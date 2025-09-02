@@ -414,26 +414,30 @@ bool Position::is_in_check(Color color) const
 
 bool Position::is_square_attacked(Square square, Color color) const
 {
-    return square_attackers(square) & occupancy_bitboard(color);
+    return square_attackers(square, color) & occupancy_bitboard(color);
 }
 
-BitBoard Position::square_attackers(Square square) const
+BitBoard Position::square_attackers(Square square, Color color) const
 {
     BitBoard knights, bishop_queens, rook_queens, kings;
-    knights = piece_bitboard(WHITE, KNIGHT) | piece_bitboard(BLACK, KNIGHT);
-    bishop_queens = rook_queens = piece_bitboard(WHITE, QUEEN) | piece_bitboard(BLACK, QUEEN);
-    bishop_queens |= piece_bitboard(WHITE, BISHOP) | piece_bitboard(BLACK, BISHOP);
-    rook_queens |= piece_bitboard(WHITE, ROOK) | piece_bitboard(BLACK, ROOK);
-    kings = piece_bitboard(WHITE, KING) | piece_bitboard(BLACK, KING);
+    knights = piece_bitboard(color, KNIGHT);
+    bishop_queens = rook_queens = piece_bitboard(color, QUEEN);
+    bishop_queens |= piece_bitboard(color, BISHOP);
+    rook_queens |= piece_bitboard(color, ROOK);
+    kings = piece_bitboard(color, KING);
 
-    BitBoard attackers = piece_bitboard(WHITE, PAWN) & Patterns::get_pawn_attacks(square, BLACK);
-    attackers |= piece_bitboard(BLACK, PAWN) & Patterns::get_pawn_attacks(square, WHITE);
+    BitBoard attackers = piece_bitboard(color, PAWN) & Patterns::get_pawn_attacks(square, toggle_color(color));
     attackers |= knights & Patterns::get_knight_attacks(square);
     attackers |= bishop_queens & Patterns::get_bishop_attacks(square, occupancy_bitboard());
     attackers |= rook_queens & Patterns::get_rook_attacks(square, occupancy_bitboard());
     attackers |= kings & Patterns::get_king_attacks(square);
 
     return attackers;
+}
+
+BitBoard Position::square_attackers(Square square) const
+{
+    return square_attackers(square, WHITE) | square_attackers(square, BLACK);
 }
 
 Color Position::side_to_move() const

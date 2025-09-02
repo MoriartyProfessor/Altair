@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-MoveGenerator::MoveGenerator(const Position* position, std::vector<Move>* moves)
+MoveGenerator::MoveGenerator(const Position* position, boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE>* moves)
 : position_{position}, moves_{moves}
 {
 
