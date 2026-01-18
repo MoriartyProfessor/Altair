@@ -26,7 +26,7 @@ class Move
     PieceType capture_piece_type() const;
     PieceType promotion_piece_type() const;
 
-    bool is_quite() const;
+    bool is_quiet() const;
     bool is_capture() const;
     bool is_promotion() const;
     bool is_double_pawn_push() const;
@@ -41,7 +41,7 @@ class Move
     void set_capture_piece_type(PieceType type);
     void set_promotion_piece_type(PieceType type);
 
-    void set_quite();
+    void set_quiet();
     void set_capture();
     void set_promotion();
     void set_double_pawn_push();
@@ -57,7 +57,7 @@ class Move
 
     enum FlagBit
     {
-        QUITE,
+        QUIET,
         CAPTURE,
         PROMOTION,
         DOUBLE_PAWN_PUSH,

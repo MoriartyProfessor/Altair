@@ -315,8 +315,8 @@ std::string Position::pretty() const
 
 void Position::make_move(Move move)
 {
-    if (move.is_quite())
-        make_quite_move_(move);
+    if (move.is_quiet())
+        make_quiet_move_(move);
 
     else if (move.is_capture() && move.is_promotion())
         make_capture_promotion_move_(move);
@@ -355,8 +355,8 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
 {
     side_to_move_ = toggle_color(side_to_move_);
 
-    if (move.is_quite())
-        unmake_quite_move_(move);
+    if (move.is_quiet())
+        unmake_quiet_move_(move);
 
     else if (move.is_capture() && move.is_promotion())
         unmake_capture_promotion_move_(move);
@@ -504,7 +504,7 @@ void Position::clear_bitboards_()
         occupancy_bitboard = EMPTY_BB;
 }
 
-void Position::make_quite_move_(Move move)
+void Position::make_quiet_move_(Move move)
 {
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.from(), move.to());
 }
@@ -621,7 +621,7 @@ void Position::update_moveclock_in_make_(Move move)
         ++moveclock_;
 }
 
-void Position::unmake_quite_move_(Move move)
+void Position::unmake_quiet_move_(Move move)
 {
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
 }
