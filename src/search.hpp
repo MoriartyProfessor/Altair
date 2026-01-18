@@ -6,6 +6,14 @@
 
 namespace Search
 {
+    struct SearchInfo
+    {
+        int depth;
+        int score;
+        Move best_move;
+        bool is_mate;
+        bool is_draw;
+    };
     Move search(Position &position);
 }
 
