@@ -75,7 +75,7 @@ void MoveGenerator::gen_pawn_moves_()
     {
         Move move{step<r_SOUTH>(push_sq), push_sq};
         
-        move.set_quite();
+        move.set_quiet();
         move.set_piece_type(PAWN);
         moves_->push_back(move);
     }
@@ -266,7 +266,7 @@ void MoveGenerator::add_piece_moves_(Square from, BitBoard attacks)
         }
         else
         {
-            move.set_quite();
+            move.set_quiet();
         }
 
         moves_->push_back(move);

@@ -51,7 +51,7 @@ PieceType Move::promotion_piece_type() const
     return (move_ >> 18) & 0x7;
 }
 
-bool Move::is_quite()               const { return (move_ >> 21) & (1 << QUITE); }
+bool Move::is_quiet()               const { return (move_ >> 21) & (1 << QUIET); }
 bool Move::is_capture()             const { return (move_ >> 21) & (1 << CAPTURE); }
 bool Move::is_promotion()           const { return (move_ >> 21) & (1 << PROMOTION); }
 bool Move::is_double_pawn_push()    const { return (move_ >> 21) & (1 << DOUBLE_PAWN_PUSH); }
@@ -95,7 +95,7 @@ void Move::set_promotion_piece_type(PieceType type)
     move_ |= mask & (type << 18);
 }
 
-void Move::set_quite()              { set_flag(QUITE); }
+void Move::set_quiet()              { set_flag(QUIET); }
 void Move::set_capture()            { set_flag(CAPTURE); }
 void Move::set_promotion()          { set_flag(PROMOTION); }
 void Move::set_double_pawn_push()   { set_flag(DOUBLE_PAWN_PUSH); }

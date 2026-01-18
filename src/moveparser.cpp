@@ -52,7 +52,7 @@ Move CoordinateMoveParser::parse_move(const std::string& descriptor)
     }
     else if(!move.is_promotion())
     {
-        move.set_quite();
+        move.set_quiet();
     }
     return move;
 }

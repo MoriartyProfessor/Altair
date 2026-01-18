@@ -61,7 +61,7 @@ class Position
 
     void clear_bitboards_();
 
-    void make_quite_move_                   (Move move);
+    void make_quiet_move_                   (Move move);
     void make_capture_move_                 (Move move);
     void make_promotion_move_               (Move move);
     void make_capture_promotion_move_       (Move move);
@@ -75,7 +75,7 @@ class Position
     void update_halfclock_in_make_          (Move move);
     void update_moveclock_in_make_          (Move move);
 
-    void unmake_quite_move_                 (Move move);
+    void unmake_quiet_move_                 (Move move);
     void unmake_capture_move_               (Move move);
     void unmake_promotion_move_             (Move move);
     void unmake_capture_promotion_move_     (Move move);
