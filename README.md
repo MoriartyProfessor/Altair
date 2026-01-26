@@ -57,17 +57,20 @@ Tests:
 
 ## Current To-Do list
 
-* Move Generation optimizations
-    * Stack Allocated container for moves
-    * Keep bitborads by color
-* Search Improvements
-    * Alpha-Beta pruning
-    * Move Ordering
+### Features to implment before setting up SRPT
+
+* Alpha-Beta pruning
+* Move Ordering
         * MVA-LAA
+* Separate thread for search
+* Material + PS tables
+
+### Next
+* Search Improvements
+    * Move Ordering
         * Transposition table
     * Iterative deepening
     * Quiescence
-    * Separate thread for search
 * Evaluation
 
 ## Dependencies
