@@ -35,3 +35,6 @@ add_library(${CMAKE_PROJECT_NAME}_lib STATIC
     ${SOURCE_FILES}
     ${HEADER_FILES}
 )
+
+find_package(Boost)
+target_include_directories(${CMAKE_PROJECT_NAME}_lib PUBLIC ${Boost_INCLUDE_DIRS})
