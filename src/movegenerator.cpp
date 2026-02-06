@@ -71,22 +71,24 @@ void MoveGenerator::gen_pawn_moves_()
     promotion_right_attacks = right_attacks & promotion_rank_BB;
     push_targets &= ~promotion_rank_BB; left_attacks &= ~promotion_rank_BB; right_attacks &= ~promotion_rank_BB;
 
-    for(Square push_sq = pop_LSB(push_targets); push_sq != N_SQUARES; push_sq = pop_LSB(push_targets))
-    {
-        Move move{step<r_SOUTH>(push_sq), push_sq};
+    if constexpr (config == Config::GENERATE_ALL) {
+        for(Square push_sq = pop_LSB(push_targets); push_sq != N_SQUARES; push_sq = pop_LSB(push_targets))
+        {
+            Move move{step<r_SOUTH>(push_sq), push_sq};
         
-        move.set_quiet();
-        move.set_piece_type(PAWN);
-        moves_->push_back(move);
-    }
+            move.set_quiet();
+            move.set_piece_type(PAWN);
+            moves_->push_back(move);
+        }
 
-    for(Square double_push_sq = pop_LSB(double_push_targets); double_push_sq != N_SQUARES; double_push_sq = pop_LSB(double_push_targets))
-    {
-        Move move{step<r_SOUTH>(double_push_sq, 2), double_push_sq};
+        for(Square double_push_sq = pop_LSB(double_push_targets); double_push_sq != N_SQUARES; double_push_sq = pop_LSB(double_push_targets))
+        {
+            Move move{step<r_SOUTH>(double_push_sq, 2), double_push_sq};
 
-        move.set_double_pawn_push();
-        move.set_piece_type(PAWN);
-        moves_->push_back(move);
+            move.set_double_pawn_push();
+            move.set_piece_type(PAWN);
+            moves_->push_back(move);
+        }
     }
     
     for(Square attack = pop_LSB(left_attacks); attack != N_SQUARES; attack = pop_LSB(left_attacks))
@@ -266,6 +268,8 @@ void MoveGenerator::add_piece_moves_(Square from, BitBoard attacks)
         }
         else
         {
+            if constexpr (config != Config::GENERATE_ALL)
+                continue;
             move.set_quiet();
         }
 
