@@ -20,7 +20,7 @@ Move MoveOrderer::next()
             max_index = i;
         }
     }
-    std::swap(moves_[i], moves_[current_index_]);
+    std::swap(moves_[max_index], moves_[current_index_]);
     return moves_[current_index_++];
 }
 
