@@ -7,6 +7,7 @@ set(HEADER_FILES
     engineinfo.hpp
     move.hpp
     movegenerator.hpp
+    moveorderer.hpp
     moveparser.hpp
     patterns.hpp
     perft.hpp
@@ -22,6 +23,7 @@ set(SOURCE_FILES
     eval.cpp
     move.cpp
     movegenerator.cpp
+    moveorderer.cpp
     moveparser.cpp
     patterns.cpp
     perft.cpp
