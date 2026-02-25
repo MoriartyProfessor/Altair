@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <string>
 
-// Might want to use more compact integers in future
+/* Might want to use more compact integers in future */
 using BitBoard = uint64_t;
 using PieceType = uint32_t;
 using Piece = uint32_t;
@@ -152,7 +152,11 @@ inline Square make_square(File file, Rank rank)
     return (rank << 3) + file;
 }
 
-inline Square make_piece(Color color, PieceType type)
+inline Square relative_square(Square square, Color color) {
+    return color == WHITE ? square : make_square(get_file(square), N_RANKS - get_rank(square) - 1);
+}
+
+inline Piece make_piece(Color color, PieceType type)
 {
     return (type << 1) + color;
 }

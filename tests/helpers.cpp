@@ -208,6 +208,43 @@ TEST(conversions, make_square)
     EXPECT_EQ(make_square(FILE_E, RANK_7), SQ_E7);
 }
 
+TEST(conversions, relative_square)
+{
+    EXPECT_EQ(relative_square(SQ_A4, WHITE), SQ_A4);
+    EXPECT_EQ(relative_square(SQ_C1, WHITE), SQ_C1);
+    EXPECT_EQ(relative_square(SQ_H3, WHITE), SQ_H3);
+    EXPECT_EQ(relative_square(SQ_D4, WHITE), SQ_D4);
+    EXPECT_EQ(relative_square(SQ_E2, WHITE), SQ_E2);
+    EXPECT_EQ(relative_square(SQ_B4, WHITE), SQ_B4);
+    EXPECT_EQ(relative_square(SQ_G1, WHITE), SQ_G1);
+    EXPECT_EQ(relative_square(SQ_B2, WHITE), SQ_B2);
+    EXPECT_EQ(relative_square(SQ_A5, WHITE), SQ_A5);
+    EXPECT_EQ(relative_square(SQ_H6, WHITE), SQ_H6);
+    EXPECT_EQ(relative_square(SQ_D3, WHITE), SQ_D3);
+    EXPECT_EQ(relative_square(SQ_G2, WHITE), SQ_G2);
+    EXPECT_EQ(relative_square(SQ_F7, WHITE), SQ_F7);
+    EXPECT_EQ(relative_square(SQ_B3, WHITE), SQ_B3);
+    EXPECT_EQ(relative_square(SQ_D8, WHITE), SQ_D8);
+    EXPECT_EQ(relative_square(SQ_E7, WHITE), SQ_E7);
+
+    EXPECT_EQ(relative_square(SQ_A4, BLACK), SQ_A5);
+    EXPECT_EQ(relative_square(SQ_C1, BLACK), SQ_C8);
+    EXPECT_EQ(relative_square(SQ_H3, BLACK), SQ_H6);
+    EXPECT_EQ(relative_square(SQ_D4, BLACK), SQ_D5);
+    EXPECT_EQ(relative_square(SQ_E2, BLACK), SQ_E7);
+    EXPECT_EQ(relative_square(SQ_B4, BLACK), SQ_B5);
+    EXPECT_EQ(relative_square(SQ_G1, BLACK), SQ_G8);
+    EXPECT_EQ(relative_square(SQ_B2, BLACK), SQ_B7);
+    EXPECT_EQ(relative_square(SQ_A5, BLACK), SQ_A4);
+    EXPECT_EQ(relative_square(SQ_H6, BLACK), SQ_H3);
+    EXPECT_EQ(relative_square(SQ_D3, BLACK), SQ_D6);
+    EXPECT_EQ(relative_square(SQ_G2, BLACK), SQ_G7);
+    EXPECT_EQ(relative_square(SQ_F7, BLACK), SQ_F2);
+    EXPECT_EQ(relative_square(SQ_B3, BLACK), SQ_B6);
+    EXPECT_EQ(relative_square(SQ_D8, BLACK), SQ_D1);
+    EXPECT_EQ(relative_square(SQ_E7, BLACK), SQ_E2);
+}
+
 TEST(conversions, make_piece)
 {
     EXPECT_EQ(make_piece(WHITE, PAWN)   , WH_PAWN);
