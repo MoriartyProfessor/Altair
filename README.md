@@ -30,7 +30,7 @@ Search:
 Evaluation:
 - [x] Material
 - [ ] Game-Phase dependent evaluation
-- [ ] Piece-Square Tables
+- [x] Piece-Square Tables
 - [ ] Pawn Structure
 - [ ] Evaluation of Pieces
 - [ ] Evaluation Patterns
@@ -59,11 +59,11 @@ Tests:
 
 ### Features to implment before setting up SRPT
 
+* Iterative Deepening
 * Alpha-Beta pruning
 * Move Ordering
-        * MVA-LAA
+    * MVA-LAA
 * Separate thread for search
-* Material + PS tables
 
 ### Next
 * Search Improvements
