@@ -72,8 +72,9 @@ void MoveGenerator::gen_pawn_moves_()
     push_targets &= ~promotion_rank_BB; left_attacks &= ~promotion_rank_BB; right_attacks &= ~promotion_rank_BB;
 
     if constexpr (config == Config::GENERATE_ALL) {
-        for(Square push_sq = pop_LSB(push_targets); push_sq != N_SQUARES; push_sq = pop_LSB(push_targets))
+        while(push_targets)
         {
+            Square push_sq = pop_LSB(push_targets);
             Move move{step<r_SOUTH>(push_sq), push_sq};
         
             move.set_quiet();
@@ -81,8 +82,9 @@ void MoveGenerator::gen_pawn_moves_()
             moves_->push_back(move);
         }
 
-        for(Square double_push_sq = pop_LSB(double_push_targets); double_push_sq != N_SQUARES; double_push_sq = pop_LSB(double_push_targets))
+        while(double_push_targets)
         {
+            Square double_push_sq = pop_LSB(double_push_targets);
             Move move{step<r_SOUTH>(double_push_sq, 2), double_push_sq};
 
             move.set_double_pawn_push();
@@ -91,8 +93,9 @@ void MoveGenerator::gen_pawn_moves_()
         }
     }
     
-    for(Square attack = pop_LSB(left_attacks); attack != N_SQUARES; attack = pop_LSB(left_attacks))
+    while(left_attacks)
     {
+        Square attack = pop_LSB(left_attacks);
         Move move{step<r_SOUTH_EAST>(attack), attack};
 
         move.set_capture();
@@ -103,8 +106,9 @@ void MoveGenerator::gen_pawn_moves_()
         moves_->push_back(move);
     }
 
-    for(Square attack = pop_LSB(right_attacks); attack != N_SQUARES; attack = pop_LSB(right_attacks))
+    while(right_attacks)
     {
+        Square attack = pop_LSB(right_attacks);
         Move move{step<r_SOUTH_WEST>(attack), attack};
 
         move.set_capture();
@@ -115,8 +119,9 @@ void MoveGenerator::gen_pawn_moves_()
         moves_->push_back(move);
     }
 
-    for(Square promotion_push_sq = pop_LSB(promotion_push_targets); promotion_push_sq != N_SQUARES; promotion_push_sq = pop_LSB(promotion_push_targets))
+    while(promotion_push_targets)
     {
+        Square promotion_push_sq = pop_LSB(promotion_push_targets);
         Move move{step<r_SOUTH>(promotion_push_sq), promotion_push_sq};
 
         move.set_promotion();
@@ -128,8 +133,9 @@ void MoveGenerator::gen_pawn_moves_()
         }
     }
 
-    for(Square promotion_attack = pop_LSB(promotion_left_attacks); promotion_attack != N_SQUARES; promotion_attack = pop_LSB(promotion_left_attacks))
+    while(promotion_left_attacks)
     {
+        Square promotion_attack = pop_LSB(promotion_left_attacks);
         Move move{step<r_SOUTH_EAST>(promotion_attack), promotion_attack};
 
         move.set_promotion();
@@ -146,8 +152,9 @@ void MoveGenerator::gen_pawn_moves_()
         }
     }
 
-    for(Square promotion_attack = pop_LSB(promotion_right_attacks); promotion_attack != N_SQUARES; promotion_attack = pop_LSB(promotion_right_attacks))
+    while(promotion_right_attacks)
     {
+        Square promotion_attack = pop_LSB(promotion_right_attacks);
         Move move{step<r_SOUTH_WEST>(promotion_attack), promotion_attack};
 
         move.set_promotion();
@@ -184,8 +191,9 @@ void MoveGenerator::gen_piece_moves_()
     static_assert(piece_type < N_PIECE_TYPES);
     BitBoard piece_bitboard = position_->piece_bitboard(position_->side_to_move(), piece_type);
 
-    for(Square piece_sq = pop_LSB(piece_bitboard); piece_sq != N_SQUARES; piece_sq = pop_LSB(piece_bitboard))
+    while(piece_bitboard)
     {
+        Square piece_sq = pop_LSB(piece_bitboard);
         BitBoard piece_attacks = EMPTY_BB;
         if constexpr (piece_type == KNIGHT)
             piece_attacks = Patterns::get_knight_attacks(piece_sq) & ~position_->occupancy_bitboard(position_->side_to_move());
@@ -255,8 +263,9 @@ void MoveGenerator::gen_castling_moves_()
 template<MoveGenerator::Config config, PieceType piece_type>
 void MoveGenerator::add_piece_moves_(Square from, BitBoard attacks)
 {
-    for(Square attack = pop_LSB(attacks); attack != N_SQUARES; attack = pop_LSB(attacks))
+    while(attacks)
     {
+        Square attack = pop_LSB(attacks);
         Move move{from, attack};
         move.set_piece_type(piece_type);
 
