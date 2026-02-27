@@ -107,12 +107,14 @@ namespace Evaluation
     int32_t evaluate(const Position &position)
     {
         int32_t eval = 0;
-        for(PieceType piece_type = PAWN; piece_type != N_PIECE_TYPES; ++piece_type) 
+        for(PieceType piece_type = PAWN; piece_type != N_PIECE_TYPES; ++piece_type)
+        {
             eval += MATERIAL_VALUES[piece_type] * 
                     (position.piece_count(make_piece(WHITE, piece_type)) - 
                     position.piece_count(make_piece(BLACK, piece_type)));
+        }
 
-        /* Check if compiler unrolls first layer of loop */
+        /* Check if compiler unrolls the loop */
         for(PieceType piece_type = PAWN; piece_type != KING; ++piece_type) 
         {
             eval += accumulate_pst(position, piece_type, WHITE, PS_TABLES[piece_type]) -
