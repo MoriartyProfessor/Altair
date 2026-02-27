@@ -355,6 +355,7 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
 {
     side_to_move_ = toggle_color(side_to_move_);
 
+    /* It might be worth making function map to avoid branches */
     if (move.is_quiet())
         unmake_quiet_move_(move);
 

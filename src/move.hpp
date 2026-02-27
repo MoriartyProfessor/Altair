@@ -14,7 +14,7 @@ class Move
     Move(Square from, Square to);
 
     Move& operator= (Move other);
-    // either don't take into account unused bits, or make sure they are always set to zero
+    /* Either don't take into account unused bits, or make sure they are always set to zero */
     bool operator== (Move other) const;
     bool operator!= (Move other) const;
 
