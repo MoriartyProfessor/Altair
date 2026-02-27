@@ -1,7 +1,23 @@
 #include "moveorderer.hpp"
 
-constexpr uint32_t MVA_LVV_scores[N_PIECE_TYPES][N_PIECE_TYPES];
-constexpr uint32_t promotion_scores[N_PIECE_TYPES];
+constexpr auto generate_mvv_lva() 
+{
+    std::array<std::array<uint32_t, N_PIECE_TYPES>, N_PIECE_TYPES> mvv_lva_scores = {};
+
+    constexpr uint32_t piece_scores[N_PIECE_TYPES] = {10, 30, 35, 50, 90, 1000};
+
+    for (PieceType attacker = PAWN; attacker != N_PIECE_TYPES; ++attacker) 
+    {
+        for (PieceType victim = PAWN; victim != N_PIECE_TYPES; ++victim) 
+        {
+            mvv_lva_scores[attacker][victim] = piece_scores[victim] * 10 - piece_scores[attacker];
+        }    
+    }
+    return mvv_lva_scores;
+}
+
+constexpr auto MVV_LVA_scores = generate_mvv_lva();
+constexpr uint32_t promotion_scores[N_PIECE_TYPES] = {0, 1000, 1100, 1500, 2000, 0};
 
 MoveOrderer::MoveOrderer(MoveList *moves)
     : moves_(*moves), scores_(moves->size(), 0)
@@ -36,12 +52,12 @@ void MoveOrderer::assign_scores_()
         auto move = moves_[i];
         auto &score = scores_[i];
 
-        /*  Potential optimization: branches can be removed if MVA_LVV and promotion board 
+        /*  Potential optimization: branches can be removed if MVV_LVA and promotion board 
             contain extra null score for non captures and non-promotions, but that requires 
             Move class to return N_PIECE_TYPE when calling capture_piece_type() and move is
             not capture*/
         if (move.is_capture())
-            score += MVA_LVV_scores[move.piece_type()][move.capture_piece_type()];
+            score += MVV_LVA_scores[move.piece_type()][move.capture_piece_type()];
         if (move.is_promotion())
             score += promotion_scores[move.promotion_piece_type()];
     }
