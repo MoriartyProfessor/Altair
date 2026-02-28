@@ -8,7 +8,7 @@
 class MoveOrderer
 {
     public:
-    MoveOrderer(MoveList* moves);
+    MoveOrderer(MoveList& moves);
     Move next();
     bool has_next() const;
 
