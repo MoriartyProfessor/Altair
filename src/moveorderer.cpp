@@ -19,8 +19,8 @@ constexpr auto generate_mvv_lva()
 constexpr auto MVV_LVA_scores = generate_mvv_lva();
 constexpr uint32_t promotion_scores[N_PIECE_TYPES] = {0, 1000, 1100, 1500, 2000, 0};
 
-MoveOrderer::MoveOrderer(MoveList *moves)
-    : moves_(*moves), scores_(moves->size(), 0)
+MoveOrderer::MoveOrderer(MoveList &moves)
+    : moves_(moves), scores_(moves.size(), 0)
 {
     assign_scores_();
 }
@@ -37,6 +37,7 @@ Move MoveOrderer::next()
         }
     }
     std::swap(moves_[max_index], moves_[current_index_]);
+    std::swap(scores_[max_index], scores_[current_index_]);
     return moves_[current_index_++];
 }
 
