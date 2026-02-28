@@ -8,6 +8,7 @@ set(SOURCE_FILES
     position.cpp
     perft.cpp
     main.cpp
+    moveorderer.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}_test ${SOURCE_FILES})
