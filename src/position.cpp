@@ -34,7 +34,7 @@ void Position::set_from_fen(std::istringstream &fen_stream)
 {
     auto init_piece_placement = [this](const std::string &fen_piece_placement)
     {
-        clear_bitboards_();
+        clear_board_();
         Rank rank = RANK_8;
         File file = FILE_A;
         for (auto ch : fen_piece_placement)
@@ -190,6 +190,8 @@ void Position::set_from_fen(std::istringstream &fen_stream)
 
     fen_stream >> fen_field;
     init_moveclock(fen_field);
+
+    zobrist_generator_.create_hashkey(*this);
 }
 
 std::string Position::fen() const
@@ -253,7 +255,7 @@ std::string Position::fen() const
             fen_castling_rights += 'Q';
         if (castling_rights_.king_side(BLACK))
             fen_castling_rights += 'k';
-        if (castling_rights_.king_side(BLACK))
+        if (castling_rights_.queen_side(BLACK))
             fen_castling_rights += 'q';
         if (fen_castling_rights.empty())
             fen_castling_rights = '-';
@@ -349,6 +351,8 @@ void Position::make_move(Move move)
     update_moveclock_in_make_(move);
 
     side_to_move_ = toggle_color(side_to_move_);
+
+    zobrist_generator_.update_side_to_move();
 }
 
 void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
@@ -388,6 +392,13 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
     update_halfclock_in_unmake_(irrecoverable_state.halfclock);
 
     update_moveclock_in_unmake_(move);
+
+    zobrist_generator_.update_side_to_move();
+}
+
+Zobrist::HashKey Position::hashkey() const 
+{
+    return zobrist_generator_.hashkey();
 }
 
 BitBoard Position::piece_bitboard(Color color, PieceType type) const
@@ -497,7 +508,7 @@ Square Position::en_passant_capture_square(Color side_to_move, Square en_passant
         return step<NORTH>(en_passant_square);
 }
 
-void Position::clear_bitboards_()
+void Position::clear_board_()
 {
     for (auto &piece_bitboard : piece_bitboards_)
         piece_bitboard = EMPTY_BB;
@@ -574,6 +585,7 @@ void Position::update_castling_rights_in_make_(Move move)
     if (move.piece_type() == KING)
         castling_rights_.clear_all_color_rights(side_to_move_);
 
+    /* It should be possible to eliminate branches using masks and CastlingRights[] table */
     if (move.piece_type() == ROOK)
     {
         if (move.from() == SQ_A1)
@@ -586,7 +598,6 @@ void Position::update_castling_rights_in_make_(Move move)
             castling_rights_.clear_king_side(BLACK);
     }
 
-    /* Maybe it is possible rook move case with capture case, or simplify it in some way*/
     if (move.is_capture())
     {
         if (move.to() == SQ_A1)
@@ -598,6 +609,8 @@ void Position::update_castling_rights_in_make_(Move move)
         else if (move.to() == SQ_H8)
             castling_rights_.clear_king_side(BLACK);
     }
+
+    zobrist_generator_.update_castling_rights(castling_rights_.raw());
 }
 
 void Position::update_en_passant_in_make_(Move move)
@@ -606,6 +619,8 @@ void Position::update_en_passant_in_make_(Move move)
         en_passant_square_ = square_in_between(move.from(), move.to());
     else
         en_passant_square_ = N_SQUARES;
+
+    zobrist_generator_.update_en_passant(en_passant_square_);
 }
 
 void Position::update_halfclock_in_make_(Move move)
@@ -690,11 +705,13 @@ void Position::unmake_en_passant_move_(Move move)
 void Position::update_castling_rights_in_unmake_(CastlingRights castling_rights)
 {
     castling_rights_ = castling_rights;
+    zobrist_generator_.update_castling_rights(castling_rights_.raw());
 }
 
 void Position::update_en_passant_in_unmake_(Square en_passant_square)
 {
     en_passant_square_ = en_passant_square;
+    zobrist_generator_.update_en_passant(en_passant_square_);
 }
 
 void Position::update_halfclock_in_unmake_(uint32_t halfclock)
@@ -713,6 +730,8 @@ void Position::add_piece_(Piece piece, Square square)
     BitBoards::set_square(piece_bitboards_[piece], square);
     BitBoards::set_square(occupancy_bitboards_[get_color(piece)], square);
     BitBoards::set_square(occupancy_bitboards_[N_COLORS], square);
+
+    zobrist_generator_.remove_piece(piece, square);
 }
 
 void Position::remove_piece_(Piece piece, Square square)
@@ -720,6 +739,8 @@ void Position::remove_piece_(Piece piece, Square square)
     BitBoards::clear_square(piece_bitboards_[piece], square);
     BitBoards::clear_square(occupancy_bitboards_[get_color(piece)], square);
     BitBoards::clear_square(occupancy_bitboards_[N_COLORS], square);
+
+    zobrist_generator_.remove_piece(piece, square);
 }
 
 void Position::move_piece_(Piece piece, Square from, Square to)
@@ -732,4 +753,6 @@ void Position::move_piece_(Piece piece, Square from, Square to)
     piece_bitboards_[piece] ^= from_to_BB;
     occupancy_bitboards_[get_color(piece)] ^= from_to_BB;
     occupancy_bitboards_[N_COLORS] ^= from_to_BB;
+
+    zobrist_generator_.move_piece(piece, from, to);
 }

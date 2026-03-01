@@ -3,6 +3,7 @@
 #include "patterns.hpp"
 #include "engineinfo.hpp"
 #include "moveparser.hpp"
+#include "zobrist.hpp"
 
 #include <sstream>
 #include <format>
@@ -14,6 +15,7 @@ namespace UCI
     {
         Rays::init();
         Patterns::init();
+        Zobrist::init();
 
         std::string command_line, command_name;
         while (std::getline(input_stream_, command_line))
