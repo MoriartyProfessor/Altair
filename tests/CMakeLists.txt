@@ -9,6 +9,7 @@ set(SOURCE_FILES
     perft.cpp
     main.cpp
     moveorderer.cpp
+    zobrist.cpp
 )
 
 add_executable(${CMAKE_PROJECT_NAME}_test ${SOURCE_FILES})

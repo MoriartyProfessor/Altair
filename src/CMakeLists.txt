@@ -16,6 +16,7 @@ set(HEADER_FILES
     search.hpp
     uci.hpp
     utils.hpp
+    zobrist.hpp
 )
 
 set(SOURCE_FILES
@@ -31,6 +32,7 @@ set(SOURCE_FILES
     rays.cpp
     search.cpp
     uci.cpp
+    zobrist.cpp
 )
 
 add_library(${CMAKE_PROJECT_NAME}_lib STATIC

@@ -6,6 +6,7 @@
 
 #include "defs.hpp"
 #include "move.hpp"
+#include "zobrist.hpp"
 
 class Position
 {
@@ -52,6 +53,7 @@ class Position
     uint32_t moveclock() const;
 
     IrrecoverableState irrecoverable_state() const;
+    Zobrist::HashKey hashkey() const;
 
     public:
     /* Maybe not the best place for this function */
@@ -59,7 +61,7 @@ class Position
 
     private:
 
-    void clear_bitboards_();
+    void clear_board_();
 
     void make_quiet_move_                   (Move move);
     void make_capture_move_                 (Move move);
@@ -102,6 +104,8 @@ class Position
     Square en_passant_square_ = N_SQUARES;
     uint32_t halfclock_ = 0;
     uint32_t moveclock_ = 0;
+
+    Zobrist zobrist_generator_;
 };
 
 #endif // ALTAIR_POSITION_HPP

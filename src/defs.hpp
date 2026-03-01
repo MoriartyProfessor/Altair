@@ -109,7 +109,9 @@ struct CastlingRights
 
     bool is_all_set() const {return rights_ == 0xF;}
     bool is_all_clear() const {return rights_ == 0x0;}
-    
+
+    uint32_t raw() const {return rights_ & 0xF;}
+
     private:
     /* 32-bit for now, it is more cache friendly */
     uint32_t rights_ = 0xF;
