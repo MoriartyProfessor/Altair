@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         position.make_move(move);
         if (!position.is_in_check(toggle_color(position.side_to_move())))
         {
-            uint64_t curr_node_count = Perft::test(position, depth - 1);
+            uint64_t curr_node_count = Perft::test_copy(position, depth - 1);
             node_count += curr_node_count;
             std::cout << move.uci_notation() << " " << curr_node_count << std::endl;
         }
