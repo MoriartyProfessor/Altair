@@ -49,4 +49,9 @@ inline uint32_t pop_LSB(uint64_t& x)
     return popped_LSB;
 }
 
+inline bool is_power_of_two(uint64_t x)
+{
+    return ((x & (x - 1)) == 0);
+}
+
 #endif // ALTAIR_UTILS_HPP
