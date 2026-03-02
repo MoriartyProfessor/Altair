@@ -59,6 +59,21 @@ TEST(lowlevel_utils, pop_LSB)
     EXPECT_EQ(test_ll, 0xCF1234FFCFFF0000ULL);
 }
 
+TEST(lowlevel_utils, is_power_of_two) 
+{
+    EXPECT_EQ(is_power_of_two(1), true);
+    EXPECT_EQ(is_power_of_two(2), true);
+    EXPECT_EQ(is_power_of_two(8), true);
+    EXPECT_EQ(is_power_of_two(1024), true);
+    EXPECT_EQ(is_power_of_two(8192), true);
+    
+    EXPECT_EQ(is_power_of_two(342), false);
+    EXPECT_EQ(is_power_of_two(4234), false);
+    EXPECT_EQ(is_power_of_two(132), false);
+    EXPECT_EQ(is_power_of_two(841), false);
+    EXPECT_EQ(is_power_of_two(13), false);
+}
+
 TEST(directions, north) 
 {
     EXPECT_EQ(step<NORTH>(SQ_A1), SQ_A2);
