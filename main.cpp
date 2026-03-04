@@ -69,7 +69,7 @@ int main()
 
     auto t1 = high_resolution_clock::now();
 
-    auto perft_result = Perft::test(position, 6);
+    auto perft_result = Perft::test_copy(position, 6);
 
     auto t2 = high_resolution_clock::now();
 
