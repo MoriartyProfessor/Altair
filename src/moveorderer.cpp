@@ -16,13 +16,14 @@ constexpr auto generate_mvv_lva()
     return mvv_lva_scores;
 }
 
-constexpr auto MVV_LVA_scores = generate_mvv_lva();
-constexpr uint32_t promotion_scores[N_PIECE_TYPES] = {0, 1000, 1100, 1500, 2000, 0};
+constexpr uint32_t HASH_MOVE_SCORE = 5000;
+constexpr auto MVV_LVA_SCORES = generate_mvv_lva();
+constexpr uint32_t PROMOTION_SCORES[N_PIECE_TYPES] = {0, 1000, 1100, 1500, 2000, 0};
 
-MoveOrderer::MoveOrderer(MoveList &moves)
+MoveOrderer::MoveOrderer(MoveList &moves, Move hash_move)
     : moves_(moves), scores_(moves.size(), 0)
 {
-    assign_scores_();
+    assign_scores_(hash_move);
 }
 
 Move MoveOrderer::next()
@@ -46,7 +47,7 @@ bool MoveOrderer::has_next() const
     return current_index_ < moves_.size();
 }
 
-void MoveOrderer::assign_scores_()
+void MoveOrderer::assign_scores_(Move hash_move)
 {
     for (int i = 0; i < moves_.size(); ++i)
     {
@@ -57,9 +58,11 @@ void MoveOrderer::assign_scores_()
             contain extra null score for non captures and non-promotions, but that requires 
             Move class to return N_PIECE_TYPE when calling capture_piece_type() and move is
             not capture*/
+        if (move == hash_move)
+            score += HASH_MOVE_SCORE;
         if (move.is_capture())
-            score += MVV_LVA_scores[move.piece_type()][move.capture_piece_type()];
+            score += MVV_LVA_SCORES[move.piece_type()][move.capture_piece_type()];
         if (move.is_promotion())
-            score += promotion_scores[move.promotion_piece_type()];
+            score += PROMOTION_SCORES[move.promotion_piece_type()];
     }
 }
