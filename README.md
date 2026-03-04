@@ -19,7 +19,7 @@ Search:
 - [ ] Alpha-Beta pruning
 - [ ] Move Ordering (preferably with Killer Heuristics)
 - [ ] Iterative Deepening
-- [ ] Transposition tables (with Zobrist Hashing)
+- [x] Transposition tables (with Zobrist Hashing)
 - [ ] Quiescence search
 - [ ] Aspiration windows
 - [ ] Principled Variation search
@@ -62,14 +62,11 @@ Tests:
 * Iterative Deepening
 * Alpha-Beta pruning
 * Move Ordering
-    * MVA-LAA
+    * Hash move ordering
 * Separate thread for search
 
 ### Next
 * Search Improvements
-    * Move Ordering
-        * Transposition table
-    * Iterative deepening
     * Quiescence
 * Evaluation
 
