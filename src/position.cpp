@@ -453,14 +453,12 @@ bool Position::is_square_attacked(Square square, Color color) const
     if (piece_bitboard(color, KING) & Patterns::get_king_attacks(square))
         return true;
 
-    BitBoard occ = occupancy_bitboard();
-
     if ((piece_bitboard(color, BISHOP) | piece_bitboard(color, QUEEN)) & 
-         Patterns::get_bishop_attacks(square, occ))
+         Patterns::get_bishop_attacks(square, occupancy_bitboard()))
         return true;
 
     if ((piece_bitboard(color, ROOK) | piece_bitboard(color, QUEEN)) & 
-         Patterns::get_rook_attacks(square, occ))
+         Patterns::get_rook_attacks(square, occupancy_bitboard()))
         return true;
 
     return false;

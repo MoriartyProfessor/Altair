@@ -14,6 +14,7 @@ set(HEADER_FILES
     position.cpp
     rays.hpp
     search.hpp
+    transpositiontable.hpp
     uci.hpp
     utils.hpp
     zobrist.hpp
@@ -31,6 +32,7 @@ set(SOURCE_FILES
     position.cpp
     rays.cpp
     search.cpp
+    transpositiontable.cpp
     uci.cpp
     zobrist.cpp
 )

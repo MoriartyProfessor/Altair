@@ -139,3 +139,9 @@ TEST(perft, various)
     position = Position{"8/8/2k5/5q2/5n2/8/5K2/8 b - - 0 1"};
     EXPECT_EQ(Perft::test_copy(position, 4), 23527);
 }
+
+TEST(perft, quirky)
+{
+    Position position = Position{"r5rk/5p1p/5R2/4B3/8/8/7P/7K w - - 0 1"};
+    EXPECT_EQ(Perft::test_copy(position, 1), 24);
+}

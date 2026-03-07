@@ -17,7 +17,7 @@ Board representation:
 Search:
 - [x] Negamax
 - [ ] Alpha-Beta pruning
-- [ ] Move Ordering (preferably with Killer Heuristics)
+- [ ] Move Ordering (MVV-LVA, PV, Hash, Killer)
 - [ ] Iterative Deepening
 - [x] Transposition tables (with Zobrist Hashing)
 - [ ] Quiescence search
@@ -68,7 +68,6 @@ Tests:
 ### Next
 * Search Improvements
     * Quiescence
-* Evaluation
 
 ## Dependencies
 
