@@ -444,7 +444,26 @@ bool Position::is_in_check(Color color) const
 
 bool Position::is_square_attacked(Square square, Color color) const
 {
-    return square_attackers(square, color) & occupancy_bitboard(color);
+    if (piece_bitboard(color, PAWN) & Patterns::get_pawn_attacks(square, toggle_color(color)))
+        return true;
+
+    if (piece_bitboard(color, KNIGHT) & Patterns::get_knight_attacks(square))
+        return true;
+
+    if (piece_bitboard(color, KING) & Patterns::get_king_attacks(square))
+        return true;
+
+    BitBoard occ = occupancy_bitboard();
+
+    if ((piece_bitboard(color, BISHOP) | piece_bitboard(color, QUEEN)) & 
+         Patterns::get_bishop_attacks(square, occ))
+        return true;
+
+    if ((piece_bitboard(color, ROOK) | piece_bitboard(color, QUEEN)) & 
+         Patterns::get_rook_attacks(square, occ))
+        return true;
+
+    return false;
 }
 
 BitBoard Position::square_attackers(Square square, Color color) const
