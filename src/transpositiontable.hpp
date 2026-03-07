@@ -8,6 +8,10 @@
 #include <optional>
 #include <boost/container/small_vector.hpp>
 
+constexpr unsigned long long operator"" _K(unsigned long long x) {
+    return x * 1024;
+}
+
 constexpr unsigned long long operator"" _M(unsigned long long x) {
     return x * 1024 * 1024;
 }

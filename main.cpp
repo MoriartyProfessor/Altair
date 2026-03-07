@@ -7,6 +7,8 @@
 #include "moveparser.hpp"
 #include "search.hpp"
 #include "uci.hpp"
+#include "zobrist.hpp"
+#include "utils.hpp"
 
 #include <iostream>
 #include <vector>
@@ -14,13 +16,14 @@
 
 int main()
 {
-    /*UCI::Game game;
-    game.start();*/
+    UCI::Game game;
+    game.start();
 
-    Rays::init();
+    /*Rays::init();
     Patterns::init();
-    /*
-    Position position{"1r6/r4pkP/2n1p3/1pb2pN1/8/2n5/P4P2/K5RR w - - 0 2"};
+    Zobrist::init();*/
+    
+    /*Position position{"1r6/r4pkP/2n1p3/1pb2pN1/8/2n5/P4P2/K5RR w - - 0 2"};
 
     auto best_move = Search::search(position);
 
@@ -57,7 +60,7 @@ int main()
 
     std::cout << double(perft_result.nodes) / (ms_double.count() * 1000) << " MNPS" << std::endl;*/
 
-    Position position;
+    /*Position position{"r5rk/5p1p/5R2/4B3/8/8/7P/7K w - - 0 1"};
 
     std::cout << "Starting position: " << std::endl
               << position.pretty() << std::endl;
@@ -69,7 +72,7 @@ int main()
 
     auto t1 = high_resolution_clock::now();
 
-    auto perft_result = Perft::test_copy(position, 6);
+    auto perft_result = Perft::test_make_unmake(position, 1);
 
     auto t2 = high_resolution_clock::now();
 
@@ -78,7 +81,7 @@ int main()
     std::cout << perft_result << " nodes" << std::endl;
 
     std::cout << ms_double.count() << "ms\n";
-    std::cout << double(perft_result) / (ms_double.count() * 1000) << " MNPS" << std::endl;
+    std::cout << double(perft_result) / (ms_double.count() * 1000) << " MNPS" << std::endl;*/
 
     return 0;
 }
