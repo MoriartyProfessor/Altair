@@ -263,24 +263,30 @@ void MoveGenerator::gen_castling_moves_()
 template<MoveGenerator::Config config, PieceType piece_type>
 void MoveGenerator::add_piece_moves_(Square from, BitBoard attacks)
 {
-    while(attacks)
+    BitBoard captures = attacks & position_->occupancy_bitboard(toggle_color(position_->side_to_move()));
+    BitBoard quiet_targets = attacks ^ captures;
+    while(captures)
     {
-        Square attack = pop_LSB(attacks);
+        Square attack = pop_LSB(captures);
         Move move{from, attack};
         move.set_piece_type(piece_type);
 
-        Piece attacked_piece = position_->piece_occupying(attack);
-        if(attacked_piece != N_PIECES)
-        {
-            move.set_capture();
-            move.set_capture_piece_type(get_type(attacked_piece));
-        }
-        else
-        {
-            if constexpr (config != Config::GENERATE_ALL)
-                continue;
-            move.set_quiet();
-        }
+        move.set_capture();
+        move.set_capture_piece_type(get_type(position_->piece_occupying(attack)));
+
+        moves_->push_back(move);
+    }
+
+    if constexpr (config != Config::GENERATE_ALL)
+        return;
+
+    while(quiet_targets)
+    {
+        Square attack = pop_LSB(quiet_targets);
+        Move move{from, attack};
+        move.set_piece_type(piece_type);
+
+        move.set_quiet();
 
         moves_->push_back(move);
     }
