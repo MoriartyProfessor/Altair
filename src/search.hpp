@@ -6,15 +6,7 @@
 
 namespace Search
 {
-    struct SearchInfo
-    {
-        int depth;
-        int score;
-        Move best_move;
-        bool is_mate;
-        bool is_draw;
-    };
-    Move search(Position &position);
+    Move iterative_deepening_search(Position &position);
 }
 
 #endif // ALTAIR_SEARCH_HPP
