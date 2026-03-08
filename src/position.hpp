@@ -103,7 +103,7 @@ class Position
     CastlingRights castling_rights_;
     Square en_passant_square_ = N_SQUARES;
     uint32_t halfclock_ = 0;
-    uint32_t moveclock_ = 0;
+    uint32_t moveclock_ = 1;
 
     Zobrist zobrist_generator_;
 };
