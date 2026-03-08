@@ -1,10 +1,10 @@
 #ifndef GWAIHIR_MOVEGENERATOR_HPP
 #define GWAIHIR_MOVEGENERATOR_HPP
 
-#include <boost/container/small_vector.hpp>
-
 #include "move.hpp"
 #include "position.hpp"
+
+#include <boost/container/small_vector.hpp>
 
 using MoveList = boost::container::small_vector<Move, MAX_MOVE_LIST_SIZE>;
 
