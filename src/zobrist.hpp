@@ -1,5 +1,5 @@
-#ifndef ALTAIR_ZOBRIST_HPP
-#define ALTAIR_ZOBRIST_HPP
+#ifndef GWAIHIR_ZOBRIST_HPP
+#define GWAIHIR_ZOBRIST_HPP
 
 #include "defs.hpp"
 
@@ -33,4 +33,4 @@ class Zobrist
     Square last_ep_ = N_SQUARES;
 };
 
-#endif // ALTAIR_ZOBRIST_HPP
+#endif // GWAIHIR_ZOBRIST_HPP

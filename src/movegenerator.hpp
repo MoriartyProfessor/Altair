@@ -1,5 +1,5 @@
-#ifndef ALTAIR_MOVEGENERATOR_HPP
-#define ALTAIR_MOVEGENERATOR_HPP
+#ifndef GWAIHIR_MOVEGENERATOR_HPP
+#define GWAIHIR_MOVEGENERATOR_HPP
 
 #include <boost/container/small_vector.hpp>
 
@@ -45,4 +45,4 @@ class MoveGenerator
     const Position* position_;
 };
 
-#endif // ALTAIR_MOVEGENERATOR_HPP
+#endif // GWAIHIR_MOVEGENERATOR_HPP

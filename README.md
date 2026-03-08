@@ -1,11 +1,11 @@
 ![](res/eagle.jpg)
 
-Altair - UCI Compatible chess engine
+Gwaihir - UCI Compatible chess engine
 =======================================
 
 * * *
 
-**Altair** is a strong (hopefully in the future) UCI compatible chess engine written in C++.
+**Gwaihir** is a strong (hopefully in the future) UCI compatible chess engine written in C++.
 
 ## Features list
 

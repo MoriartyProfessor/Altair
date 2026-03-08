@@ -1,5 +1,5 @@
-#ifndef ALTAIR_MOVEPARSE_HPP
-#define ALTAIR_MOVEPARSE_HPP
+#ifndef GWAIHIR_MOVEPARSE_HPP
+#define GWAIHIR_MOVEPARSE_HPP
 
 #include <string>
 #include <vector>
@@ -30,4 +30,4 @@ class CoordinateMoveParser : public MoveParser
     Position position_;
 };
 
-#endif // ALTAIR_MOVEPARSE_HPP
+#endif // GWAIHIR_MOVEPARSE_HPP

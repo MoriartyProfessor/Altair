@@ -1,5 +1,5 @@
-#ifndef ALTAIR_RAYS_HPP
-#define ALTAIR_RAYS_HPP
+#ifndef GWAIHIR_RAYS_HPP
+#define GWAIHIR_RAYS_HPP
 
 #include "defs.hpp"
 
@@ -9,4 +9,4 @@ namespace Rays
     BitBoard get(Direction direction, Square square);
 }
 
-#endif // ALTAIR_RAYS_HPP
+#endif // GWAIHIR_RAYS_HPP

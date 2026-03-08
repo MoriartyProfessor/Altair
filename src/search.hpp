@@ -1,5 +1,5 @@
-#ifndef ALTAIR_SEARCH_HPP
-#define ALTAIR_SEARCH_HPP
+#ifndef GWAIHIR_SEARCH_HPP
+#define GWAIHIR_SEARCH_HPP
 
 #include "move.hpp"
 #include "position.hpp"
@@ -9,4 +9,4 @@ namespace Search
     Move iterative_deepening_search(Position &position);
 }
 
-#endif // ALTAIR_SEARCH_HPP
+#endif // GWAIHIR_SEARCH_HPP
