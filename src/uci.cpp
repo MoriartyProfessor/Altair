@@ -17,6 +17,11 @@ namespace UCI
         Patterns::init();
         Zobrist::init();
 
+        position_ = Position{};
+
+        Search::clear_history_stack(); 
+        Search::update_history_stack(position_.hashkey(), position_.halfclock());
+
         std::string command_line, command_name;
         while (std::getline(input_stream_, command_line))
         {
@@ -61,15 +66,19 @@ namespace UCI
     {
         std::string argument;
 
+        Search::clear_history_stack();
+
         while (command_args >> argument)
         {
             if (argument == "startpos")
             {
                 position_ = Position{};
+                Search::update_history_stack(position_.hashkey(), position_.halfclock());
             }
             else if (argument == "fen")
             {
                 position_.set_from_fen(command_args);
+                Search::update_history_stack(position_.hashkey(), position_.halfclock());
             }
             else if (argument == "moves")
             {
@@ -78,6 +87,7 @@ namespace UCI
                     CoordinateMoveParser move_parser{position_};
                     auto move = move_parser.parse_move(argument);
                     position_.make_move(move);
+                    Search::update_history_stack(position_.hashkey(), position_.halfclock());
                 }
             }
             else
