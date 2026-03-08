@@ -89,7 +89,7 @@ namespace UCI
 
     void Game::execute_go_command_(std::istringstream &command_args)
     {
-        auto best_move = Search::search(position_);
+        auto best_move = Search::iterative_deepening_search(position_);
         output_stream_ << "bestmove " << best_move.uci_notation() << std::endl;
     }
 

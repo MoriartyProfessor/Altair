@@ -1,5 +1,5 @@
-#ifndef ALTAIR_TRANSPOSITIONTABLE_HPP
-#define ALTAIR_TRANSPOSITIONTABLE_HPP
+#ifndef GWAIHIR_TRANSPOSITIONTABLE_HPP
+#define GWAIHIR_TRANSPOSITIONTABLE_HPP
 
 #include "move.hpp"
 #include "zobrist.hpp"
@@ -51,4 +51,4 @@ class TranspostionTable
     std::vector<TTBucket> table_;
 };
 
-#endif // ALTAIR_TRANSPOSITIONTABLE_HPP
+#endif // GWAIHIR_TRANSPOSITIONTABLE_HPP

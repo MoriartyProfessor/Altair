@@ -1,5 +1,5 @@
-#ifndef ALTAIR_PATTERNS_HPP
-#define ALTAIR_PATTERNS_HPP
+#ifndef GWAIHIR_PATTERNS_HPP
+#define GWAIHIR_PATTERNS_HPP
 
 #include "defs.hpp"
 
@@ -14,4 +14,4 @@ namespace Patterns
     BitBoard get_king_attacks(Square square);
 }
 
-#endif // ALTAIR_PATTERNS_HPP
+#endif // GWAIHIR_PATTERNS_HPP

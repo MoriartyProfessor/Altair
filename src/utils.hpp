@@ -1,5 +1,5 @@
-#ifndef ALTAIR_UTILS_HPP
-#define ALTAIR_UTILS_HPP
+#ifndef GWAIHIR_UTILS_HPP
+#define GWAIHIR_UTILS_HPP
 
 #include <cstdint>
 #include <cmath>
@@ -54,4 +54,4 @@ inline bool is_power_of_two(uint64_t x)
     return ((x & (x - 1)) == 0);
 }
 
-#endif // ALTAIR_UTILS_HPP
+#endif // GWAIHIR_UTILS_HPP

@@ -1,5 +1,5 @@
-#ifndef ALTAIR_MOVEORDERER_HPP
-#define ALTAIR_MOVEORDERER_HPP
+#ifndef GWAIHIR_MOVEORDERER_HPP
+#define GWAIHIR_MOVEORDERER_HPP
 
 #include "movegenerator.hpp"
 #include "transpositiontable.hpp"
@@ -21,4 +21,4 @@ class MoveOrderer
     std::uint16_t current_index_ = 0;
 };
 
-#endif // ALTAIR_MOVEORDERER_HPP
+#endif // GWAIHIR_MOVEORDERER_HPP

@@ -1,5 +1,5 @@
-#ifndef ALTAIR_UCI_HPP
-#define ALTAIR_UCI_HPP
+#ifndef GWAIHIR_UCI_HPP
+#define GWAIHIR_UCI_HPP
 
 #include "search.hpp"
 
@@ -32,4 +32,4 @@ namespace UCI
     };
 }
 
-#endif // ALTAIR_UCI_HPP
+#endif // GWAIHIR_UCI_HPP

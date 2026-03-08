@@ -1,5 +1,5 @@
-#ifndef ALTAIR_ENGINEINFO_HPP
-#define ALTAIR_ENGINEINFO_HPP
+#ifndef GWAIHIR_ENGINEINFO_HPP
+#define GWAIHIR_ENGINEINFO_HPP
 
 #include <iostream>
 #include <string>
@@ -8,7 +8,7 @@
 
 namespace EngineInfo {
     constexpr std::string_view AUTHOR = "Nickname";
-    constexpr std::string_view NAME = "Altair";
+    constexpr std::string_view NAME = "Gwaihir";
     constexpr uint8_t MAJOR = 0;
     constexpr uint8_t MINOR = 1;
     constexpr uint8_t PATCH = 0;
@@ -18,4 +18,4 @@ namespace EngineInfo {
     }
 }
 
-#endif // ALTAIR_ENGINEINFO_HPP
+#endif // GWAIHIR_ENGINEINFO_HPP

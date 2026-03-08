@@ -1,5 +1,5 @@
-#ifndef ALTAIR_DEFS_HPP
-#define ALTAIR_DEFS_HPP
+#ifndef GWAIHIR_DEFS_HPP
+#define GWAIHIR_DEFS_HPP
 
 #include <cstdint>
 #include <string>
@@ -285,4 +285,4 @@ inline Square str_to_square(const std::string& square_str)
     return make_square(char_to_file(square_str[0]), char_to_rank(square_str[1]));
 }
 
-#endif // ALTAIR_DEFS_HPP
+#endif // GWAIHIR_DEFS_HPP

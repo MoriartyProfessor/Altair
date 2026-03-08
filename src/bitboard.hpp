@@ -1,5 +1,5 @@
-#ifndef ALTAIR_BITBOARD_HPP
-#define ALTAIR_BITBOARD_HPP
+#ifndef GWAIHIR_BITBOARD_HPP
+#define GWAIHIR_BITBOARD_HPP
 
 #include "defs.hpp"
 
@@ -101,4 +101,4 @@ namespace BitBoards
     inline BitBoard step<NORTH_EAST>(BitBoard bitboard) { return (bitboard << 9) & (~FILE_A_BB); }
 }
 
-#endif // ALTAIR_BITBOARD_HPP
+#endif // GWAIHIR_BITBOARD_HPP

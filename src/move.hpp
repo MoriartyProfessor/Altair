@@ -1,5 +1,5 @@
-#ifndef ALTAIR_MOVE_HPP
-#define ALTAIR_MOVE_HPP
+#ifndef GWAIHIR_MOVE_HPP
+#define GWAIHIR_MOVE_HPP
 
 #include <string>
 
@@ -72,4 +72,4 @@ class Move
 };
 
 
-#endif // ALTAIR_MOVE_HPP
+#endif // GWAIHIR_MOVE_HPP

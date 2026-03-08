@@ -1,5 +1,5 @@
-#ifndef ALTAIR_POSITION_HPP
-#define ALTAIR_POSITION_HPP
+#ifndef GWAIHIR_POSITION_HPP
+#define GWAIHIR_POSITION_HPP
 
 #include <string>
 #include <array>
@@ -108,4 +108,4 @@ class Position
     Zobrist zobrist_generator_;
 };
 
-#endif // ALTAIR_POSITION_HPP
+#endif // GWAIHIR_POSITION_HPP

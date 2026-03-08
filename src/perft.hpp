@@ -1,5 +1,5 @@
-#ifndef ALTAIR_PERFT_HPP
-#define ALTAIR_PERFT_HPP
+#ifndef GWAIHIR_PERFT_HPP
+#define GWAIHIR_PERFT_HPP
 
 #include "position.hpp"
 
@@ -19,4 +19,4 @@ namespace Perft
     void thorough_test(Position &position, Result &result, Move move, uint32_t depth);
 }
 
-#endif // ALTAIR_PERFT_HPP
+#endif // GWAIHIR_PERFT_HPP
