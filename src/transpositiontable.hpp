@@ -29,7 +29,7 @@ struct TTEntry
     Zobrist::HashKey key = 0;
     Move best_move;
     uint32_t depth = 0;
-    uint32_t score = 0;
+    int32_t score = 0;
     NodeType node_type;
 };
 

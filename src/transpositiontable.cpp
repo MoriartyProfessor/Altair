@@ -18,9 +18,11 @@ void TranspostionTable::insert(TTEntry&& tt_entry)
     auto& bucket = table_[get_partial_key(tt_entry.key)];
     for(auto &bucket_entry : bucket)
     {
-        // Always replace policy for tier-2 collisions
+        // Depth preferred policy for tier-2 collisions
         if(bucket_entry.key == tt_entry.key)
         {
+            if(tt_entry.depth < bucket_entry.depth)
+                return;
             bucket_entry = std::move(tt_entry);
             return;
         }
