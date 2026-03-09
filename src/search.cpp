@@ -20,8 +20,6 @@ namespace Search
     constexpr int32_t REPETITION_SCORE = -100;
     constexpr int32_t MATE_SCORE = -15000;
 
-    Position::IrrecoverableState irrecoverable_states_[MAX_DEPTH];
-
     HistoryStack history_stack;
 
     TranspostionTable transposition_table{4_M};
@@ -37,10 +35,12 @@ namespace Search
     {
         uint64_t node_count = 0;
         uint64_t qnode_count = 0;
+        uint64_t tt_hits = 0;
         void clear()
         {
             node_count = 0;
             qnode_count = 0;
+            tt_hits = 0;
         }
     } search_stats;
 
@@ -98,10 +98,9 @@ namespace Search
         {
             Move move = move_orderer.next();
 
-            Position::IrrecoverableState irrecoverable_state = position.irrecoverable_state();
+            auto irrecoverable_state = position.irrecoverable_state();
 
             position.make_move(move);
-            Search::update_history_stack(position.hashkey(), position.halfclock());
 
             if (!position.is_in_check(toggle_color(position.side_to_move())))
             {
@@ -133,17 +132,22 @@ namespace Search
         }
         
         const auto &entry = transposition_table.probe(position.hashkey());
-        if(!entry && entry->depth >= depth)
+        if(entry && entry->depth >= depth)
         {
+            ++search_stats.tt_hits;
             switch (entry->node_type)
             {
             case TTEntry::NodeType::EXACT:
-            case TTEntry::NodeType::LOWERBOUND:
                 return {entry->score, entry->best_move};
+            case TTEntry::NodeType::LOWERBOUND:
+                alpha = std::max(alpha, entry->score);
                 break;
             case TTEntry::NodeType::UPPERBOUND:
-                alpha = entry->score;
+                beta = std::min(beta, entry->score);
+                break;
             }
+            if (alpha >= beta) 
+                return {entry->score, entry->best_move};
         }
 
         MoveList moves;
@@ -156,12 +160,15 @@ namespace Search
         Result best_result {MATE_SCORE, {}};
 
         uint32_t legal_move_counter = 0;
+        
+        auto alpha_initial = alpha;
+
         while (move_orderer.has_next())
         {
             Move move = move_orderer.next();
             
             auto hashkey = position.hashkey();
-            Position::IrrecoverableState irrecoverable_state = position.irrecoverable_state();
+            auto irrecoverable_state = position.irrecoverable_state();
             
             position.make_move(move);
             Search::update_history_stack(position.hashkey(), position.halfclock());
@@ -175,15 +182,7 @@ namespace Search
                 {
                     best_result = result;
                     if( result.score > alpha )
-                    {
-                        TTEntry tt_entry = {.key = hashkey, 
-                            .best_move = best_result.move, 
-                            .depth = depth,
-                            .score = best_result.score,
-                            .node_type = TTEntry::NodeType::UPPERBOUND};
-                        transposition_table.insert(std::move(tt_entry));
                         alpha = result.score;
-                    }
                 }
                 if(result.score >= beta)
                 {
@@ -209,11 +208,12 @@ namespace Search
                 best_result.score = STALEMATE_SCORE;
         }
 
+        TTEntry::NodeType type = (best_result.score > alpha_initial) ? TTEntry::NodeType::EXACT : TTEntry::NodeType::UPPERBOUND;
         TTEntry tt_entry = {.key = position.hashkey(), 
                             .best_move = best_result.move, 
                             .depth = depth,
                             .score = best_result.score,
-                            .node_type = TTEntry::NodeType::EXACT};
+                            .node_type = type};
         transposition_table.insert(std::move(tt_entry));
 
         return best_result;
@@ -235,10 +235,12 @@ namespace Search
             double speed = double(search_stats.qnode_count)/(timer.duration().count() * 1000);
             
             std::cout << std::format("[Debug] Depth: {}, Move: {}, Score: {}, Node "
-                                 "Count: {:L}, QNode Count: {:L}, Speed: {} MNPS",
+                                 "Count: {:L}, QNode Count: {:L}, TT Hits: {}, "
+                                 "Speed: {} MNPS",
                                  depth, result.move.uci_notation(),
                                  result.score, search_stats.node_count,
-                                 search_stats.qnode_count, speed) << std::endl;
+                                 search_stats.qnode_count, search_stats.tt_hits, speed)
+                                  << std::endl;
         }
         return result.move;
     }
