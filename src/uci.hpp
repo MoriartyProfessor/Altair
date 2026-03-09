@@ -28,7 +28,6 @@ namespace UCI
         std::ostream &output_stream_;
         std::istream &input_stream_;
         Position position_;
-        Move best_move_;
     };
 }
 
