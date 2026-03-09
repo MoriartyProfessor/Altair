@@ -9,6 +9,7 @@ set(SOURCE_FILES
     perft.cpp
     main.cpp
     moveorderer.cpp
+    repetition.cpp
     zobrist.cpp
 )
 
