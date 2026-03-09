@@ -26,18 +26,18 @@ TEST(repetition, basic)
     position.make_move(move);
     Search::update_history_stack(position.hashkey(), position.halfclock());
 
-    EXPECT_EQ(Search::was_position_reached(Search::history_stack, position.halfclock()), false);
+    EXPECT_EQ(Search::was_threefold_reached(Search::history_stack, position.halfclock()), false);
 
     move.set_from(SQ_C3);
     move.set_to(SQ_B1);
     position.make_move(move);
     Search::update_history_stack(position.hashkey(), position.halfclock());
 
-    EXPECT_EQ(Search::was_position_reached(Search::history_stack, position.halfclock()), false);
+    EXPECT_EQ(Search::was_threefold_reached(Search::history_stack, position.halfclock()), false);
 
     move.set_from(SQ_C6);
     move.set_to(SQ_B8);
     position.make_move(move);
     Search::update_history_stack(position.hashkey(), position.halfclock());
-    EXPECT_EQ(Search::was_position_reached(Search::history_stack, position.halfclock()), true);
+    EXPECT_EQ(Search::was_threefold_reached(Search::history_stack, position.halfclock()), false);
 }
