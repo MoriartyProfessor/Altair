@@ -16,11 +16,11 @@ Board representation:
 
 Search:
 - [x] Negamax
-- [ ] Alpha-Beta pruning
+- [x] Alpha-Beta pruning
 - [ ] Move Ordering (MVV-LVA, PV, Hash, Killer)
-- [ ] Iterative Deepening
+- [x] Iterative Deepening
 - [x] Transposition tables (with Zobrist Hashing)
-- [ ] Quiescence search
+- [x] Quiescence search
 - [ ] Aspiration windows
 - [ ] Principled Variation search
 - [ ] Search Extensions Reductions
@@ -41,6 +41,7 @@ Evaluation:
 - [ ] King Safety
 - [ ] Space
 - [ ] Tempo
+- [ ] Evaluation/Pawn TT
 
 Other game phases:
 - [ ] Opening book
@@ -56,14 +57,7 @@ Tests:
 
 
 ## Current To-Do list
-
-### Features to implment before setting up SRPT
-
-* Iterative Deepening
-* Alpha-Beta pruning
-* Move Ordering
-    * Hash move ordering
-* Separate thread for search
+* Figure out why are so few nodes searched if compiled with RelWithDebInfo
 
 ### Next
 * Search Improvements
