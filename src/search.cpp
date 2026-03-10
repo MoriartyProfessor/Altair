@@ -36,11 +36,13 @@ namespace Search
         uint64_t node_count = 0;
         uint64_t qnode_count = 0;
         uint64_t tt_hits = 0;
+        uint64_t threefold_count = 0;
         void clear()
         {
             node_count = 0;
             qnode_count = 0;
             tt_hits = 0;
+            threefold_count = 0;
         }
     } search_stats;
 
@@ -51,11 +53,11 @@ namespace Search
         return entry->best_move;
     }
 
-    bool was_threefold_reached(const HistoryStack& history_stack, uint32_t ply)
+    bool was_threefold_reached(const HistoryStack& history_stack)
     {
-        auto current_position = history_stack[ply];
+        auto current_position = history_stack.back();
         auto cnt = 0u;
-        for(int i = ply - 2; i >= 0; --i)
+        for(int i = history_stack.size() - 2; i >= 0; --i)
         {
             if(history_stack[i] == current_position)
                 ++cnt;
@@ -65,12 +67,14 @@ namespace Search
         return false;
     }
 
-    void update_history_stack(Zobrist::HashKey key, uint32_t ply)
+    void push_to_history_stack(Zobrist::HashKey key)
     {
-        if(ply < history_stack.size())
-            history_stack[ply] = key;
-        else
             history_stack.push_back(key);
+    }
+    
+    void pop_from_history_stack()
+    {
+        history_stack.pop_back();
     }
 
     void clear_history_stack()
@@ -123,8 +127,11 @@ namespace Search
 
     Result negamax(Position& position, int alpha, int beta, int depth)
     {
-        if(was_threefold_reached(history_stack, position.halfclock()))
+        if(was_threefold_reached(history_stack))
+        {
+            +search_stats.threefold_count;
             return {STALEMATE_SCORE, {}};
+        }
         if (depth == 0)
         {
             ++search_stats.node_count;
@@ -171,7 +178,7 @@ namespace Search
             auto irrecoverable_state = position.irrecoverable_state();
             
             position.make_move(move);
-            Search::update_history_stack(position.hashkey(), position.halfclock());
+            push_to_history_stack(position.hashkey());
 
             if (!position.is_in_check(toggle_color(position.side_to_move())))
             {
@@ -193,11 +200,13 @@ namespace Search
                             .node_type = TTEntry::NodeType::LOWERBOUND};
                     transposition_table.insert(std::move(tt_entry));
                     position.unmake_move(move, irrecoverable_state);
+                    pop_from_history_stack();
                     return best_result;
                 }
             }
 
             position.unmake_move(move, irrecoverable_state);
+            pop_from_history_stack();
         }
 
         if (legal_move_counter == 0)
@@ -206,6 +215,10 @@ namespace Search
                 best_result.score =  MATE_SCORE - SEARCH_DEPTH + depth;
             else
                 best_result.score = STALEMATE_SCORE;
+        }
+        else if(best_result.move == Move{})
+        {
+            best_result.move = moves.front();
         }
 
         TTEntry::NodeType type = (best_result.score > alpha_initial) ? TTEntry::NodeType::EXACT : TTEntry::NodeType::UPPERBOUND;
@@ -233,13 +246,13 @@ namespace Search
             timer.stop();
 
             double speed = double(search_stats.qnode_count)/(timer.duration().count() * 1000);
-            
             std::cout << std::format("[Debug] Depth: {}, Move: {}, Score: {}, Node "
                                  "Count: {:L}, QNode Count: {:L}, TT Hits: {}, "
-                                 "Speed: {} MNPS",
+                                 "Threefolds: {}, Speed: {} MNPS",
                                  depth, result.move.uci_notation(),
                                  result.score, search_stats.node_count,
-                                 search_stats.qnode_count, search_stats.tt_hits, speed)
+                                 search_stats.qnode_count, search_stats.tt_hits,
+                                 search_stats.threefold_count, speed)
                                   << std::endl;
         }
         return result.move;
