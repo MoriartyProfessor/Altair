@@ -1,0 +1,361 @@
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.2.0"]
+[Black "gwaihir-0.1.0"]
+[Result "1/2-1/2"]
+[ECO "B30"]
+[GameDuration "00:16:48"]
+[GameEndTime "2026-03-10T06:44:58.820 +05"]
+[GameStartTime "2026-03-10T06:28:10.156 +05"]
+[Opening "Sicilian defense"]
+[PlyCount "96"]
+[TimeControl "inf"]
+
+1. e4 {book} c5 {book} 2. Nf3 {book} Nc6 {book} 3. Nc3 {book} Nf6 {book}
+4. Bb5 {book} g6 {book} 5. h3 {book} Nd4 {book} 6. e5 {book} Nxb5 {book}
+7. Nxb5 {8.2s} Nd5 {1.7s} 8. Qe2 {18s} Qb6 {7.5s} 9. Nd6+ {13s} exd6
+10. exd6+ {22s} Be7 {1.0s} 11. dxe7 {28s} Qe6 {13s} 12. Qxe6 {51s} dxe6
+13. Ng5 {26s} Kxe7 {1.1s} 14. d3 {5.2s} Nb4 {5.7s} 15. Kd1 {28s} Nd5 {2.8s}
+16. Ne4 {26s} b6 {1.2s} 17. Bg5+ {9.3s} Kd7 {0.78s} 18. Ke2 {15s} Bb7 {2.5s}
+19. Bd2 {27s} Nc7 {7.1s} 20. Bc3 {13s} Rhc8 {1.6s} 21. Be5 {6.2s} Ne8 {2.0s}
+22. Rh2 {7.7s} c4 {1.5s} 23. Bc3 {8.4s} cxd3+ {0.75s} 24. Kxd3 {8.4s}
+Bxe4+ {2.4s} 25. Kxe4 {64s} Rc5 {4.7s} 26. Rb1 {11s} Nd6+ {3.6s} 27. Kd3 {11s}
+Rd5+ {10s} 28. Ke3 {55s} Rc8 {5.9s} 29. Rc1 {10s} Rc4 {4.1s} 30. Ke2 {15s}
+Re4+ {5.7s} 31. Kf1 {20s} Kc6 {5.0s} 32. f3 {15s} Ra4 {0.90s} 33. a3 {25s}
+Rc4 {5.9s} 34. Ke2 {6.5s} Nb5 {3.3s} 35. Bf6 {5.3s} Nd4+ {1.2s} 36. Bxd4 {18s}
+Rcxd4 37. Ke3 {7.2s} Kc5 {1.4s} 38. f4 {42s} Rf5 {0.81s} 39. Rf1 {13s} g5
+40. g3 {39s} gxf4+ {0.53s} 41. Rxf4 {38s} Rfxf4 42. gxf4 {21s} Kd5 {0.58s}
+43. Rg2 {8.3s} Re4+ 44. Kf3 {19s} Rc4 45. Rd2+ {12s} Rd4 46. Rg2 {47s}
+Rc4 {0.81s} 47. Rd2+ {14s} Rd4 48. Rg2 {61s}
+Rc4 {0.73s, Draw by 3-fold repetition} 1/2-1/2
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.1.0"]
+[Black "gwaihir-0.2.0"]
+[Result "0-1"]
+[ECO "A41"]
+[GameDuration "00:12:40"]
+[GameEndTime "2026-03-10T06:57:39.253 +05"]
+[GameStartTime "2026-03-10T06:44:58.823 +05"]
+[Opening "Queen's Pawn"]
+[PlyCount "64"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+
+1. d4 {book} d6 {book} 2. e4 {book} Nf6 {book} 3. Nc3 {book} Nbd7 {book}
+4. g4 {book} g6 {book} 5. g5 {6.8s} Nh5 {5.5s} 6. Be2 {18s} Bg7 {39s}
+7. Be3 {9.9s} Nb6 {25s} 8. Bb5+ {13s} Bd7 {5.7s} 9. Be2 {4.0s} O-O {7.2s}
+10. Qd2 {8.1s} Na4 {21s} 11. Nxa4 {0.85s} Bxa4 {4.8s} 12. Bf3 {10s} Qd7 {32s}
+13. Ne2 {8.0s} Qh3 {13s} 14. Ng1 {1.1s} Qh4 {73s} 15. O-O-O {4.3s} Bc6 {8.7s}
+16. d5 {0.55s} Bd7 {6.4s} 17. Qb4 {4.7s} Rfb8 {12s} 18. Qc4 {3.5s} Rc8 {5.6s}
+19. Qb4 {5.0s} Nf4 {6.1s} 20. Qxb7 {1.7s} Rab8 {59s} 21. Qa6 {0.58s}
+Bxb2+ {6.0s} 22. Kd2 Nxd5 {41s} 23. Qxa7 {1.0s} Bc3+ {44s} 24. Kc1 {0.54s}
+Ra8 {33s} 25. Rxd5 {0.62s} Rxa7 {19s} 26. Bxa7 {0.60s} Ra8 {46s} 27. Rd3
+Rxa7 {25s} 28. Rxc3 Rxa2 {22s} 29. Rxc7 Qxf2 {12s} 30. Kb1 {0.85s} Ra8 {39s}
+31. Rb7 {1.7s} Qe1+ {42s} 32. Kb2 Qa1+ {White makes an illegal move: a1a1} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.2.0"]
+[Black "gwaihir-0.1.0"]
+[Result "1-0"]
+[ECO "A06"]
+[GameDuration "00:37:42"]
+[GameEndTime "2026-03-10T07:35:22.191 +05"]
+[GameStartTime "2026-03-10T06:57:39.255 +05"]
+[Opening "Reti Opening"]
+[PlyCount "173"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+
+1. Nf3 {book} d5 {book} 2. d4 {book} Nf6 {book} 3. c4 {book} e6 {book}
+4. g3 {book} Bb4+ {book} 5. Bd2 {book} Bd6 {book} 6. Bg2 {book} O-O {book}
+7. cxd5 {8.1s} Nxd5 {4.4s} 8. Nc3 {115s} Nxc3 {4.9s} 9. Bxc3 {7.7s} Qe7 {15s}
+10. Ne5 {18s} Nd7 {6.6s} 11. Nxd7 {11s} Qxd7 {3.8s} 12. Qd3 {8.6s} Qe7 {9.9s}
+13. Be4 {8.2s} Kh8 {3.9s} 14. Qb5 {16s} Kg8 {8.6s} 15. O-O {8.1s} Rb8 {5.0s}
+16. Kh1 {12s} f5 {13s} 17. Bf3 {21s} f4 {7.2s} 18. g4 {7.6s} Ra8 {9.6s}
+19. Be4 {18s} Qh4 {5.9s} 20. Qh5 {12s} Qxh5 21. gxh5 {11s} Rf6 {3.5s}
+22. Rg1 {53s} Rh6 {1.2s} 23. d5 {74s} e5 24. Rg5 {12s} Be7 25. Rxe5 {11s}
+Kf7 {1.8s} 26. Rc1 {7.5s} Bf6 {0.58s} 27. Bf3 {7.2s} Bxe5 {1.4s} 28. Bxe5 {40s}
+g5 29. Rxc7+ {34s} Ke8 30. Rg7 {12s} g4 {0.68s} 31. Bxg4 {22s} Bxg4
+32. Rxg4 {16s} Rd8 {0.76s} 33. Rg8+ {25s} Ke7 34. Rg7+ {26s} Ke8 35. Rg8+ {25s}
+Ke7 36. Rg7+ {28s} Ke8 37. Bxf4 {29s} Rxh5 38. Rg8+ {28s} Kd7 39. Rg7+ {12s} Ke8
+40. Rxb7 {47s} Rd7 41. Rb8+ {9.5s} Kf7 42. d6 {58s} Ra5 43. a3 {12s} Rf5 {0.71s}
+44. Bg3 {31s} Rc5 {1.3s} 45. Kg2 {12s} Rc2 {2.7s} 46. Kf3 {43s} Ke6 {2.1s}
+47. Ke3 {13s} Rc5 {3.0s} 48. Kd4 {12s} Rc2 {0.99s} 49. Kd3 {42s} Rc5 {0.95s}
+50. Re8+ {13s} Kf7 {0.54s} 51. Rh8 {60s} Ke6 {0.72s} 52. Re8+ {61s} Kf7 {0.51s}
+53. Rb8 {52s} Rg5 {2.9s} 54. Ke4 {11s} Rc5 {0.95s} 55. Rh8 {26s} Kf6 {0.70s}
+56. Rf8+ {14s} Kg6 {0.59s} 57. Be5 {21s} Rc2 {2.0s} 58. Rf6+ {34s} Kg5
+59. Rf5+ {18s} Kg6 60. Rf6+ {37s} Kg5 61. Ke3 {27s} Rb7 {0.69s} 62. Kd3 {76s}
+Rc1 {0.51s} 63. Rf3 {20s} Rc6 {3.4s} 64. Kd4 {27s} Rc8 {1.4s} 65. Rg3+ {15s} Kf5
+66. Rf3+ {18s} Kg4 67. Rg3+ {11s} Kf5 68. Rf3+ {32s} Kg4 69. Ke4 {9.2s}
+Re8 {1.6s} 70. Rg3+ {43s} Kh4 71. Re3 {47s} Rb5 {1.7s} 72. Kf5 {14s}
+Rf8+ {0.94s} 73. Ke6 {25s} Re8+ {0.94s} 74. Kf6 {39s} Rf8+ {1.8s} 75. Kg7 {14s}
+Ra8 76. d7 {12s} Rxe5 {0.85s} 77. Rxe5 {15s} Rd8 78. Re7 {12s} Kg5 79. Rf7 {21s}
+h6 80. e4 {9.8s} Kg4 81. e5 {15s} Rxd7 82. Rxd7 {56s} Kf5 83. Re7 {62s} h5
+84. e6 {37s} a6 85. Re8 {70s} h4 86. e7 {9.3s} Kg4
+87. Rc8 {4.3s, Black makes an illegal move: a1a1} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.1.0"]
+[Black "gwaihir-0.2.0"]
+[Result "0-1"]
+[ECO "B29"]
+[GameDuration "00:13:11"]
+[GameEndTime "2026-03-10T07:48:33.927 +05"]
+[GameStartTime "2026-03-10T07:35:22.194 +05"]
+[Opening "Sicilian"]
+[PlyCount "72"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+[Variation "Nimzowitsch-Rubinstein variation"]
+
+1. e4 {book} c5 {book} 2. Nf3 {book} Nf6 {book} 3. e5 {book} Nd5 {book}
+4. d4 {book} cxd4 {book} 5. Qxd4 {book} e6 {book} 6. c4 {book} Nc6 {book}
+7. Qd1 {2.0s} Nde7 {5.0s} 8. Nc3 {19s} Ng6 {20s} 9. Bd3 {10s} Ngxe5 {24s}
+10. Nxe5 {1.5s} Nxe5 {30s} 11. Be2 {18s} Bc5 {13s} 12. Ne4 {23s} O-O {31s}
+13. Qa4 {6.7s} Bd4 {15s} 14. Qc2 {10s} Qb6 {6.2s} 15. Kf1 {5.8s} f5 {13s}
+16. c5 {1.4s} Qc6 {49s} 17. Nd2 {1.7s} Ng4 {13s} 18. Bf3 {0.53s} Qc7 {7.2s}
+19. Bxg4 fxg4 {19s} 20. Ne4 {0.91s} d5 {5.2s} 21. Qe2 {2.2s} dxe4 {30s} 22. Be3
+Qxc5 {7.8s} 23. Rc1 Qb6 {18s} 24. Bxd4 Qxd4 {23s} 25. Kg1 {4.5s} Bd7 {25s}
+26. Rf1 {3.4s} Bc6 {28s} 27. Qxg4 {2.4s} Bb5 {39s} 28. Qxe6+ Rf7 {69s} 29. Qxf7+
+Kxf7 {11s} 30. Re1 {1.1s} e3 {23s} 31. fxe3 Qd2 {10s} 32. h3 Qxe1+ {36s} 33. Kh2
+Qxe3 {32s} 34. Rd1 {7.6s} Qf2 {59s} 35. Kh1 {1.7s} Bc6 {2.1s} 36. Rg1
+Rd8 {White makes an illegal move: a1a1} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.2.0"]
+[Black "gwaihir-0.1.0"]
+[Result "1-0"]
+[ECO "B29"]
+[GameDuration "00:20:40"]
+[GameEndTime "2026-03-10T08:09:14.914 +05"]
+[GameStartTime "2026-03-10T07:48:33.929 +05"]
+[Opening "Sicilian"]
+[PlyCount "135"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+[Variation "Nimzowitsch-Rubinstein variation"]
+
+1. e4 {book} c5 {book} 2. Nf3 {book} Nf6 {book} 3. e5 {book} Nd5 {book}
+4. d4 {book} cxd4 {book} 5. Qxd4 {book} e6 {book} 6. c4 {book} Nc6 {book}
+7. Qe4 {4.8s} Bb4+ {4.6s} 8. Bd2 {6.0s} Bxd2+ {1.1s} 9. Nbxd2 {48s} Ndb4 {2.7s}
+10. Nb3 {36s} d5 {4.8s} 11. exd6 {38s} Qxd6 {3.5s} 12. Be2 {7.1s} f5 {12s}
+13. Qb1 {14s} O-O {31s} 14. O-O {36s} Qe7 {19s} 15. Qc1 {13s} Qf6 {15s}
+16. Qc3 {33s} Qxc3 {3.7s} 17. bxc3 {33s} Na6 {0.63s} 18. Ng5 {14s} h6 {2.7s}
+19. Nf3 {16s} Kf7 {3.4s} 20. Rfb1 {5.6s} e5 {3.5s} 21. Kf1 {6.3s} Kf6 {3.6s}
+22. Ke1 {5.0s} Be6 {3.1s} 23. Rb2 {23s} Rad8 {13s} 24. Rd1 {10.0s} Rxd1+ {2.1s}
+25. Kxd1 {23s} Rd8+ {7.7s} 26. Ke1 {9.8s} Rd7 {7.0s} 27. Bf1 {60s} Rc7 {4.3s}
+28. Nfd2 {13s} Ne7 {4.4s} 29. Rc2 {6.8s} b5 {3.0s} 30. Na5 {12s} b4 {0.54s}
+31. cxb4 {9.5s} Nxb4 32. Rb2 {12s} Nbc6 {0.77s} 33. Nab3 {24s} Rb7 {2.8s}
+34. Kd1 {8.2s} Bf7 {5.9s} 35. Kc2 {8.6s} Bg6 {5.5s} 36. Kc3 {20s} Nd4 {2.8s}
+37. Nc5 {10s} Rc7 38. Ndb3 {44s} Nxb3 39. Nxb3 {9.1s} Nd5+ {3.3s} 40. Kd2 {58s}
+Nf4 {0.90s} 41. Ke3 {21s} Ne6 {0.74s} 42. Kd2 {24s} Be8 {5.1s} 43. Ke3 {6.4s}
+Bc6 {3.7s} 44. f3 {16s} f4+ {3.7s} 45. Kd3 {12s} Rb7 {5.3s} 46. Kc3 {24s}
+Ba4 {3.7s} 47. Bd3 {30s} Bxb3 {2.1s} 48. Be4 {9.4s} Rb6 49. Rxb3 {28s} Rxb3+
+50. Kxb3 {11s} Nd4+ 51. Kc3 {22s} Nf5 52. Bxf5 {12s} Kxf5 53. c5 {14s} Ke6
+54. Kc4 {33s} h5 55. h4 {17s} a6 56. a4 {7.1s} a5 57. Kb5 {0.95s} e4
+58. fxe4 {3.1s} Ke5 59. c6 {3.6s} Kxe4 60. c7 {12s} f3 61. gxf3+ {23s} Kxf3
+62. c8=Q {9.4s} Kg3 63. Qc3+ {11s} Kxh4 64. Qxg7 {8.4s} Kh3 65. Kxa5 {0.84s} Kh2
+66. Kb4 Kh3 67. Kc3 Kh2 68. Kd3 {Black makes an illegal move: a1a1} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.1.0"]
+[Black "gwaihir-0.2.0"]
+[Result "0-1"]
+[ECO "B29"]
+[GameDuration "00:12:59"]
+[GameEndTime "2026-03-10T08:22:13.940 +05"]
+[GameStartTime "2026-03-10T08:09:14.916 +05"]
+[Opening "Sicilian"]
+[PlyCount "72"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+[Variation "Nimzowitsch-Rubinstein variation"]
+
+1. e4 {book} c5 {book} 2. Nf3 {book} Nf6 {book} 3. e5 {book} Nd5 {book}
+4. d4 {book} cxd4 {book} 5. Qxd4 {book} e6 {book} 6. c4 {book} Nc6 {book}
+7. Qd1 {2.0s} Nde7 {4.9s} 8. Nc3 {19s} Ng6 {20s} 9. Bd3 {10s} Ngxe5 {24s}
+10. Nxe5 {1.5s} Nxe5 {30s} 11. Be2 {18s} Bc5 {13s} 12. Ne4 {23s} O-O {31s}
+13. Qa4 {6.7s} Bd4 {15s} 14. Qc2 {10s} Qb6 {6.3s} 15. Kf1 {6.0s} f5 {13s}
+16. c5 {1.4s} Qc6 {49s} 17. Nd2 {1.7s} Ng4 {13s} 18. Bf3 {0.53s} Qc7 {7.2s}
+19. Bxg4 fxg4 {19s} 20. Ne4 {0.90s} d5 {5.1s} 21. Qe2 {2.2s} dxe4 {30s} 22. Be3
+Qxc5 {7.6s} 23. Rc1 Qb6 {18s} 24. Bxd4 Qxd4 {21s} 25. Kg1 {1.8s} Bd7 {18s}
+26. Rf1 {3.1s} Bc6 {28s} 27. Qxg4 {2.4s} Bb5 {39s} 28. Qxe6+ Rf7 {68s} 29. Qxf7+
+Kxf7 {10s} 30. Re1 {1.1s} e3 {23s} 31. fxe3 Qd2 {11s} 32. h3 Qxe1+ {36s} 33. Kh2
+Qxe3 {32s} 34. Rd1 {7.6s} Qf2 {58s} 35. Kh1 {1.7s} Bc6 {2.1s} 36. Rg1
+Rd8 {White makes an illegal move: a1a1} 0-1
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.2.0"]
+[Black "gwaihir-0.1.0"]
+[Result "1-0"]
+[ECO "C13"]
+[GameDuration "00:21:41"]
+[GameEndTime "2026-03-10T08:43:55.357 +05"]
+[GameStartTime "2026-03-10T08:22:13.942 +05"]
+[Opening "French"]
+[PlyCount "121"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+[Variation "Albin-Alekhine-Chatard attack, Spielmann variation"]
+
+1. e4 {book} e6 {book} 2. d4 {book} d5 {book} 3. Nc3 {book} Nf6 {book}
+4. Bg5 {book} Be7 {book} 5. e5 {book} Nfd7 {book} 6. h4 {book} O-O {book}
+7. Qg4 {15s} f5 {1.1s} 8. Qf4 {25s} Nc6 {0.64s} 9. Nf3 {49s} Nb4 {0.68s}
+10. O-O-O {22s} Nb6 {0.63s} 11. h5 {26s} Bd7 12. h6 {8.0s} Rf7 13. hxg7 {16s}
+Rxg7 14. Bf6 {30s} Bxf6 {0.64s} 15. exf6 {14s} Qxf6 {0.89s} 16. Qxc7 {34s}
+Nxc2 {11s} 17. Qc5 {39s} Na4 {3.0s} 18. Nxa4 {19s} Bxa4 {1.3s} 19. Qa5 {5.8s}
+Ne3 {1.0s} 20. Qxa4 {42s} Rc8+ {0.94s} 21. Kb1 {27s} Nxd1 {1.0s} 22. Qxd1 {7.5s}
+Qg6 {13s} 23. Rh2 {29s} Rgc7 {8.2s} 24. Bd3 {19s} Qg7 {11s} 25. Qe1 {32s}
+Qf6 {4.9s} 26. Qd2 {4.9s} Qg6 {11s} 27. Rh3 {30s} Rg7 {14s} 28. Rg3 {13s} Qf6
+29. Rxg7+ {12s} Kxg7 {0.92s} 30. Qb4 {19s} Rb8 {2.8s} 31. Qa5 {12s} Ra8 {1.6s}
+32. Qc7+ {50s} Qf7 33. Ng5 {14s} Qxc7 34. Nxe6+ {28s} Kf7 35. Nxc7 {19s} Rg8
+36. g3 {19s} Rg4 37. Bxf5 {18s} Rxd4 38. Bxh7 {12s} Rd2 39. f3 {27s} Rf2
+40. f4 {44s} Rh2 41. Bf5 {16s} d4 42. Be4 {47s} Rh3 43. Nb5 {29s} Rxg3
+44. Nxd4 {11s} Rg4 45. Ne2 {35s} b6 46. Kc2 {14s} Ke6 {0.83s} 47. Kd3 {15s} Kd6
+48. Ke3 {13s} Kc5 49. Nc1 {12s} Rg3+ 50. Bf3 {49s} Kc4 51. Nd3 {16s} Rxf3+
+52. Kxf3 {42s} Kd4 53. f5 {30s} Kd5 54. Kf4 {30s} Kd6 55. f6 {32s} Ke6
+56. Kg5 {18s} Kf7 57. Kf5 {10s} Kf8 58. Ke6 {5.6s} Kg8 59. f7+ {1.0s} Kg7
+60. Nf4 b5 61. Ke7 {Black makes an illegal move: a1a1} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.1.0"]
+[Black "gwaihir-0.2.0"]
+[Result "1/2-1/2"]
+[ECO "C13"]
+[GameDuration "00:15:00"]
+[GameEndTime "2026-03-10T08:58:55.495 +05"]
+[GameStartTime "2026-03-10T08:43:55.358 +05"]
+[Opening "French"]
+[PlyCount "114"]
+[TimeControl "inf"]
+[Variation "Albin-Alekhine-Chatard attack, Spielmann variation"]
+
+1. e4 {book} e6 {book} 2. d4 {book} d5 {book} 3. Nc3 {book} Nf6 {book}
+4. Bg5 {book} Be7 {book} 5. e5 {book} Nfd7 {book} 6. h4 {book} O-O {book}
+7. Nf3 {2.1s} Nc6 {22s} 8. Bb5 {2.1s} Nb6 {17s} 9. Kf1 {2.7s} Bd7 {15s}
+10. Be2 {2.5s} Qe8 {7.0s} 11. Nb5 {4.4s} Rc8 {25s} 12. Bd3 {2.2s} Na4 {15s}
+13. Rb1 {1.4s} a6 {12s} 14. Nc3 {0.77s} Nb4 {16s} 15. Bxe7 {0.66s} Qxe7 {14s}
+16. Nxa4 {0.55s} Bxa4 {6.7s} 17. Qd2 {1.1s} c5 {10s} 18. Qg5 {0.98s} Qc7 {6.4s}
+19. b3 {1.0s} Bb5 {6.8s} 20. Bxb5 axb5 {7.1s} 21. h5 {0.68s} h6 {6.0s} 22. Qd2
+Nxa2 {7.0s} 23. c4 {0.71s} Nb4 {12s} 24. dxc5 Qxc5 {23s} 25. Qe3 {1.1s}
+Qxe3 {6.3s} 26. fxe3 bxc4 {6.1s} 27. Ke2 Na2 {7.0s} 28. bxc4 Nc3+ {13s} 29. Kd3
+Nxb1 {32s} 30. Rxb1 Rxc4 {25s} 31. Rxb7 {0.55s} Rg4 {41s} 32. Rb2 Ra8 {32s}
+33. Rc2 Ra3+ {29s} 34. Rc3 Rxc3+ {31s} 35. Kxc3 Rxg2 {26s} 36. Kd3 Rg3 {22s}
+37. Nd4 Rh3 {37s} 38. Nc6 Rxh5 {16s} 39. Ne7+ Kf8 {24s} 40. Nc6 Ke8 {18s}
+41. Kd4 Kd7 {32s} 42. Nb8+ Kc7 {12s} 43. Na6+ Kb6 {28s} 44. Nb8 Rh4+ {45s}
+45. Kd3 Rc4 {31s} 46. e4 Kc7 {15s} 47. exd5 exd5 {11s} 48. Na6+ Kb7 {11s}
+49. Nc5+ Rxc5 {28s} 50. e6 fxe6 {9.2s} 51. Kd4 Rc6 {19s} 52. Kd3 Rc7 {12s}
+53. Kd4 Rf7 {11s} 54. Ke5 Rf1 {6.5s} 55. Kd4 Rf7 {6.2s} 56. Ke5 Rf1 {1.2s}
+57. Kd4 Rf7 {Draw by 3-fold repetition} 1/2-1/2
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.2.0"]
+[Black "gwaihir-0.1.0"]
+[Result "1-0"]
+[ECO "A06"]
+[GameDuration "00:37:30"]
+[GameEndTime "2026-03-10T09:36:25.661 +05"]gwaihir-0.2.0
+[GameStartTime "2026-03-10T08:58:55.499 +05"]
+[Opening "Reti Opening"]
+[PlyCount "173"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+
+1. Nf3 {book} d5 {book} 2. d4 {book} Nf6 {book} 3. c4 {book} e6 {book}
+4. g3 {book} Bb4+ {book} 5. Bd2 {book} Bd6 {book} 6. Bg2 {book} O-O {book}
+7. cxd5 {8.1s} Nxd5 {4.4s} 8. Nc3 {72s} Nxc3 {5.0s} 9. Bxc3 {7.7s} Qe7 {16s}
+10. Ne5 {18s} Nd7 {6.9s} 11. Nxd7 {11s} Qxd7 {3.9s} 12. Qd3 {8.5s} Qe7 {10s}
+13. Be4 {8.2s} Kh8 {4.0s} 14. Qb5 {16s} Kg8 {8.9s} 15. O-O {8.0s} Rb8 {5.2s}
+16. Kh1 {11s} f5 {15s} 17. Bf3 {20s} f4 {7.5s} 18. g4 {7.6s} Ra8 {9.5s}
+19. Be4 {18s} Qh4 {6.1s} 20. Qh5 {12s} Qxh5 21. gxh5 {11s} Rf6 {3.1s}
+22. Rg1 {53s} Rh6 {1.2s} 23. d5 {76s} e5 24. Rg5 {13s} Be7 25. Rxe5 {12s}
+Kf7 {1.9s} 26. Rc1 {7.8s} Bf6 {0.60s} 27. Bf3 {7.5s} Bxe5 {1.4s} 28. Bxe5 {41s}
+g5 29. Rxc7+ {34s} Ke8 30. Rg7 {12s} g4 {0.71s} 31. Bxg4 {23s} Bxg4
+32. Rxg4 {17s} Rd8 {0.78s} 33. Rg8+ {25s} Ke7 34. Rg7+ {27s} Ke8 35. Rg8+ {25s}
+Ke7 36. Rg7+ {28s} Ke8 37. Bxf4 {28s} Rxh5 38. Rg8+ {28s} Kd7 39. Rg7+ {12s} Ke8
+40. Rxb7 {48s} Rd7 41. Rb8+ {9.7s} Kf7 42. d6 {59s} Ra5 43. a3 {12s} Rf5 {0.73s}
+44. Bg3 {31s} Rc5 {1.3s} 45. Kg2 {12s} Rc2 {2.2s} 46. Kf3 {43s} Ke6 {2.0s}
+47. Ke3 {14s} Rc5 {3.0s} 48. Kd4 {13s} Rc2 {1.00s} 49. Kd3 {43s} Rc5 {0.77s}
+50. Re8+ {13s} Kf7 {0.54s} 51. Rh8 {61s} Ke6 {0.75s} 52. Re8+ {62s} Kf7 {0.50s}
+53. Rb8 {52s} Rg5 {3.0s} 54. Ke4 {11s} Rc5 {0.98s} 55. Rh8 {26s} Kf6 {0.71s}
+56. Rf8+ {15s} Kg6 {0.67s} 57. Be5 {21s} Rc2 {2.0s} 58. Rf6+ {35s} Kg5
+59. Rf5+ {19s} Kg6 60. Rf6+ {39s} Kg5 61. Ke3 {28s} Rb7 {0.71s} 62. Kd3 {78s}
+Rc1 {0.58s} 63. Rf3 {21s} Rc6 {3.5s} 64. Kd4 {27s} Rc8 {1.5s} 65. Rg3+ {16s} Kf5
+66. Rf3+ {19s} Kg4 67. Rg3+ {11s} Kf5 68. Rf3+ {32s} Kg4 69. Ke4 {9.2s}
+Re8 {1.6s} 70. Rg3+ {43s} Kh4 71. Re3 {47s} Rb5 {1.6s} 72. Kf5 {14s}
+Rf8+ {0.93s} 73. Ke6 {25s} Re8+ {0.93s} 74. Kf6 {39s} Rf8+ {1.8s} 75. Kg7 {15s}
+Ra8 76. d7 {12s} Rxe5 {0.85s} 77. Rxe5 {15s} Rd8 78. Re7 {12s} Kg5 79. Rf7 {21s}
+h6 80. e4 {9.8s} Kg4 81. e5 {16s} Rxd7 82. Rxd7 {56s} Kf5 83. Re7 {63s} h5
+84. e6 {37s} a6 85. Re8 {70s} h4 86. e7 {9.3s} Kg4
+87. Rc8 {4.4s, Black makes an illegal move: a1a1} 1-0
+
+[Event "My Tournament"]
+[Site "?"]
+[Date "2026.03.10"]
+[Round "1"]
+[White "gwaihir-0.1.0"]
+[Black "gwaihir-0.2.0"]
+[Result "0-1"]
+[ECO "A06"]
+[GameDuration "00:27:57"]
+[GameEndTime "2026-03-10T10:04:22.803 +05"]
+[GameStartTime "2026-03-10T09:36:25.666 +05"]
+[Opening "Reti Opening"]
+[PlyCount "156"]
+[Termination "illegal move"]
+[TimeControl "inf"]
+
+1. Nf3 {book} d5 {book} 2. d4 {book} Nf6 {book} 3. c4 {book} e6 {book}
+4. Nc3 {book} c5 {book} 5. cxd5 {book} Nxd5 {book} 6. e4 {book} Nxc3 {book}
+7. bxc3 {0.82s} Nd7 {5.7s} 8. Bb5 {3.1s} Qa5 {19s} 9. Qb3 {1.3s} cxd4 {14s}
+10. Nxd4 {2.6s} Bd6 {30s} 11. Nxe6 {12s} fxe6 {22s} 12. Qxe6+ {5.0s} Be7 {6.8s}
+13. Rb1 {3.0s} Rf8 {6.0s} 14. Qc4 {4.3s} Bf6 {10s} 15. Bd2 {3.3s} Kd8 {19s}
+16. Bxd7 {4.3s} Kxd7 {6.8s} 17. Rb5 {11s} Qa3 {12s} 18. e5 {9.8s} Be7 {14s}
+19. Rd5+ {11s} Ke8 {52s} 20. Qb5+ {11s} Kf7 {12s} 21. Qb1 {5.0s} Be6 {15s}
+22. Rb5 {2.1s} Qxa2 {23s} 23. Qxa2 {0.73s} Bxa2 {12s} 24. Rxb7 {0.92s} Bd5 {41s}
+25. Rc7 {0.61s} Rfc8 {33s} 26. Rxc8 Rxc8 {27s} 27. O-O {2.7s} Ke6 {9.9s}
+28. Be3 {1.5s} Rxc3 {22s} 29. Bxa7 {0.92s} Rd3 {31s} 30. Re1 {1.6s} Bb4 {12s}
+31. Rb1 {0.51s} Bd2 {22s} 32. Bb8 {1.1s} Bc3 {14s} 33. Rb6+ Kf5 {29s}
+34. Rb1 {0.63s} Be4 {22s} 35. Rc1 {1.2s} Rd2 {13s} 36. f3 {0.66s} Bd4+ {20s}
+37. Kh1 Bd5 {33s} 38. Re1 Rd3 {17s} 39. Rf1 {0.71s} Rb3 {26s} 40. Bd6 Ke6 {24s}
+41. Bc7 {0.67s} Ra3 {28s} 42. Bd6 {0.50s} Rb3 {10s} 43. Bc7 {0.65s} Rb7 {34s}
+44. Bd6 {0.74s} Rb2 {22s} 45. Bf8 {0.73s} Rb7 {13s} 46. Bd6 {1.2s} Rb2 {31s}
+47. Bf8 {0.66s} Bxe5 {11s} 48. Re1 {1.2s} Kf6 {32s} 49. Bc5 {1.4s} Rb3 {27s}
+50. Rd1 {2.4s} Be6 {35s} 51. Kg1 {3.7s} Rc3 {32s} 52. Bd4 {0.97s} Rc2 {7.5s}
+53. Bxe5+ {0.85s} Kxe5 {33s} 54. Rd8 {0.80s} Kf4 {9.1s} 55. Rd4+ {0.83s}
+Ke5 {15s} 56. Rh4 Bf5 {9.5s} 57. Ra4 Rd2 {16s} 58. f4+ {1.1s} Kf6 {9.8s}
+59. Ra6+ {0.63s} Be6 {9.1s} 60. Kf1 {0.70s} Rd4 {20s} 61. g3 Rd2 {24s} 62. Kg1
+Rd1+ {18s} 63. Kg2 Rd2+ {18s} 64. Kg1 Rb2 {20s} 65. Ra5 {0.82s} Rb1+ {39s}
+66. Kf2 Rb2+ {42s} 67. Kg1 Bh3 {53s} 68. Ra6+ {0.78s} Kf5 {23s} 69. Ra7
+Ke4 {28s} 70. Ra1 {0.73s} Rg2+ {10s} 71. Kh1 Re2 {32s} 72. Kg1 {0.52s} Bd7 {44s}
+73. Ra5 {0.57s} Kf3 {22s} 74. Ra3+ Kg4 {17s} 75. Ra5 Bf5 {15s} 76. Ra7 {0.51s}
+Be4 {31s} 77. Rxg7+ Kf3 {24s} 78. h4 Re1+ {White makes an illegal move: a1a1}
+0-1
+
