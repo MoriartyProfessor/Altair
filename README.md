@@ -58,6 +58,10 @@ Tests:
 
 ## Current To-Do list
 * Figure out why are so few nodes searched if compiled with RelWithDebInfo
+* Fix threefold repetition
+* Fix halfclock again
+* Fix drawing completely winning games
+* Minor - don't make illegal move when getting mated
 
 ### Next
 * Search Improvements
