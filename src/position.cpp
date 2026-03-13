@@ -642,7 +642,10 @@ void Position::update_en_passant_in_make_(Move move)
 
 void Position::update_halfclock_in_make_(Move move)
 {
-    ++halfclock_;
+    if (move.piece_type() == PAWN || move.is_capture())
+        halfclock_ = 0;
+    else
+        ++halfclock_;
 }
 
 void Position::update_moveclock_in_make_(Move move)
