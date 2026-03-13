@@ -29,7 +29,7 @@ Search:
 
 Evaluation:
 - [x] Material
-- [ ] Game-Phase dependent evaluation
+- [x] Game-Phase dependent evaluation
 - [x] Piece-Square Tables
 - [ ] Pawn Structure
 - [ ] Evaluation of Pieces
@@ -61,6 +61,9 @@ Tests:
 * Fix threefold repetition
 * Fix halfclock again
 * Fix drawing completely winning games
+* MNPS drops significantly towards the endgame. Potential causes:
+    * More TT hits, so nodes are not being counted.
+    * History stack is getting too big.
 * Minor - don't make illegal move when getting mated
 
 ### Next
