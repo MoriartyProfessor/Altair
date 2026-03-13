@@ -13,6 +13,7 @@ using Square = uint32_t;
 using File = uint32_t;
 using Rank = uint32_t;
 using Direction = uint32_t;
+using Phase = uint32_t;
 
 const uint32_t MAX_DEPTH = 64;
 const uint32_t MAX_MOVE_LIST_SIZE = 218;
@@ -89,6 +90,14 @@ enum Directions : Direction
     NORTH_EAST,
 
     N_DIRECTIONS
+};
+
+enum Phases : Phase
+{
+    MIDDLEGAME,
+    ENDGAME,
+
+    N_PHASES
 };
 
 struct CastlingRights
