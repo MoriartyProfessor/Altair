@@ -1,7 +1,7 @@
+#include "moveparser.hpp"
+
 #include <cmath>
 #include <sstream>
-
-#include "moveparser.hpp"
 
 CoordinateMoveParser::CoordinateMoveParser(const Position& position)
 : position_{position}
@@ -34,11 +34,11 @@ Move CoordinateMoveParser::parse_move(const std::string& descriptor)
         move.set_capture();
         move.set_capture_piece_type(get_type(position_.piece_occupying(to)));
     }
-    else if(move.piece_type() == KING && (from == SQ_E1 && to == SQ_G1) || (from == SQ_E8 && to == SQ_G8))
+    else if(move.piece_type() == KING && ((from == SQ_E1 && to == SQ_G1) || (from == SQ_E8 && to == SQ_G8)))
     {
         move.set_king_side_castle();
     }
-    else if(move.piece_type() == KING && (from == SQ_E1 && to == SQ_C1) || (from == SQ_E8 && to == SQ_C8))
+    else if(move.piece_type() == KING && ((from == SQ_E1 && to == SQ_C1) || (from == SQ_E8 && to == SQ_C8)))
     {
         move.set_queen_side_castle();
     }
