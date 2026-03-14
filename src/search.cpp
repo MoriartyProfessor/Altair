@@ -15,10 +15,13 @@ using HistoryStack = boost::container::small_vector<Zobrist::HashKey, 256>;
 
 namespace Search
 {
-    constexpr uint8_t SEARCH_DEPTH = 9;
+    constexpr uint8_t SEARCH_DEPTH = 16;
+    constexpr uint8_t MIN_DEPTH = 8;
+    constexpr int32_t MAX_PLY = 100;
+
+    constexpr int32_t MATE_SCORE = 15000;
     constexpr int32_t STALEMATE_SCORE = 0;
     constexpr int32_t REPETITION_SCORE = -100;
-    constexpr int32_t MATE_SCORE = -15000;
 
     HistoryStack history_stack;
 
@@ -65,6 +68,24 @@ namespace Search
                 return true;
         }
         return false;
+    }
+
+    int32_t to_tt_score(int32_t score, int sply)
+    {
+        if(score >= (MATE_SCORE - MAX_PLY))
+            return score + sply;
+        if(score <= -(MATE_SCORE - MAX_PLY))
+            return score - sply;
+        return score;
+    }
+
+    int32_t from_tt_value(int32_t score, int sply)
+    {
+        if(score >= (MATE_SCORE - MAX_PLY))
+            return score - sply;
+        if(score <= -(MATE_SCORE - MAX_PLY))
+            return score + sply;
+        return score;
     }
 
     void push_to_history_stack(Zobrist::HashKey key)
@@ -125,7 +146,7 @@ namespace Search
         return best_score;
     }
 
-    Result negamax(Position& position, int alpha, int beta, int depth)
+    Result negamax(Position& position, int alpha, int beta, int depth, int sply)
     {
         if(was_threefold_reached(history_stack))
         {
@@ -142,19 +163,20 @@ namespace Search
         if(entry && entry->depth >= depth)
         {
             ++search_stats.tt_hits;
+            auto adjusted_score = from_tt_value(entry->score, sply);
             switch (entry->node_type)
             {
             case TTEntry::NodeType::EXACT:
-                return {entry->score, entry->best_move};
+                return {adjusted_score, entry->best_move};
             case TTEntry::NodeType::LOWERBOUND:
-                alpha = std::max(alpha, entry->score);
+                alpha = std::max(alpha, adjusted_score);
                 break;
             case TTEntry::NodeType::UPPERBOUND:
-                beta = std::min(beta, entry->score);
+                beta = std::min(beta, adjusted_score);
                 break;
             }
             if (alpha >= beta) 
-                return {entry->score, entry->best_move};
+                return {adjusted_score, entry->best_move};
         }
 
         MoveList moves;
@@ -164,7 +186,7 @@ namespace Search
 
         MoveOrderer move_orderer{moves, get_hash_move(entry)};
 
-        Result best_result {MATE_SCORE, {}};
+        Result best_result {-MATE_SCORE, {}};
 
         uint32_t legal_move_counter = 0;
         
@@ -183,7 +205,7 @@ namespace Search
             if (!position.is_in_check(toggle_color(position.side_to_move())))
             {
                 ++legal_move_counter;
-                auto result = -negamax(position, -beta, -alpha, depth - 1);
+                auto result = -negamax(position, -beta, -alpha, depth - 1, sply + 1);
                 result.move = move;
                 if (result.score > best_result.score)
                 {
@@ -196,7 +218,7 @@ namespace Search
                     TTEntry tt_entry = {.key = hashkey, 
                             .best_move = result.move, 
                             .depth = depth,
-                            .score = result.score,
+                            .score = to_tt_score(result.score, sply),
                             .node_type = TTEntry::NodeType::LOWERBOUND};
                     transposition_table.insert(std::move(tt_entry));
                     position.unmake_move(move, irrecoverable_state);
@@ -212,7 +234,7 @@ namespace Search
         if (legal_move_counter == 0)
         {
             if (position.is_in_check(position.side_to_move()))
-                best_result.score =  MATE_SCORE - SEARCH_DEPTH + depth;
+                best_result.score = -MATE_SCORE - sply;
             else
                 best_result.score = STALEMATE_SCORE;
         }
@@ -225,7 +247,7 @@ namespace Search
         TTEntry tt_entry = {.key = position.hashkey(), 
                             .best_move = best_result.move, 
                             .depth = depth,
-                            .score = best_result.score,
+                            .score = to_tt_score(best_result.score, sply),
                             .node_type = type};
         transposition_table.insert(std::move(tt_entry));
 
@@ -241,13 +263,13 @@ namespace Search
             Timer timer;
             timer.start();
 
-            result = negamax(position, MATE_SCORE, -MATE_SCORE, depth);
+            result = negamax(position, -MATE_SCORE, MATE_SCORE, depth, 0);
 
             timer.stop();
 
             double speed = double(search_stats.qnode_count)/(timer.duration().count() * 1000);
             std::cout << std::format("[Debug] Depth: {}, Move: {}, Score: {}, Node "
-                                 "Count: {:L}, QNode Count: {:L}, TT Hits: {}, "
+                                 "Count: {:L}, QNode Count: {:L}, TT Hits: {:L}, "
                                  "Threefolds: {}, Speed: {} MNPS",
                                  depth, result.move.uci_notation(),
                                  result.score, search_stats.node_count,
