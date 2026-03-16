@@ -51,6 +51,7 @@ PieceType Move::promotion_piece_type() const
     return (move_ >> 18) & 0x7;
 }
 
+bool Move::is_null()                const { return  move_ == 0; }
 bool Move::is_quiet()               const { return (move_ >> 21) & (1 << QUIET); }
 bool Move::is_capture()             const { return (move_ >> 21) & (1 << CAPTURE); }
 bool Move::is_promotion()           const { return (move_ >> 21) & (1 << PROMOTION); }

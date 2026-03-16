@@ -26,6 +26,7 @@ class Move
     PieceType capture_piece_type() const;
     PieceType promotion_piece_type() const;
 
+    bool is_null() const;
     bool is_quiet() const;
     bool is_capture() const;
     bool is_promotion() const;
