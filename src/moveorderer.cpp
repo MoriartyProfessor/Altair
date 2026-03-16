@@ -17,13 +17,14 @@ constexpr auto generate_mvv_lva()
 }
 
 constexpr uint32_t HASH_MOVE_SCORE = 5000;
+constexpr uint32_t KILLER_MOVE_SCORE = 400;
 constexpr auto MVV_LVA_SCORES = generate_mvv_lva();
 constexpr uint32_t PROMOTION_SCORES[N_PIECE_TYPES] = {0, 1000, 1100, 1500, 2000, 0};
 
-MoveOrderer::MoveOrderer(MoveList &moves, Move hash_move)
+MoveOrderer::MoveOrderer(MoveList &moves, std::pair<Move, Move> killers, Move hash_move)
     : moves_(moves), scores_(moves.size(), 0)
 {
-    assign_scores_(hash_move);
+    assign_scores_(killers, hash_move);
 }
 
 Move MoveOrderer::next()
@@ -47,7 +48,7 @@ bool MoveOrderer::has_next() const
     return current_index_ < moves_.size();
 }
 
-void MoveOrderer::assign_scores_(Move hash_move)
+void MoveOrderer::assign_scores_(std::pair<Move, Move> killers, Move hash_move)
 {
     for (int i = 0; i < moves_.size(); ++i)
     {
@@ -60,6 +61,8 @@ void MoveOrderer::assign_scores_(Move hash_move)
             not capture*/
         if (move == hash_move)
             score += HASH_MOVE_SCORE;
+        if (move == killers.first || move == killers.second)
+            score += KILLER_MOVE_SCORE;
         if (move.is_capture())
             score += MVV_LVA_SCORES[move.piece_type()][move.capture_piece_type()];
         if (move.is_promotion())

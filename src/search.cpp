@@ -27,6 +27,8 @@ namespace Search
 
     TranspostionTable transposition_table{4_M};
 
+    Killers killers;
+
     struct Result
     {
         int score;
@@ -184,7 +186,7 @@ namespace Search
         MoveGenerator move_generator_{&position, &moves};
         move_generator_.gen_all_moves();
 
-        MoveOrderer move_orderer{moves, get_hash_move(entry)};
+        MoveOrderer move_orderer{moves, killers[sply], get_hash_move(entry)};
 
         Result best_result {-MATE_SCORE, {}};
 
@@ -215,6 +217,11 @@ namespace Search
                 }
                 if(result.score >= beta)
                 {
+                    if(result.move.is_quiet())
+                    {
+                        std::swap(killers[sply].first, killers[sply].second);
+                        killers[sply].first = result.move;
+                    } 
                     TTEntry tt_entry = {.key = hashkey, 
                             .best_move = result.move, 
                             .depth = depth,
