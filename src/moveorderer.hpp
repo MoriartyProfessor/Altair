@@ -9,12 +9,12 @@
 class MoveOrderer
 {
     public:
-    MoveOrderer(MoveList& moves, Move hash_move = Move{});
+    MoveOrderer(MoveList& moves, std::pair<Move, Move> killers, Move hash_move = Move{});
     Move next();
     bool has_next() const;
 
     private:
-    void assign_scores_(Move hash_move);
+    void assign_scores_(std::pair<Move, Move> killers, Move hash_move);
 
     MoveList& moves_;
     boost::container::small_vector<uint32_t, MAX_MOVE_LIST_SIZE> scores_;

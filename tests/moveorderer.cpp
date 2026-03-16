@@ -17,7 +17,7 @@ TEST(moveorderer, basic) {
     MoveGenerator move_generator{&position, &moves};
     move_generator.gen_all_moves();
 
-    MoveOrderer move_orderer{moves};
+    MoveOrderer move_orderer{moves, {}};
 
     Move first_move = move_orderer.next();
     EXPECT_EQ(first_move.from(), SQ_D6);
