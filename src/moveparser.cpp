@@ -29,7 +29,7 @@ Move CoordinateMoveParser::parse_move(const std::string& descriptor)
         move.set_promotion();
         move.set_promotion_piece_type(get_type(char_to_piece(descriptor[4])));
     }
-    else if(position_.piece_occupying(to) != N_PIECES)
+    if(position_.piece_occupying(to) != N_PIECES)
     {
         move.set_capture();
         move.set_capture_piece_type(get_type(position_.piece_occupying(to)));
