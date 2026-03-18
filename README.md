@@ -59,12 +59,12 @@ Tests:
 ## Current To-Do list
 * Figure out why are so few nodes searched if compiled with RelWithDebInfo
 * Fix threefold repetition
-* Fix drawing completely winning games
 * MNPS drops significantly towards the endgame. Potential causes:
     * More TT hits, so nodes are not being counted.
     * History stack is getting too big.
 * Minor - don't make illegal move when getting mated
 * Fix TT wrap around logic (experimented with boost::circular_buffer, but it slowed down the code)
+* Implement proper time management to and setup SPRT
 
 ### Next
 * Search Improvements
