@@ -12,6 +12,7 @@
 #include <format>
 
 using HistoryStack = boost::container::small_vector<Zobrist::HashKey, 256>;
+using Killers = std::array<std::pair<Move, Move>, 256>;
 
 namespace Search
 {
