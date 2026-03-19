@@ -218,7 +218,7 @@ namespace Search
                 }
                 if(result.score >= beta)
                 {
-                    if(result.move.is_quiet())
+                    if(result.move.is_quiet() && killers[sply].first != result.move)
                     {
                         std::swap(killers[sply].first, killers[sply].second);
                         killers[sply].first = result.move;
@@ -246,7 +246,7 @@ namespace Search
             else
                 best_result.score = STALEMATE_SCORE;
         }
-        else if(best_result.move == Move{})
+        else if(best_result.move.is_null())
         {
             best_result.move = moves.front();
         }
