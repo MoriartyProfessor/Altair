@@ -19,8 +19,8 @@ namespace UCI
 
         position_ = Position{};
 
-        Search::clear_history_stack(); 
-        Search::push_to_history_stack(position_.hashkey());
+        search_.history_stack.clear(); 
+        search_.history_stack.push(position_.hashkey());
 
         std::string command_line, command_name;
         while (std::getline(input_stream_, command_line))
@@ -66,19 +66,19 @@ namespace UCI
     {
         std::string argument;
 
-        Search::clear_history_stack();
+        search_.history_stack.clear();
 
         while (command_args >> argument)
         {
             if (argument == "startpos")
             {
                 position_ = Position{};
-                Search::push_to_history_stack(position_.hashkey());
+                search_.history_stack.push(position_.hashkey());
             }
             else if (argument == "fen")
             {
                 position_.set_from_fen(command_args);
-                Search::push_to_history_stack(position_.hashkey());
+                search_.history_stack.push(position_.hashkey());
             }
             else if (argument == "moves")
             {
@@ -87,7 +87,7 @@ namespace UCI
                     CoordinateMoveParser move_parser{position_};
                     auto move = move_parser.parse_move(argument);
                     position_.make_move(move);
-                    Search::push_to_history_stack(position_.hashkey());
+                    search_.history_stack.push(position_.hashkey());
                 }
             }
             else
@@ -99,7 +99,7 @@ namespace UCI
 
     void Game::execute_go_command_(std::istringstream &command_args)
     {
-        auto best_move = Search::iterative_deepening_search(position_);
+        auto best_move = search_.iterative_deepening(position_);
         output_stream_ << "bestmove " << best_move.uci_notation() << std::endl;
     }
 

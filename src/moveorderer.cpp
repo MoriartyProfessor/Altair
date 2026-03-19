@@ -17,7 +17,7 @@ constexpr auto generate_mvv_lva()
 }
 
 constexpr uint32_t HASH_MOVE_SCORE = 5000;
-constexpr uint32_t KILLER_MOVE_SCORE = 400;
+constexpr uint32_t KILLER_MOVE_SCORE = 90;
 constexpr auto MVV_LVA_SCORES = generate_mvv_lva();
 constexpr uint32_t PROMOTION_SCORES[N_PIECE_TYPES] = {0, 1000, 1100, 1500, 2000, 0};
 
