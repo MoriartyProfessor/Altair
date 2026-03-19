@@ -3,14 +3,34 @@
 
 #include "move.hpp"
 #include "position.hpp"
+#include "transpositiontable.hpp"
 
-namespace Search
+#include <boost/container/small_vector.hpp>
+
+using Killers = std::array<std::pair<Move, Move>, 256>;
+
+class Result;
+
+class Search
 {
-    // Encapsulate it into class
-    void push_to_history_stack(Zobrist::HashKey key);
-    void pop_from_history_stack();
-    void clear_history_stack();
-    Move iterative_deepening_search(Position &position);
-}
+    public:
+    struct HistoryStack
+    {
+        void push(Zobrist::HashKey key);
+        void pop();
+        void clear();
+        boost::container::small_vector<Zobrist::HashKey, 256> entries;
+    } history_stack;
+    
+    public:
+    Move iterative_deepening(Position &position);
+
+    private:
+    int32_t quiescence(Position& position, int alpha, int beta);
+    Result negamax(Position& position, int alpha, int beta, int depth, int sply);
+    private:
+    Killers killers_;
+    TranspostionTable transposition_table_{4_M};
+};
 
 #endif // GWAIHIR_SEARCH_HPP

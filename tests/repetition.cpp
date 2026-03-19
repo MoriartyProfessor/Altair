@@ -12,32 +12,33 @@ TEST(repetition, basic)
     Zobrist::init();
 
     Position position;
-    Search::push_to_history_stack(position.hashkey());
+    Search search;
+    search.history_stack.push(position.hashkey());
 
     Move move{SQ_B1, SQ_C3};
     move.set_piece_type(KNIGHT);
     move.set_quiet();
     
     position.make_move(move);
-    Search::push_to_history_stack(position.hashkey());
+    search.history_stack.push(position.hashkey());
 
     move.set_from(SQ_B8);
     move.set_to(SQ_C6);
     position.make_move(move);
-    Search::push_to_history_stack(position.hashkey());
+    search.history_stack.push(position.hashkey());
 
-    EXPECT_EQ(Search::was_threefold_reached(Search::history_stack), false);
+    EXPECT_EQ(was_threefold_reached(search.history_stack), false);
 
     move.set_from(SQ_C3);
     move.set_to(SQ_B1);
     position.make_move(move);
-    Search::push_to_history_stack(position.hashkey());
+    search.history_stack.push(position.hashkey());
 
-    EXPECT_EQ(Search::was_threefold_reached(Search::history_stack), false);
+    EXPECT_EQ(was_threefold_reached(search.history_stack), false);
 
     move.set_from(SQ_C6);
     move.set_to(SQ_B8);
     position.make_move(move);
-    Search::push_to_history_stack(position.hashkey());
-    EXPECT_EQ(Search::was_threefold_reached(Search::history_stack), false);
+    search.history_stack.push(position.hashkey());
+    EXPECT_EQ(was_threefold_reached(search.history_stack), false);
 }
