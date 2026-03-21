@@ -66,10 +66,6 @@ Tests:
 * Fix TT wrap around logic (experimented with boost::circular_buffer, but it slowed down the code)
 * Implement proper time management to and setup SPRT
 
-### Next
-* Search Improvements
-    * Quiescence
-
 ## Dependencies
 
 ## Building
