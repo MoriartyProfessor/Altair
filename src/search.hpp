@@ -23,6 +23,7 @@ class Search
     } history_stack;
     
     public:
+    void clear();
     Move iterative_deepening(Position &position);
 
     private:

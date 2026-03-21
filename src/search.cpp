@@ -82,6 +82,13 @@ void Search::HistoryStack::push(Zobrist::HashKey key) { entries.push_back(key); 
 void Search::HistoryStack::pop() { entries.pop_back(); }
 void Search::HistoryStack::clear() { entries.clear(); }
 
+void Search::clear()
+{
+    history_stack.clear();
+    transposition_table_.clear();
+    std::ranges::fill(killers_, std::pair{Move{}, Move{}});
+}
+
 int32_t Search::quiescence(Position& position, int alpha, int beta)
 {
     ++search_stats.qnode_count;

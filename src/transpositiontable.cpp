@@ -3,6 +3,7 @@
 #include "utils.hpp"
 
 #include <stdexcept>
+#include <algorithm>
 
 TranspostionTable::TranspostionTable(uint64_t size) : size_{size} 
 {
@@ -32,6 +33,11 @@ void TranspostionTable::insert(TTEntry&& tt_entry)
         bucket[0] = std::move(tt_entry);
     else
         bucket.push_back(std::move(tt_entry));
+}
+
+void TranspostionTable::clear()
+{
+    std::ranges::fill(table_, TTBucket{});
 }
 
 std::optional<TTEntry> TranspostionTable::probe(Zobrist::HashKey key) const
