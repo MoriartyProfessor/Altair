@@ -41,6 +41,7 @@ class TranspostionTable
     TranspostionTable(uint64_t size);
     void insert(TTEntry&& tt_entry);
     std::optional<TTEntry> probe(Zobrist::HashKey key) const;
+    void clear();
 
     private:
     uint64_t get_partial_key(Zobrist::HashKey key) const;

@@ -60,7 +60,10 @@ namespace UCI
         output_stream_ << "readyok" << std::endl;
     }
 
-    void Game::execute_ucinewgame_command_() {}
+    void Game::execute_ucinewgame_command_() 
+    {
+        search_.clear();
+    }
 
     void Game::execute_position_command_(std::istringstream &command_args)
     {
