@@ -14,6 +14,7 @@ set(HEADER_FILES
     position.cpp
     rays.hpp
     search.hpp
+    timemanager.hpp
     timer.hpp
     transpositiontable.hpp
     uci.hpp

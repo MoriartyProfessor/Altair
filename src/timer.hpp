@@ -9,6 +9,7 @@ namespace
     using namespace std::chrono;
 };
 
+template<typename Ratio = std::milli>
 class Timer
 {
     public:
@@ -23,10 +24,12 @@ class Timer
         stopped = true;
         end = high_resolution_clock::now();
     }
-    auto duration() -> duration<double, std::milli>
+    auto duration() -> duration<double, Ratio>
     {
-        if(!(started && stopped))
-            throw std::runtime_error("Timer was not started or has not stopped");
+        if(!started)
+            throw std::runtime_error("Timer was not started");
+        if(!stopped)
+            return high_resolution_clock::now() - begin;
         return end - begin;
     }
     private:
