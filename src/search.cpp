@@ -2,7 +2,6 @@
 #include "movegenerator.hpp"
 #include "moveorderer.hpp"
 #include "eval.hpp"
-#include "timer.hpp"
 
 #include <limits>
 #include <iostream>
@@ -258,8 +257,16 @@ Move Search::iterative_deepening(Position &position)
 
         timer.stop();
 
-        double speed = double(search_stats.qnode_count)/(timer.duration().count() * 1000);
-        std::cout << std::format("[Debug] Depth: {}, Move: {}, Score: {}, Node "
+        print_info(depth, result, timer);
+
+    }
+    return result.move;
+}
+
+void Search::print_info(unsigned depth, const Result& result, const Timer<>& timer)
+{
+    double speed = double(search_stats.qnode_count)/(timer.duration().count() * 1000);
+    std::cout << std::format("[Debug] Depth: {}, Move: {}, Score: {}, Node "
                              "Count: {:L}, QNode Count: {:L}, TT Hits: {:L}, "
                              "Threefolds: {}, Speed: {} MNPS",
                              depth, result.move.uci_notation(),
@@ -268,8 +275,11 @@ Move Search::iterative_deepening(Position &position)
                              search_stats.threefold_count, speed)
                               << std::endl;
 
-        if(search_stats.qnode_count > 500_K && depth >= MIN_DEPTH)
-            break;
-    }
-    return result.move;
+    std::cout << std::format("info depth {} score cp {} nodes {} time {} nps "
+                             "{} currmove {} tbhits {}",
+                             depth, result.score, search_stats.qnode_count,
+                             static_cast<int>(timer.duration().count()),
+                             static_cast<int>(speed * 1000 * 1000),
+                             result.move.uci_notation(), search_stats.tt_hits)
+              << std::endl;
 }

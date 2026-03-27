@@ -3,6 +3,7 @@
 
 #include "move.hpp"
 #include "position.hpp"
+#include "timer.hpp"
 #include "transpositiontable.hpp"
 
 #include <boost/container/small_vector.hpp>
@@ -29,6 +30,9 @@ class Search
     private:
     int32_t quiescence(Position& position, int alpha, int beta);
     Result negamax(Position& position, int alpha, int beta, int depth, int sply);
+    
+
+    void print_info(unsigned depth, const Result& result, const Timer<>& timer);
     private:
     Killers killers_;
     TranspostionTable transposition_table_{4_M};
