@@ -16,6 +16,8 @@ constexpr int32_t MATE_SCORE = 15000;
 constexpr int32_t STALEMATE_SCORE = 0;
 constexpr int32_t REPETITION_SCORE = -100;
 
+constexpr int32_t NODE_STEP = 8192;
+
 struct Result
 {
     int score;
@@ -88,8 +90,15 @@ void Search::clear()
     std::ranges::fill(killers_, std::pair{Move{}, Move{}});
 }
 
+void Search::setup_time_manager(std::unique_ptr<TimeManager> time_manager)
+{
+    time_manager_ = std::move(time_manager);
+}
+
 int32_t Search::quiescence(Position& position, int alpha, int beta)
 {
+    if(search_stats.qnode_count % NODE_STEP == 0 && time_manager_->is_over())
+        return 0;
     ++search_stats.qnode_count;
 
     auto best_score = Evaluation::evaluate(position);
@@ -133,6 +142,8 @@ int32_t Search::quiescence(Position& position, int alpha, int beta)
 
 Result Search::negamax(Position& position, int alpha, int beta, int depth, int sply)
 {
+    if(search_stats.qnode_count % NODE_STEP == 0 && time_manager_->is_over())
+        return {0, {}};
     if(was_threefold_reached(history_stack))
     {
         +search_stats.threefold_count;
@@ -246,21 +257,25 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
 
 Move Search::iterative_deepening(Position &position)
 {
-    Result result;
+    Result final_result;
     for(unsigned depth = 1; depth <= SEARCH_DEPTH; ++depth)
     {
         search_stats.clear();
         Timer timer;
         timer.start();
 
-        result = negamax(position, -MATE_SCORE, MATE_SCORE, depth, 0);
-
+        auto result = negamax(position, -MATE_SCORE, MATE_SCORE, depth, 0);
+        
         timer.stop();
+        
+        if(!time_manager_->is_over())
+            final_result = result;
+        else
+            break;
 
         print_info(depth, result, timer);
-
     }
-    return result.move;
+    return final_result.move;
 }
 
 void Search::print_info(unsigned depth, const Result& result, const Timer<>& timer)

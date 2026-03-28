@@ -5,13 +5,13 @@
 
 namespace 
 {
-    constexpr uint16_t MARGIN = 100; 
+    constexpr uint32_t MARGIN = 100; 
 };
 
 class TimeManager
 {
     public:
-    TimeManager(uint16_t inc, uint16_t time) 
+    TimeManager(uint32_t inc, uint32_t time) 
     : inc_{inc}, time_{time}
     {
         if(time == 0)
@@ -24,13 +24,13 @@ class TimeManager
     }
     bool is_over()
     {
-        return timer_.duration().count() > movetime_ + MARGIN;
+        return timer_.duration().count() > movetime_ - MARGIN;
     }
 
     private:
-    const uint16_t inc_ = 0u;
-    const uint16_t time_ = 0u;
-    uint16_t movetime_;
+    const uint32_t inc_ = 0u;
+    const uint32_t time_ = 0u;
+    uint32_t movetime_;
     Timer<> timer_;
 };
 

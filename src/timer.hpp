@@ -24,7 +24,7 @@ class Timer
         stopped = true;
         end = high_resolution_clock::now();
     }
-    auto duration() -> duration<double, Ratio>
+    auto duration() const -> duration<double, Ratio>
     {
         if(!started)
             throw std::runtime_error("Timer was not started");

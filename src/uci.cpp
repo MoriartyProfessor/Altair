@@ -67,10 +67,9 @@ namespace UCI
 
     void Game::execute_position_command_(std::istringstream &command_args)
     {
-        std::string argument;
-
         search_.history_stack.clear();
 
+        std::string argument;
         while (command_args >> argument)
         {
             if (argument == "startpos")
@@ -102,6 +101,42 @@ namespace UCI
 
     void Game::execute_go_command_(std::istringstream &command_args)
     {
+        std::string argument, value;
+        uint32_t time = 0, inc = 60000;
+        while (command_args >> argument)
+        {
+            command_args >> value;
+            if (argument == "movetime")
+                inc = std::stoi(value);
+            else if (value == "wtime")
+            {
+                if(position_.side_to_move() == Colors::WHITE)
+                    time = std::stoi(value);
+            }
+            else if (value == "btime")
+            {
+                if(position_.side_to_move() == Colors::BLACK)
+                    time = std::stoi(value);
+            }
+            else if (value == "winc")
+            {
+                if(position_.side_to_move() == Colors::WHITE)
+                    inc = std::stoi(value);
+            }
+            else if (value == "binc")
+            {
+                if(position_.side_to_move() == Colors::BLACK)
+                    inc = std::stoi(value);
+            }
+            else
+            {
+                throw std::runtime_error(std::format("Invalid argument in position command: {}", argument));
+            }
+        }
+
+        auto time_manager = std::make_unique<TimeManager>(inc, time);
+        search_.setup_time_manager(std::move(time_manager));        
+
         auto best_move = search_.iterative_deepening(position_);
         output_stream_ << "bestmove " << best_move.uci_notation() << std::endl;
     }

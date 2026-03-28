@@ -3,10 +3,13 @@
 
 #include "move.hpp"
 #include "position.hpp"
+#include "timemanager.hpp"
 #include "timer.hpp"
 #include "transpositiontable.hpp"
 
 #include <boost/container/small_vector.hpp>
+
+#include <memory>
 
 using Killers = std::array<std::pair<Move, Move>, 256>;
 
@@ -25,6 +28,7 @@ class Search
     
     public:
     void clear();
+    void setup_time_manager(std::unique_ptr<TimeManager>);
     Move iterative_deepening(Position &position);
 
     private:
@@ -36,6 +40,7 @@ class Search
     private:
     Killers killers_;
     TranspostionTable transposition_table_{4_M};
+    std::unique_ptr<TimeManager> time_manager_;
 };
 
 #endif // GWAIHIR_SEARCH_HPP
