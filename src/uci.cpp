@@ -102,28 +102,28 @@ namespace UCI
     void Game::execute_go_command_(std::istringstream &command_args)
     {
         std::string argument, value;
-        uint32_t time = 0, inc = 60000;
+        uint32_t time = 0, inc = 0;
         while (command_args >> argument)
         {
             command_args >> value;
             if (argument == "movetime")
                 inc = std::stoi(value);
-            else if (value == "wtime")
+            else if (argument == "wtime")
             {
                 if(position_.side_to_move() == Colors::WHITE)
                     time = std::stoi(value);
             }
-            else if (value == "btime")
+            else if (argument == "btime")
             {
                 if(position_.side_to_move() == Colors::BLACK)
                     time = std::stoi(value);
             }
-            else if (value == "winc")
+            else if (argument == "winc")
             {
                 if(position_.side_to_move() == Colors::WHITE)
                     inc = std::stoi(value);
             }
-            else if (value == "binc")
+            else if (argument == "binc")
             {
                 if(position_.side_to_move() == Colors::BLACK)
                     inc = std::stoi(value);
@@ -133,6 +133,9 @@ namespace UCI
                 throw std::runtime_error(std::format("Invalid argument in position command: {}", argument));
             }
         }
+
+        if(time == 0 && inc == 0)
+            inc = 60000;
 
         auto time_manager = std::make_unique<TimeManager>(inc, time);
         search_.setup_time_manager(std::move(time_manager));        
