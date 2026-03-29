@@ -16,7 +16,7 @@ constexpr int32_t MATE_SCORE = 15000;
 constexpr int32_t STALEMATE_SCORE = 0;
 constexpr int32_t REPETITION_SCORE = -100;
 
-constexpr int32_t NODE_STEP = 8192;
+constexpr int32_t NODE_STEP = 8191;
 
 struct Result
 {
