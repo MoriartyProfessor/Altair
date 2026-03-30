@@ -64,7 +64,6 @@ Tests:
     * History stack is getting too big.
 * Minor - don't make illegal move when getting mated
 * Fix TT wrap around logic (experimented with boost::circular_buffer, but it slowed down the code)
-* Implement proper time management to and setup SPRT
 
 ## Dependencies
 
