@@ -5,7 +5,7 @@
 
 namespace 
 {
-    constexpr uint32_t MARGIN = 100; 
+    constexpr uint32_t MARGIN = 10; 
 };
 
 class TimeManager
