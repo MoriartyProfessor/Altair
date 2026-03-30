@@ -50,12 +50,9 @@ Move get_hash_move(const std::optional<TTEntry> &entry)
 bool was_threefold_reached(const Search::HistoryStack& history_stack)
 {
     auto current_position = history_stack.entries.back();
-    auto cnt = 0u;
     for(int i = history_stack.entries.size() - 2; i >= 0; --i)
     {
         if(history_stack.entries[i] == current_position)
-            ++cnt;
-        if(cnt == 2)
             return true;
     }
     return false;
@@ -144,9 +141,9 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
 {
     if(search_stats.qnode_count % NODE_STEP == 0 && time_manager_->is_over())
         return {0, {}};
-    if(was_threefold_reached(history_stack))
+    if(was_threefold_reached(history_stack) && sply != 0)
     {
-        +search_stats.threefold_count;
+        ++search_stats.threefold_count;
         return {STALEMATE_SCORE, {}};
     }
     if (depth == 0)
