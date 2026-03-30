@@ -10,14 +10,14 @@ constexpr auto generate_mvv_lva()
     {
         for (PieceType victim = PAWN; victim != N_PIECE_TYPES; ++victim) 
         {
-            mvv_lva_scores[attacker][victim] = piece_scores[victim] * 10 - piece_scores[attacker];
-        }    
+            mvv_lva_scores[attacker][victim] = piece_scores[victim] * 10 - piece_scores[attacker] + 10000;
+        }
     }
     return mvv_lva_scores;
 }
 
-constexpr uint32_t HASH_MOVE_SCORE = 5000;
-constexpr uint32_t KILLER_MOVE_SCORE = 90;
+constexpr uint32_t HASH_MOVE_SCORE = 50000;
+constexpr uint32_t KILLER_MOVE_SCORES[] = {9000, 8000};
 constexpr auto MVV_LVA_SCORES = generate_mvv_lva();
 constexpr uint32_t PROMOTION_SCORES[N_PIECE_TYPES] = {0, 1000, 1100, 1500, 2000, 0};
 
@@ -61,8 +61,10 @@ void MoveOrderer::assign_scores_(std::pair<Move, Move> killers, Move hash_move)
             not capture*/
         if (move == hash_move)
             score += HASH_MOVE_SCORE;
-        if (move == killers.first || move == killers.second)
-            score += KILLER_MOVE_SCORE;
+        if (move == killers.first)
+            score += KILLER_MOVE_SCORES[0];
+        if (move == killers.second)
+            score += KILLER_MOVE_SCORES[1];
         if (move.is_capture())
             score += MVV_LVA_SCORES[move.piece_type()][move.capture_piece_type()];
         if (move.is_promotion())
