@@ -27,11 +27,13 @@ class Search
     } history_stack;
     
     public:
-    void clear();
+    /* Full reset for new game */
+    void reset();
     void setup_time_manager(std::unique_ptr<TimeManager>);
     Move iterative_deepening(Position &position);
 
     private:
+    void clear();
     int32_t quiescence(Position& position, int alpha, int beta);
     Result negamax(Position& position, int alpha, int beta, int depth, int sply);
     
@@ -39,6 +41,7 @@ class Search
     void print_info(unsigned depth, const Result& result, const Timer<>& timer);
     private:
     Killers killers_;
+    int32_t history_scores_[N_COLORS][N_SQUARES][N_SQUARES];
     TranspostionTable transposition_table_{4_M};
     std::unique_ptr<TimeManager> time_manager_;
 };
