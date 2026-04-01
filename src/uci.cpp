@@ -62,7 +62,7 @@ namespace UCI
 
     void Game::execute_ucinewgame_command_() 
     {
-        search_.clear();
+        search_.reset();
     }
 
     void Game::execute_position_command_(std::istringstream &command_args)

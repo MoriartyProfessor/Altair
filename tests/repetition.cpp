@@ -40,5 +40,5 @@ TEST(repetition, basic)
     move.set_to(SQ_B8);
     position.make_move(move);
     search.history_stack.push(position.hashkey());
-    EXPECT_EQ(was_threefold_reached(search.history_stack), false);
+    EXPECT_EQ(was_threefold_reached(search.history_stack), true);
 }

@@ -3,12 +3,13 @@
 #include "moveorderer.hpp"
 #include "eval.hpp"
 
-#include <limits>
-#include <iostream>
+#include <algorithm>
 #include <format>
+#include <iostream>
+#include <limits>
 
 
-constexpr uint8_t SEARCH_DEPTH = 16;
+constexpr uint8_t SEARCH_DEPTH = 22;
 constexpr uint8_t MIN_DEPTH = 6;
 constexpr int32_t MAX_PLY = 100;
 
@@ -76,20 +77,43 @@ int32_t from_tt_value(int32_t score, int sply)
     return score;
 }
 
+void update_killers(Killers& killers, int sply, Move move)
+{
+    if(killers[sply].first != move)
+    {
+        std::swap(killers[sply].first, killers[sply].second);
+        killers[sply].first = move;
+    }
+}
+
+void update_history_scores(int32_t history_scores[N_SQUARES][N_SQUARES],
+                           int bonus, Move move) 
+{
+    auto clamped_bonus = std::clamp(bonus, -MAX_HISTORY_SCORE, MAX_HISTORY_SCORE);
+    history_scores[move.from()][move.to()] += 
+        clamped_bonus - history_scores[move.from()][move.to()] * abs(clamped_bonus) / MAX_HISTORY_SCORE;
+}
+
 void Search::HistoryStack::push(Zobrist::HashKey key) { entries.push_back(key); }
 void Search::HistoryStack::pop() { entries.pop_back(); }
 void Search::HistoryStack::clear() { entries.clear(); }
 
-void Search::clear()
+void Search::reset()
 {
+    clear();
     history_stack.clear();
     transposition_table_.clear();
-    std::ranges::fill(killers_, std::pair{Move{}, Move{}});
 }
 
 void Search::setup_time_manager(std::unique_ptr<TimeManager> time_manager)
 {
     time_manager_ = std::move(time_manager);
+}
+
+void Search::clear()
+{
+    std::ranges::fill(killers_, std::pair{Move{}, Move{}});
+    memset(history_scores_, 0, sizeof(history_scores_));
 }
 
 int32_t Search::quiescence(Position& position, int alpha, int beta)
@@ -108,7 +132,7 @@ int32_t Search::quiescence(Position& position, int alpha, int beta)
     MoveGenerator move_generator_{&position, &moves};
     move_generator_.gen_tactical_moves();
 
-    MoveOrderer move_orderer{moves, {}};
+    MoveOrderer move_orderer{moves, {}, nullptr};
 
     while (move_orderer.has_next())
     {
@@ -177,13 +201,16 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
     MoveGenerator move_generator_{&position, &moves};
     move_generator_.gen_all_moves();
 
-    MoveOrderer move_orderer{moves, killers_[sply], get_hash_move(entry)};
+    MoveOrderer move_orderer{moves, killers_[sply],
+                             history_scores_[position.side_to_move()],
+                             get_hash_move(entry)};
 
     Result best_result {-MATE_SCORE, {}};
 
     uint32_t legal_move_counter = 0;
         
     auto alpha_initial = alpha;
+    auto side_to_move = position.side_to_move();
 
     while (move_orderer.has_next())
     {
@@ -208,11 +235,12 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
             }
             if(result.score >= beta)
             {
-                if(result.move.is_quiet() && killers_[sply].first != result.move)
+                if(result.move.is_quiet())
                 {
-                    std::swap(killers_[sply].first, killers_[sply].second);
-                    killers_[sply].first = result.move;
-                } 
+                    update_killers(killers_, sply, result.move);
+                    update_history_scores(history_scores_[side_to_move],
+                                          depth, result.move);   
+                }
                 TTEntry tt_entry = {.key = hashkey, 
                         .best_move = result.move, 
                         .depth = depth,
@@ -241,6 +269,9 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
         best_result.move = moves.front();
     }
 
+    if(search_stats.qnode_count % NODE_STEP == 0 && time_manager_->is_over())
+        return {0, {}};
+
     TTEntry::NodeType type = (best_result.score > alpha_initial) ? TTEntry::NodeType::EXACT : TTEntry::NodeType::UPPERBOUND;
     TTEntry tt_entry = {.key = position.hashkey(), 
                         .best_move = best_result.move, 
@@ -254,6 +285,7 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
 
 Move Search::iterative_deepening(Position &position)
 {
+    clear();
     Result final_result;
     for(unsigned depth = 1; depth <= SEARCH_DEPTH; ++depth)
     {
