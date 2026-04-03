@@ -17,7 +17,7 @@ Board representation:
 Search:
 - [x] Negamax
 - [x] Alpha-Beta pruning
-- [ ] Move Ordering (MVV-LVA, PV, Hash, Killer)
+- [x] Move Ordering (Hash > MVV-LVA > Killer > History)
 - [x] Iterative Deepening
 - [x] Transposition tables (with Zobrist Hashing)
 - [x] Quiescence search
