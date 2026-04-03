@@ -49,7 +49,7 @@ Other game phases:
 
 Miscellaneous:
 - [x] UCI protocol implementation
-- [ ] Time control
+- [x] Time control
 - [ ] Parallel search
 
 Tests:
@@ -63,6 +63,7 @@ Tests:
     * More TT hits, so nodes are not being counted.
     * History stack is getting too big.
 * Minor - don't make illegal move when getting mated
+* Minor - stop iterative deepening, when there is a mate already
 * Fix TT wrap around logic (experimented with boost::circular_buffer, but it slowed down the code)
 
 ## Dependencies
