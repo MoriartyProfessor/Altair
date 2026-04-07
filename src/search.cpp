@@ -310,13 +310,14 @@ Move Search::iterative_deepening(Position &position)
 void Search::print_info(unsigned depth, const Result& result, const Timer<>& timer)
 {
     double speed = double(search_stats.qnode_count)/(timer.duration().count() * 1000);
-    std::cout << std::format("[Debug] Depth: {}, Move: {}, Score: {}, Node "
+    std::cout << std::format(std::locale("en_US.UTF-8"),
+                             "[Debug] Depth: {}, Move: {}, Score: {}, Node "
                              "Count: {:L}, QNode Count: {:L}, TT Hits: {:L}, "
                              "Threefolds: {}, Speed: {} MNPS",
-                             depth, result.move.uci_notation(),
-                             result.score, search_stats.node_count,
-                             search_stats.qnode_count, search_stats.tt_hits,
-                             search_stats.threefold_count, speed)
+                             depth, result.move.uci_notation(), result.score,
+                             search_stats.node_count, search_stats.qnode_count,
+                             search_stats.tt_hits, search_stats.threefold_count,
+                             speed)
                               << std::endl;
 
     std::cout << std::format("info depth {} score cp {} nodes {} time {} nps "
