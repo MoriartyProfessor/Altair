@@ -26,6 +26,7 @@ Search:
 - [ ] Search Extensions Reductions
 - [ ] Late Move Reduction (LMR)
 - [ ] Null Move Pruning
+- [ ] Lazy SMP
 
 Evaluation:
 - [x] Material
@@ -50,20 +51,20 @@ Other game phases:
 Miscellaneous:
 - [x] UCI protocol implementation
 - [x] Time control
-- [ ] Parallel search
 
 Tests:
 - [x] Perft Test
 
 
 ## Current To-Do list
+* Test giving Tempo bonus in eval
 * Figure out why are so few nodes searched if compiled with RelWithDebInfo
 * Fix threefold repetition
 * MNPS drops significantly towards the endgame. Potential causes:
     * More TT hits, so nodes are not being counted.
     * History stack is getting too big.
 * Minor - don't make illegal move when getting mated
-* Minor - stop iterative deepening, when there is a mate already
+* Minor - stop iterative deepening when there is a mate already
 * Fix TT wrap around logic (experimented with boost::circular_buffer, but it slowed down the code)
 
 ## Dependencies
