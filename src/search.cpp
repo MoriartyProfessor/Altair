@@ -17,7 +17,7 @@ constexpr int32_t MATE_SCORE = 15000;
 constexpr int32_t STALEMATE_SCORE = 0;
 constexpr int32_t REPETITION_SCORE = -100;
 
-constexpr int32_t NODE_STEP = 8191;
+constexpr int32_t NODE_STEP = 2047;
 
 struct Result
 {
@@ -239,7 +239,7 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
                 {
                     update_killers(killers_, sply, result.move);
                     update_history_scores(history_scores_[side_to_move],
-                                          depth, result.move);   
+                                          depth * depth, result.move);
                 }
                 TTEntry tt_entry = {.key = hashkey, 
                         .best_move = result.move, 
