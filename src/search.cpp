@@ -225,7 +225,18 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
         if (!position.is_in_check(toggle_color(position.side_to_move())))
         {
             ++legal_move_counter;
-            auto result = -negamax(position, -beta, -alpha, depth - 1, sply + 1);
+            Result result;
+            if(legal_move_counter != 1)
+            {
+                result = -negamax(position, -alpha - 1, -alpha, depth - 1, sply + 1);
+                if(result.score > alpha && result.score < beta)
+                    result = -negamax(position, -beta, -alpha, depth - 1, sply + 1);
+
+            }
+            else 
+            {
+                result = -negamax(position, -beta, -alpha, depth - 1, sply + 1);
+            } 
             result.move = move;
             if (result.score > best_result.score)
             {
