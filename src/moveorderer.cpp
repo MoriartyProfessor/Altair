@@ -1,4 +1,5 @@
 #include "moveorderer.hpp"
+#include <cstddef>
 
 
 constexpr auto generate_mvv_lva() 
@@ -56,7 +57,7 @@ void MoveOrderer::assign_scores_(std::pair<Move, Move> killers,
                                  int32_t history_scores[N_SQUARES][N_SQUARES],
                                  Move hash_move)
 {
-    for (int i = 0; i < moves_.size(); ++i)
+    for (size_t i = 0; i < moves_.size(); ++i)
     {
         auto move = moves_[i];
         auto &score = scores_[i];

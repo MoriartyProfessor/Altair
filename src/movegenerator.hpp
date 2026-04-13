@@ -41,8 +41,8 @@ class MoveGenerator
     void add_piece_moves_(Square from, BitBoard attacks);
 
     private:
-    MoveList* moves_;
     const Position* position_;
+    MoveList* moves_;
 };
 
 #endif // GWAIHIR_MOVEGENERATOR_HPP
