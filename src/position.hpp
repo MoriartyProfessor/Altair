@@ -75,21 +75,21 @@ class Position
     void update_castling_rights_in_make_    (Move move);
     void update_en_passant_in_make_         (Move move);
     void update_halfclock_in_make_          (Move move);
-    void update_moveclock_in_make_          (Move move);
+    void update_moveclock_in_make_          ();
 
     void unmake_quiet_move_                 (Move move);
     void unmake_capture_move_               (Move move);
     void unmake_promotion_move_             (Move move);
     void unmake_capture_promotion_move_     (Move move);
     void unmake_double_pawn_push_move_      (Move move);
-    void unmake_king_side_castling_move_    (Move move);
-    void unmake_queen_side_castling_move_   (Move move);
+    void unmake_king_side_castling_move_    ();
+    void unmake_queen_side_castling_move_   ();
     void unmake_en_passant_move_            (Move move);
 
     void update_castling_rights_in_unmake_  (CastlingRights castling_rights);
     void update_en_passant_in_unmake_       (Square en_passant_square);
     void update_halfclock_in_unmake_        (uint32_t halfclock);
-    void update_moveclock_in_unmake_        (Move move);
+    void update_moveclock_in_unmake_        ();
 
     void add_piece_(Piece piece, Square square);
     /* Maybe add toggle piece interface instead*/

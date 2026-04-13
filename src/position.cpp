@@ -348,7 +348,7 @@ void Position::make_move(Move move)
 
     update_halfclock_in_make_(move);
 
-    update_moveclock_in_make_(move);
+    update_moveclock_in_make_();
 
     side_to_move_ = toggle_color(side_to_move_);
 
@@ -379,10 +379,10 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
         unmake_double_pawn_push_move_(move);
 
     else if (move.is_king_side_castle())
-        unmake_king_side_castling_move_(move);
+        unmake_king_side_castling_move_();
 
     else if (move.is_queen_side_castle())
-        unmake_queen_side_castling_move_(move);
+        unmake_queen_side_castling_move_();
 
     if (!castling_rights_.is_all_set())
         update_castling_rights_in_unmake_(irrecoverable_state.castling_rights);
@@ -391,7 +391,7 @@ void Position::unmake_move(Move move, IrrecoverableState irrecoverable_state)
 
     update_halfclock_in_unmake_(irrecoverable_state.halfclock);
 
-    update_moveclock_in_unmake_(move);
+    update_moveclock_in_unmake_();
 
     zobrist_generator_.update_side_to_move();
 }
@@ -648,7 +648,7 @@ void Position::update_halfclock_in_make_(Move move)
         ++halfclock_;
 }
 
-void Position::update_moveclock_in_make_(Move move)
+void Position::update_moveclock_in_make_()
 {
     if (side_to_move_ == BLACK)
         ++moveclock_;
@@ -683,7 +683,7 @@ void Position::unmake_double_pawn_push_move_(Move move)
     move_piece_(make_piece(side_to_move_, move.piece_type()), move.to(), move.from());
 }
 
-void Position::unmake_king_side_castling_move_(Move move)
+void Position::unmake_king_side_castling_move_()
 {
     if (side_to_move_ == WHITE)
     {
@@ -697,7 +697,7 @@ void Position::unmake_king_side_castling_move_(Move move)
     }
 }
 
-void Position::unmake_queen_side_castling_move_(Move move)
+void Position::unmake_queen_side_castling_move_()
 {
     if (side_to_move_ == WHITE)
     {
@@ -736,7 +736,7 @@ void Position::update_halfclock_in_unmake_(uint32_t halfclock)
     halfclock_ = halfclock;
 }
 
-void Position::update_moveclock_in_unmake_(Move move)
+void Position::update_moveclock_in_unmake_()
 {
     if (side_to_move_ == BLACK)
         --moveclock_;
