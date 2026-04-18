@@ -14,7 +14,7 @@ TranspostionTable::TranspostionTable(uint64_t size) : size_{size}
     hash_mask_ >>= 64 - LSB(size);
 }
 
-void TranspostionTable::insert(TTEntry&& tt_entry)
+void TranspostionTable::insert(const TTEntry& tt_entry)
 {
     auto& bucket = table_[get_partial_key(tt_entry.key)];
     for(auto &bucket_entry : bucket)
@@ -24,15 +24,15 @@ void TranspostionTable::insert(TTEntry&& tt_entry)
         {
             if(tt_entry.depth < bucket_entry.depth)
                 return;
-            bucket_entry = std::move(tt_entry);
+            bucket_entry = tt_entry;
             return;
         }
     }
     // LRU policy when bucket is full
     if(bucket.size() >= BUCKET_SIZE - 1)
-        bucket[0] = std::move(tt_entry);
+        bucket[0] = tt_entry;
     else
-        bucket.push_back(std::move(tt_entry));
+        bucket.push_back(tt_entry);
 }
 
 void TranspostionTable::clear()

@@ -257,7 +257,7 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
                         .depth = depth,
                         .score = to_tt_score(result.score, sply),
                         .node_type = TTEntry::NodeType::LOWERBOUND};
-                transposition_table_.insert(std::move(tt_entry));
+                transposition_table_.insert(tt_entry);
                 position.unmake_move(move, irrecoverable_state);
                 history_stack.pop();
                 return best_result;
@@ -289,7 +289,7 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
                         .depth = depth,
                         .score = to_tt_score(best_result.score, sply),
                         .node_type = type};
-    transposition_table_.insert(std::move(tt_entry));
+    transposition_table_.insert(tt_entry);
 
     return best_result;
 }
