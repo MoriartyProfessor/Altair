@@ -31,7 +31,7 @@ struct TTEntry
     uint32_t depth = 0;
     int32_t score = 0;
     NodeType node_type;
-    bool is_end = true;
+    bool sentinel = true;
 };
 
 using TTBucket = std::array<TTEntry, BUCKET_SIZE>;

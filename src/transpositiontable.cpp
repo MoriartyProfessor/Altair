@@ -26,21 +26,21 @@ void TranspositionTable::insert(const TTEntry& tt_entry)
             if(tt_entry.depth < bucket_entry.depth)
                 return;
             bucket_entry = tt_entry;
-            bucket_entry.is_end = false;
+            bucket_entry.sentinel = false;
             return;
         }
-        if(bucket_entry.is_end)
+        if(bucket_entry.sentinel)
         {
             bucket_entry = tt_entry;
-            bucket_entry.is_end = false;
-            bucket[(i + 1) % BUCKET_SIZE].is_end = true;
+            bucket_entry.sentinel = false;
+            bucket[(i + 1) % BUCKET_SIZE].sentinel = true;
             return;
         }
     }
     // LRU policy when bucket is full
     bucket[0] = tt_entry;
-    bucket[0].is_end = false;
-    bucket[(BUCKET_SIZE + 1) % BUCKET_SIZE].is_end = true;
+    bucket[0].sentinel = false;
+    bucket[(BUCKET_SIZE + 1) % BUCKET_SIZE].sentinel = true;
 }
 
 void TranspositionTable::clear()
