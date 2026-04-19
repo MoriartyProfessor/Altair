@@ -42,7 +42,7 @@ class Search
     private:
     Killers killers_;
     int32_t history_scores_[N_COLORS][N_SQUARES][N_SQUARES];
-    TranspostionTable transposition_table_{4_M};
+    TranspositionTable transposition_table_{4_M};
     std::unique_ptr<TimeManager> time_manager_;
 };
 

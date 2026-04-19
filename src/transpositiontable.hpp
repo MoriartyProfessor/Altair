@@ -4,9 +4,9 @@
 #include "move.hpp"
 #include "zobrist.hpp"
 
-#include <vector>
+#include <array>
 #include <optional>
-#include <boost/container/small_vector.hpp>
+#include <vector>
 
 constexpr unsigned long long operator"" _K(unsigned long long x) {
     return x * 1024;
@@ -31,14 +31,15 @@ struct TTEntry
     uint32_t depth = 0;
     int32_t score = 0;
     NodeType node_type;
+    bool is_end = true;
 };
 
-using TTBucket = boost::container::small_vector<TTEntry, BUCKET_SIZE>;
+using TTBucket = std::array<TTEntry, BUCKET_SIZE>;
 
-class TranspostionTable 
+class TranspositionTable 
 {
     public:
-    TranspostionTable(uint64_t size);
+    TranspositionTable(uint64_t size);
     void insert(const TTEntry& tt_entry);
     std::optional<TTEntry> probe(Zobrist::HashKey key) const;
     void clear();
