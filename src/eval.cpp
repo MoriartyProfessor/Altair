@@ -139,14 +139,16 @@ namespace Evaluation
         KING_PST
     };
 
-    constexpr int32_t phase_weights[N_PIECE_TYPES] = {0, 1, 1, 2, 4, 0};
+    constexpr int32_t BISHOP_PAIR_WEIGHTS[N_PHASES] = {30, 50};
+
+    constexpr int32_t PHASE_WEIGHTS[N_PIECE_TYPES] = {0, 1, 1, 2, 4, 0};
     constexpr int32_t MAX_PHASE = 24;
 
     int32_t compute_phase(const Position& position)
     {
         int32_t phase = 0;
         for(Piece p = WH_PAWN; p < N_PIECES; ++p)
-            phase += position.piece_count(p) * phase_weights[get_type(p)];
+            phase += position.piece_count(p) * PHASE_WEIGHTS[get_type(p)];
         return std::min(MAX_PHASE, phase);
     }
 
@@ -180,6 +182,12 @@ namespace Evaluation
             mg_eval += (wh_mg_pst - bl_mg_pst);
             eg_eval += (wh_eg_pst - bl_eg_pst);
         }
+
+        mg_eval += BISHOP_PAIR_WEIGHTS[MIDDLEGAME] * (position.piece_count(WH_BISHOP) == 2);
+        mg_eval -= BISHOP_PAIR_WEIGHTS[MIDDLEGAME] * (position.piece_count(BL_BISHOP) == 2);
+
+        eg_eval += BISHOP_PAIR_WEIGHTS[ENDGAME] * (position.piece_count(WH_BISHOP) == 2);
+        eg_eval -= BISHOP_PAIR_WEIGHTS[ENDGAME] * (position.piece_count(BL_BISHOP) == 2);
 
         int32_t interp_phase = compute_phase(position);
         int32_t eval = ((mg_eval * interp_phase) + (eg_eval * (MAX_PHASE - interp_phase))) / MAX_PHASE;
