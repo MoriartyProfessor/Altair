@@ -11,7 +11,7 @@ namespace EngineInfo {
     constexpr std::string_view NAME = "Gwaihir";
     constexpr uint8_t MAJOR = 0;
     constexpr uint8_t MINOR = 4;
-    constexpr uint8_t PATCH = 1;
+    constexpr uint8_t PATCH = 2;
 
     std::string engine_id() {
         return std::format("{}-{}.{}.{}", NAME, MAJOR, MINOR, PATCH);
