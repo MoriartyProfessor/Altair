@@ -23,7 +23,7 @@ Search:
 - [x] Quiescence search
 - [x] Principled Variation search
 - [ ] Aspiration windows
-- [ ] Principled Variation search
+- [ ] SEE
 - [ ] Search Extensions Reductions
 - [ ] Late Move Reduction (LMR)
 - [ ] Null Move Pruning
