@@ -58,8 +58,7 @@ Tests:
 
 
 ## Current To-Do list
-* Experiment with TT sizes
-* Write python script to extract results of the tournament from PGN
+* Engine could not mate in NBK vs K endgame (sigh...)
 * Figure out why are so few nodes searched if compiled with RelWithDebInfo
 * 50 move rule
 * MNPS drops significantly towards the endgame. Potential causes:
