@@ -35,7 +35,7 @@ class Search
     private:
     void clear();
     int32_t quiescence(Position& position, int alpha, int beta);
-    Result negamax(Position& position, int alpha, int beta, int depth, int sply);
+    Result negamax(Position& position, int alpha, int beta, int depth, bool can_reduce, int sply);
     
 
     void print_info(unsigned depth, const Result& result, const Timer<>& timer);

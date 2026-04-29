@@ -4,6 +4,7 @@
 #include "eval.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <format>
 #include <iostream>
 #include <limits>
@@ -94,6 +95,15 @@ void update_history_scores(int32_t history_scores[N_SQUARES][N_SQUARES],
         clamped_bonus - history_scores[move.from()][move.to()] * abs(clamped_bonus) / MAX_HISTORY_SCORE;
 }
 
+int LMR(int depth, int move_index)
+{
+    if(depth > 3)
+    {
+        return 0.2 + std::log(depth) / 2 + std::log(move_index) / 5;
+    }
+    return 0;
+}
+
 void Search::HistoryStack::push(Zobrist::HashKey key) { entries.push_back(key); }
 void Search::HistoryStack::pop() { entries.pop_back(); }
 void Search::HistoryStack::clear() { entries.clear(); }
@@ -161,7 +171,7 @@ int32_t Search::quiescence(Position& position, int alpha, int beta)
     return best_score;
 }
 
-Result Search::negamax(Position& position, int alpha, int beta, int depth, int sply)
+Result Search::negamax(Position& position, int alpha, int beta, int depth, bool can_reduce, int sply)
 {
     if(search_stats.qnode_count % NODE_STEP == 0 && time_manager_->is_over())
         return {0, {}};
@@ -228,14 +238,17 @@ Result Search::negamax(Position& position, int alpha, int beta, int depth, int s
             Result result;
             if(legal_move_counter != 1)
             {
-                result = -negamax(position, -alpha - 1, -alpha, depth - 1, sply + 1);
+                int reductions = can_reduce * LMR(depth, legal_move_counter);
+                result = -negamax(position, -alpha - 1, -alpha, depth - 1 - reductions, false, sply + 1);
                 if(result.score > alpha && result.score < beta)
-                    result = -negamax(position, -beta, -alpha, depth - 1, sply + 1);
+                {
+                    result = -negamax(position, -beta, -alpha, depth - 1 - reductions, false, sply + 1);
+                }
 
             }
             else 
             {
-                result = -negamax(position, -beta, -alpha, depth - 1, sply + 1);
+                result = -negamax(position, -beta, -alpha, depth - 1, true, sply + 1);
             } 
             result.move = move;
             if (result.score > best_result.score)
@@ -304,7 +317,7 @@ Move Search::iterative_deepening(Position &position)
         Timer timer;
         timer.start();
 
-        auto result = negamax(position, -MATE_SCORE, MATE_SCORE, depth, 0);
+        auto result = negamax(position, -MATE_SCORE, MATE_SCORE, depth, true, 0);
         
         timer.stop();
         
